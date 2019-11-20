@@ -1,3 +1,15 @@
+This is a simple Web App Project for me to learn and hopefully share to anyone interested in Svelte! Whole purpose of the app is to keep track of stuff you have at home/work or wherever so when you forgot if you have milk at home or not you can check it!
+
+Stuff I want to add are:
+
+- Edit and Remove any Container
+- PWA compatibility
+- Add quantity for some items like Eggs,sock pairs etc.
+- Low quantity threshold setting for certain items.
+- Alert system for periodicly updating items or changing/removing/cleanig.
+
+Please give me feedback on anything to make me a better Svelter, Thanks!
+
 *Psst — looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
