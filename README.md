@@ -10,6 +10,8 @@ Stuff I want to add are:
 
 Please give me feedback on anything to make me a better Svelter, Thanks!
 
+---
+
 *Psst — looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
 ---
