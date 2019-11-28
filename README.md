@@ -1,3 +1,5 @@
+Try it here: https://gageracer.github.io/myStuff/
+
 This is a simple Web App Project for me to learn and hopefully share to anyone interested in Svelte! Whole purpose of the app is to keep track of stuff you have at home/work or wherever so when you forgot if you have milk at home or not you can check it!
 
 Stuff I want to add are:
