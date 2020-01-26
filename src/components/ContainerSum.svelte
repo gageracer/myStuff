@@ -9,10 +9,8 @@
 
     {#each get(myContainers) as container, i (container.id)}
 		#{i+1}
-			<Container 
-				name={container.name}
-				type={container.type}
-				items={container.items}
+            <Container 
+                {...container}
             />
     {:else}
         Welcome to MyStuff! Start adding Containers to the app using the plus button so you

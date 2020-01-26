@@ -1,8 +1,10 @@
 <script>
-    import {addContainer,toggle} from '../store.js';
-    let name = "";
-    let type = "";
-    let items = [""];
+    import {addContainer, toggle, setList} from '../store.js';
+    
+    
+    export let name = "";
+    export let type = "";
+    export let items = [""];
     
 
     let inputMsg = "Start adding items to your container!";
@@ -17,9 +19,15 @@
         toggle("main");
     }
 
-    $: console.log(name+ ':'+type+':'+items);
-    $: console.log(items.length+" items:"+items);
-    
+    $: {
+        console.log(name+ ':'+type+':'+items);
+        setList({name: name, type: type, items: items},"unSaved");
+    }
+
+    $: {
+        console.log(items.length+" items:"+items);
+    }
+
     function newItem(itm){
         items[items.length-1] = itm;
         items = [...items, ""];

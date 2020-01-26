@@ -5,7 +5,6 @@
 	
 	import {reLoad} from './store.js';
 	
-	
 	reLoad();
 </script>
 

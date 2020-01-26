@@ -1,10 +1,17 @@
 <script>
+    import Create from './Create.svelte';
+    import { toggle,tmpCont, editCont} from '../store.js';
+    import NewButton from './NewButton.svelte';
+
+    export let id = "";
     export let name = "TestName";
     export let type = "TestType";
     export let items = ["sugar"];
     export let itemsnum = items.length;
 
     export let isSum = true;
+
+
 
     function details() {
             isSum = !isSum;
@@ -41,10 +48,7 @@
         align-items: center;
         color:coral;
     }
-    .edit-button{
-        width: fit-content;
-        align-self: center;
-    }
+    
 </style>
 
 
@@ -66,7 +70,9 @@
                 {/each}
         </div>
         {/if}
-
-        <button class="edit-button">Edit</button>
+        <NewButton button="editlist" 
+        on:click="{ () => editCont(this.name, this.type, this.items, this.id)}"
+        />
+        
     </div>
 
