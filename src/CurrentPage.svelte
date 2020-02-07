@@ -16,6 +16,7 @@ $: console.log("Current page is: " + $mypage);
         name={$unSaved.name}
         type={$unSaved.type}
         items={$unSaved.items}
+        editt={false}
     />
 
 {:else if $mypage === "editlist"}
@@ -24,9 +25,12 @@ $: console.log("Current page is: " + $mypage);
             name={$tmpCont.name}
             type={$tmpCont.type}
             items={$tmpCont.items}
+            id={$tmpCont.id}
+            editt={true}
             /> 
 {:else}
     
     <ContainerSum/>
-    <NewButton button='newlist'/>
+    <NewButton button='newlist'
+    />
 {/if}

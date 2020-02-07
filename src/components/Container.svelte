@@ -1,21 +1,28 @@
 <script>
     import Create from './Create.svelte';
-    import { toggle,tmpCont, editCont} from '../store.js';
+    import { toggle, editCont} from '../store.js';
     import NewButton from './NewButton.svelte';
 
     export let id = "";
     export let name = "TestName";
     export let type = "TestType";
     export let items = ["sugar"];
-    export let itemsnum = items.length;
+    let itemsnum = items.length;
 
     export let isSum = true;
 
-
+    export function editHandle() {
+            
+        editCont(name, type, items, id);
+        toggle("editlist");
+        console.log("handleSubmitted by editCont");
+            
+    
+    }
 
     function details() {
             isSum = !isSum;
-        }
+    }
 </script>
 
 <style>
@@ -48,7 +55,10 @@
         align-items: center;
         color:coral;
     }
-    
+    .edit-button{
+        width: fit-content;
+        align-self: center;
+    }
 </style>
 
 
@@ -66,13 +76,11 @@
         {#if !isSum}:
         <div class="item-list">
             {#each items as item,i}
-                *{item}<br>
+                * {item}<br>
                 {/each}
         </div>
         {/if}
-        <NewButton button="editlist" 
-        on:click="{ () => editCont(this.name, this.type, this.items, this.id)}"
-        />
+        <button class="edit-button" on:click="{editHandle}">Edit</button>
         
     </div>
 

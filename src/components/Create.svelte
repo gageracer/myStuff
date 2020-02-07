@@ -1,19 +1,18 @@
 <script>
     import {addContainer, toggle, setList} from '../store.js';
     
-    
+    export let id = "";
     export let name = "";
     export let type = "";
     export let items = [""];
-    
+    export let editt = false;
 
     let inputMsg = "Start adding items to your container!";
 
     $: if(items.length > 1){ inputMsg= "And another one";}
 
     function handleSubmit(){
-        //TODO: use JSON to save data to localStorage
-        addContainer(name,type,items);
+        addContainer(name, type, items, id);
 
         console.log("handleSubmitted");
         toggle("main");
@@ -21,7 +20,9 @@
 
     $: {
         console.log(name+ ':'+type+':'+items);
-        setList({name: name, type: type, items: items},"unSaved");
+        
+        editt? setList({ name: name, type: type, items: items }, "tmpCont") 
+        :setList({name: name, type: type, items: items},"unSaved");
     }
 
     $: {

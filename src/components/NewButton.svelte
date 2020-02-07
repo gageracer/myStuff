@@ -1,7 +1,9 @@
 <script>
     import { toggle } from '../store.js';
 
+
     export let button;
+
 
 </script>
 
@@ -21,16 +23,13 @@
         font-family: 'Courier New', Courier, monospace;
         background-color: #454f69;
     }
-    .edit-button{
-        width: fit-content;
-        align-self: center;
-    }
+    
 </style>
 
 {#if button === 'newlist'}
-<button id="menu-edit-create" on:click="{ () => toggle(button)}">+</button>
+<button id="menu-edit-create" on:click="{ () => toggle(button)}" >+</button>
 {:else if button === 'editlist'}
-<button class="edit-button">Edit</button>
+
 
 {/if}
 

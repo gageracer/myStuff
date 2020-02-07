@@ -2,63 +2,83 @@ import { writable,get } from 'svelte/store';
 
 export const mypage = writable("main");
 export const myContainers = writable([]);
-export const tmpCont = writable({id:"",name:"",type:"",items:[]});
+export const tmpCont = writable({id:"",name:"",type:"",items:[""]});
 export const unSaved = writable({ id: "", name: "", type: "", items: [""] });
 
 export function reLoad() {
     myContainers.set(getList("myStuff"));
     mypage.set(getLastPage("lastPage"));
     unSaved.set(getList("unSaved"));
+    tmpCont.set(getList("tmpCont"));
 }
 
 // Editing any Container Function
 export function editCont(name,type,items,id) {
-    console.log("tmpContis: " + name);
-    $: console.log(tmpCont);
+    console.log("tmpContis: " + id);
+    
     tmpCont.set({
         name: name,
         type: type,
         items: items,
         id: id
     });
-
+    
+    console.log(tmpCont);
 
 }
 
-export function addContainer(nname,ntype,nitems){
-    myContainers.update(existing => [...existing, {
-        id: existing.length + Math.random(),
-        name: nname,
-        type: ntype,
-        items: nitems
-    }]
+export function addContainer(nname, ntype, nitems, oId = ""){
+    
+    if(oId == ""){
+        console.log("I am Creating new one");
+        myContainers.update(existing => [...existing, {
+            id: existing.length + Math.random(),
+            name: nname,
+            type: ntype,
+            items: nitems
+        }]
 
-    );
+        );
+        setList({ id: "", name: "", type: "", items: [""] }, "unSaved");
+        
+        
+        
+    }
+    else{
+        let x = get(myContainers).findIndex(x => x.id === oId);
+        let tmpContainer = get(myContainers);
+        tmpContainer.splice(x,1, {
+            id: oId,
+            name: nname,
+            type: ntype,
+            items: nitems});
+        myContainers.update(() => tmpContainer);
+
+        setList({ id: "", name: "", type: "", items: [""] }, "tmpCont");
+    }
+    
     setList(get(myContainers),"myStuff");
-    setList({ id: "", name: "", type: "", items: [""] },"unSaved");
+    
 }
 
 export function toggle(msg) {
+    setLastPage(msg);
     if (msg === "main") {
         mypage.set("main");
-        setLastPage(msg);
         reLoad();
         return;
     }
     if (msg === "newlist") {
         mypage.set("newlist");
-        setLastPage(msg);
         return;
     }
     if (msg === "editlist") {
         mypage.set("editlist");
-        setLastPage(msg);
         return;
     }
 
 
     mypage.set("newlist");
-    setLastPage(msg);
 }
 
 // These are set and get functions for the whole Containers list
@@ -73,6 +93,7 @@ export function getList(str) {
     else { 
         if(str === "myStuff") return new Array;
         if(str === "unSaved") return { id: "", name: "", type: "", items: [""] };
+        if (str === "tmpCont") return { id: "", name: "", type: "", items: [""] };
         }
 }
 
