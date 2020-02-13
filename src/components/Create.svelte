@@ -1,20 +1,28 @@
 <script>
-    import {addContainer, toggle, setList} from '../store.js';
-    
+    import {addContainer, toggle, setList, deleteContainer} from '../store.js';
+    import Modal from './Modal.svelte';
+
     export let id = "";
     export let name = "";
     export let type = "";
     export let items = [""];
     export let editt = false;
 
+    let delModal = false;
+
     let inputMsg = "Start adding items to your container!";
 
-    $: if(items.length > 1){ inputMsg= "And another one";}
+    $: if(items.length > 1){ inputMsg= "And another one"}
 
     function handleSubmit(){
         addContainer(name, type, items, id);
 
         console.log("handleSubmitted");
+        toggle("main");
+    }
+
+    function deleteSubmit(){
+        deleteContainer(id);
         toggle("main");
     }
 
@@ -74,6 +82,22 @@
     .itemslist>button{
         width:10%;
     }
+    .buttons{
+        display: flex;
+        flex-direction: row;
+    }
+    .buttons>button{
+        width: 100%;
+    }
+    .row-buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        height: 2em;
+    }
+    .row-buttons>button{
+        width: 90vw;
+    }
 </style>
 
 <div className="create-new">
@@ -94,8 +118,22 @@
                 <button on:click="{ () => newItem(item)}">+</button>
             </div>
         {/each}
-
-        <button on:click|once={handleSubmit}>Done</button>
+        <div class="buttons">
+            {#if editt}
+            <button style="color: red;" on:click="{ () => delModal = true}">Delete</button>
+            {/if}
+            <button on:click|once={handleSubmit}>Save</button>
+        </div>    
+        
 
     </label>
 </div>
+{#if delModal}
+    <Modal content="Are you sure you wanna delete this container?">
+        <div class="row-buttons">
+            <button on:click|once={deleteSubmit} style="background-color: red;">Yes</button>
+            <button on:click="{ () => delModal = false}">No</button>
+        </div>
+        
+    </Modal>
+{/if}

@@ -26,6 +26,15 @@ export function editCont(name,type,items,id) {
     console.log(tmpCont);
 
 }
+export function deleteContainer(oId){
+    let x = get(myContainers).findIndex(x => x.id === oId);
+    let tmpContainer = get(myContainers);
+    tmpContainer.splice(x, 1);
+    myContainers.update(() => tmpContainer);
+
+    setList({ id: "", name: "", type: "", items: [""] }, "tmpCont");
+    setList(get(myContainers), "myStuff");
+}
 
 export function addContainer(nname, ntype, nitems, oId = ""){
     

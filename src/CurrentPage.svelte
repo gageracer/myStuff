@@ -1,12 +1,12 @@
 <script>
-import { mypage,tmpCont,unSaved } from './store.js';
+    import { mypage,tmpCont,unSaved } from './store.js';
 
-import Container from './components/Container.svelte';
-import Create from './components/Create.svelte';
-import ContainerSum from './components/ContainerSum.svelte';
-import NewButton from './components/NewButton.svelte';
+    import Container from './components/Container.svelte';
+    import Create from './components/Create.svelte';
+    import ContainerSum from './components/ContainerSum.svelte';
+    import NewButton from './components/NewButton.svelte';
 
-$: console.log("Current page is: " + $mypage);
+    $: console.log("Current page is: " + $mypage);
 
 </script>
 
