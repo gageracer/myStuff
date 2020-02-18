@@ -4,7 +4,6 @@ This is a simple Web App Project for me to learn and hopefully share to anyone i
 
 Stuff I want to add are:
 
-- Remove any Container
 - PWA compatibility
 - Add quantity for some items like Eggs,sock pairs etc.
 - Low quantity threshold setting for certain items.
