@@ -14,6 +14,9 @@
         height: 4rem;
         border: 1px transparent solid;
         align-items: center;
+        -webkit-border-radius: 50%;
+        -khtml-border-radius: 50%;
+        -moz-border-radius: 50%;
         border-radius: 50%;
         bottom: 5vh;
         right: 5vw;
@@ -24,6 +27,7 @@
         font-family: 'Courier New', Courier, monospace;
         background-color: #cbc26d;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        overflow: hidden;
 
     }
     

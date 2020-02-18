@@ -3,13 +3,13 @@
     import { myContainers } from '../store.js';
 
     import { get } from 'svelte/store';
-
+    
     $: console.log("myContainers list has: ", get(myContainers));
 </script>
 
     {#each get(myContainers) as container, i (container.id)}
 		
-            <Container 
+            <Container
                 {...container}
             />
     {:else}

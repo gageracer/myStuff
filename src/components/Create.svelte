@@ -1,6 +1,8 @@
 <script>
     import {addContainer, toggle, setList, deleteContainer} from '../store.js';
     import Modal from './Modal.svelte';
+    import { fade,fly } from 'svelte/transition';
+    import { flip } from 'svelte/animate';
 
     export let id = "";
     export let name = "";
@@ -15,10 +17,14 @@
     $: if(items.length > 1){ inputMsg= "And another one"}
 
     function handleSubmit(){
-        addContainer(name, type, items, id);
+        if(name && type && items) {
+            items = items.filter(Boolean);
+            addContainer(name, type, items, id);
 
-        console.log("handleSubmitted");
-        toggle("main");
+            console.log("handleSubmitted");
+            toggle("main");
+        }
+        
     }
 
     function deleteSubmit(){
@@ -38,15 +44,15 @@
     }
 
     function newItem(itm){
-        items[items.length-1] = itm;
-        items = [...items, ""];
-        
+        if(items[items.length-1] !== ""){
+            items[items.length - 1] = itm;
+            items = [...items, ""];
+        }
     }
 
     function remItem(index) {
         console.log(index+ " th item deleted");
-        items = items.filter((i,idx) => { return idx !== index;
-        });
+        items = items.filter((i,idx) => { return idx !== index;});
     }
 </script>
 
@@ -127,17 +133,20 @@
     }
 </style>
 
-<div className="create-new">
+<div className="create-new" in:fade="{{ duration: 1000 }}" out:fade="{{duration: 0}}">
     <label>
-        <input type="text" name="name" bind:value={name} autocomplete="off"
-            placeholder="The Container Name" />
+        <input autofocus type="text" name="name" bind:value={name} autocomplete="off"
+            placeholder="The Container Name" required/>
         <input type="text" name="type" bind:value={type}  autocomplete="off"
-        placeholder="The Container Type" />
+        placeholder="The Container Type"  required/>
         
         {#each items as item, i (i)}
-            <div class="itemslist">
-                <input type="text" name="tmpitems" autocomplete="off"
-                    placeholder={inputMsg} bind:value={item}/>
+            <div class="itemslist"
+                    transition:fade="{{key: i}}"
+                    animate:flip="{{key: i}}"
+            >
+                <input type="text" name="tmpitems" autocomplete="off" maxlength="16"
+                    placeholder={inputMsg} bind:value={item} required/>
                 {#if i != 0}
                 <button on:click={remItem.bind(this,i)}>-</button>
                 {/if}

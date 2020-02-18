@@ -2,6 +2,7 @@
     import Create from './Create.svelte';
     import { toggle, editCont} from '../store.js';
     import NewButton from './NewButton.svelte';
+    import { fly,fade } from 'svelte/transition';
 
     export let id = "";
     export let name = "TestName";
@@ -33,8 +34,8 @@
         padding:5vh 0 2vh 0;
         list-style-type: none;
         display:flex;
+        align-items: center;
         flex-direction: column;
-        justify-content: center;
         background-color:#f5f5f6;
         font-size:calc(10px + 4vmin);
         color: black;
@@ -73,7 +74,7 @@
 </style>
 
 
-    <div class="containersum" on:click="{details}">
+    <div class="containersum" on:click="{details}" in:fade="{{ duration: 500 }}" out:fade="{{duration: 0}}">
 
         <div id="name">
             {name}
@@ -82,7 +83,9 @@
         
         
         {#if !isSum}
-        <div class="details">
+        <div class="details" transition:fly="{{ y: -200, duration: 100 }}"
+            
+        >
             
             Type: {type} |
             {itemsnum} Stuff here
