@@ -30,7 +30,7 @@
         margin-bottom: 1rem;
         width: 95vw;
         height: fit-content;
-        padding:5vh 0 5vh 0;
+        padding:5vh 0 2vh 0;
         list-style-type: none;
         display:flex;
         flex-direction: column;
@@ -38,6 +38,7 @@
         background-color:#f5f5f6;
         font-size:calc(10px + 4vmin);
         color: black;
+        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     }
     .details{
 		display: flex;
@@ -50,17 +51,20 @@
 		/* font-size: calc(6px + 1vmin); */
 	}
     .item-list{
-        display:flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+        /* display:flex;
+        flex-direction: column;
+        justify-content: center; */
+        text-align: left;
         color:coral;
+        width: 70%;
+        overflow: auto;
     }
     .edit-button{
         width: fit-content;
         align-self: center;
-        background-color: #fdd835;
+        background-color: #fff59d;
         float: right;
+        font-size: 1.5em;
     }
     #name{
         height: 5vh;
@@ -74,21 +78,19 @@
         <div id="name">
             {name}
         </div>
-            
-            
+        <hr style="width: 90%; border-color: #e1e2e186;" />
         
         
         {#if !isSum}
         <div class="details">
-            <hr style="width: 90%;border-color: gray;" />
-            Type: {type}
-            <br>
+            
+            Type: {type} |
             {itemsnum} Stuff here
-            <div class="item-list">
+            <ul class="item-list">
                 {#each items as item,i}
-                    * {item}<br>
-                    {/each}
-            </div>
+                    <li>{item}</li>
+                {/each}
+            </ul>
             <button class="edit-button" on:click="{editHandle}">Edit</button>
         </div>
         {/if}

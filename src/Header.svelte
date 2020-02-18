@@ -15,6 +15,8 @@
 		text-align: center;
 		top:0;
 		height: 10vh;
+		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+
 	}
 </style>
 

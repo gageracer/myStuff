@@ -687,8 +687,8 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "My_Stuff";
     			attr_dev(button, "id", "main_link");
-    			attr_dev(button, "class", "svelte-8ym6ur");
-    			add_location(button, file, 20, 0, 297);
+    			attr_dev(button, "class", "svelte-1mvd3j6");
+    			add_location(button, file, 22, 0, 378);
     			dispose = listen_dev(button, "click", ctx.click_handler);
     		},
 
@@ -880,7 +880,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (115:16) {#if i != 0}
+    // (141:16) {#if i != 0}
     function create_if_block_2(ctx) {
     	var button, dispose;
 
@@ -888,8 +888,8 @@ var app = (function () {
     		c: function create() {
     			button = element("button");
     			button.textContent = "-";
-    			attr_dev(button, "class", "svelte-fi5nbv");
-    			add_location(button, file$2, 115, 16, 2623);
+    			attr_dev(button, "class", "svelte-1bsmocl");
+    			add_location(button, file$2, 141, 16, 3381);
     			dispose = listen_dev(button, "click", ctx.remItem.bind(this,ctx.i));
     		},
 
@@ -909,11 +909,11 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(115:16) {#if i != 0}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_2.name, type: "if", source: "(141:16) {#if i != 0}", ctx });
     	return block;
     }
 
-    // (111:8) {#each items as item, i (i)}
+    // (137:8) {#each items as item, i (i)}
     function create_each_block(key_1, ctx) {
     	var div, input, t0, t1, button, dispose;
 
@@ -942,13 +942,14 @@ var app = (function () {
     			button.textContent = "+";
     			attr_dev(input, "type", "text");
     			attr_dev(input, "name", "tmpitems");
+    			attr_dev(input, "autocomplete", "off");
     			attr_dev(input, "placeholder", ctx.inputMsg);
-    			attr_dev(input, "class", "svelte-fi5nbv");
-    			add_location(input, file$2, 112, 16, 2479);
-    			attr_dev(button, "class", "svelte-fi5nbv");
-    			add_location(button, file$2, 117, 16, 2712);
-    			attr_dev(div, "class", "itemslist svelte-fi5nbv");
-    			add_location(div, file$2, 111, 12, 2439);
+    			attr_dev(input, "class", "svelte-1bsmocl");
+    			add_location(input, file$2, 138, 16, 3219);
+    			attr_dev(button, "class", "svelte-1bsmocl");
+    			add_location(button, file$2, 143, 16, 3470);
+    			attr_dev(div, "class", "itemslist svelte-1bsmocl");
+    			add_location(div, file$2, 137, 12, 3179);
 
     			dispose = [
     				listen_dev(input, "input", input_input_handler),
@@ -1001,11 +1002,11 @@ var app = (function () {
     			run_all(dispose);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block.name, type: "each", source: "(111:8) {#each items as item, i (i)}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block.name, type: "each", source: "(137:8) {#each items as item, i (i)}", ctx });
     	return block;
     }
 
-    // (122:12) {#if editt}
+    // (148:12) {#if editt}
     function create_if_block_1(ctx) {
     	var button, dispose;
 
@@ -1014,8 +1015,9 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Delete";
     			set_style(button, "color", "red");
-    			attr_dev(button, "class", "svelte-fi5nbv");
-    			add_location(button, file$2, 122, 12, 2866);
+    			set_style(button, "background-color", "#f5f5f6");
+    			attr_dev(button, "class", "svelte-1bsmocl");
+    			add_location(button, file$2, 148, 12, 3624);
     			dispose = listen_dev(button, "click", ctx.click_handler_1);
     		},
 
@@ -1031,11 +1033,11 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(122:12) {#if editt}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1.name, type: "if", source: "(148:12) {#if editt}", ctx });
     	return block;
     }
 
-    // (131:0) {#if delModal}
+    // (157:0) {#if delModal}
     function create_if_block(ctx) {
     	var current;
 
@@ -1074,11 +1076,11 @@ var app = (function () {
     			destroy_component(modal, detaching);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(131:0) {#if delModal}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block.name, type: "if", source: "(157:0) {#if delModal}", ctx });
     	return block;
     }
 
-    // (132:4) <Modal content="Are you sure you wanna delete this container?">
+    // (158:4) <Modal content="Are you sure you wanna delete this container?">
     function create_default_slot(ctx) {
     	var div, button0, t_1, button1, dispose;
 
@@ -1091,12 +1093,12 @@ var app = (function () {
     			button1 = element("button");
     			button1.textContent = "No";
     			set_style(button0, "background-color", "red");
-    			attr_dev(button0, "class", "svelte-fi5nbv");
-    			add_location(button0, file$2, 133, 12, 3205);
-    			attr_dev(button1, "class", "svelte-fi5nbv");
-    			add_location(button1, file$2, 134, 12, 3298);
-    			attr_dev(div, "class", "row-buttons svelte-fi5nbv");
-    			add_location(div, file$2, 132, 8, 3167);
+    			attr_dev(button0, "class", "svelte-1bsmocl");
+    			add_location(button0, file$2, 159, 12, 3989);
+    			attr_dev(button1, "class", "svelte-1bsmocl");
+    			add_location(button1, file$2, 160, 12, 4082);
+    			attr_dev(div, "class", "row-buttons svelte-1bsmocl");
+    			add_location(div, file$2, 158, 8, 3951);
 
     			dispose = [
     				listen_dev(button0, "click", ctx.deleteSubmit, { once: true }),
@@ -1121,12 +1123,12 @@ var app = (function () {
     			run_all(dispose);
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(132:4) <Modal content=\"Are you sure you wanna delete this container?\">", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_default_slot.name, type: "slot", source: "(158:4) <Modal content=\"Are you sure you wanna delete this container?\">", ctx });
     	return block;
     }
 
     function create_fragment$2(ctx) {
-    	var div1, t0, label, input0, t1, input1, t2, each_blocks = [], each_1_lookup = new Map(), t3, div0, t4, button, t6, if_block1_anchor, current, dispose;
+    	var div1, label, input0, t0, input1, t1, each_blocks = [], each_1_lookup = new Map(), t2, div0, t3, button, t5, if_block1_anchor, current, dispose;
 
     	let each_value = ctx.items;
 
@@ -1145,45 +1147,46 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			div1 = element("div");
-    			t0 = text("Create Your Container\n    ");
     			label = element("label");
     			input0 = element("input");
-    			t1 = space();
+    			t0 = space();
     			input1 = element("input");
-    			t2 = space();
+    			t1 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t3 = space();
+    			t2 = space();
     			div0 = element("div");
     			if (if_block0) if_block0.c();
-    			t4 = space();
+    			t3 = space();
     			button = element("button");
     			button.textContent = "Save";
-    			t6 = space();
+    			t5 = space();
     			if (if_block1) if_block1.c();
     			if_block1_anchor = empty();
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "name", "name");
+    			attr_dev(input0, "autocomplete", "off");
     			attr_dev(input0, "placeholder", "The Container Name");
-    			attr_dev(input0, "class", "svelte-fi5nbv");
-    			add_location(input0, file$2, 105, 8, 2182);
+    			attr_dev(input0, "class", "svelte-1bsmocl");
+    			add_location(input0, file$2, 131, 8, 2884);
     			attr_dev(input1, "type", "text");
     			attr_dev(input1, "name", "type");
+    			attr_dev(input1, "autocomplete", "off");
     			attr_dev(input1, "placeholder", "The Container Type");
-    			attr_dev(input1, "class", "svelte-fi5nbv");
-    			add_location(input1, file$2, 107, 8, 2287);
-    			attr_dev(button, "class", "svelte-fi5nbv");
-    			add_location(button, file$2, 124, 12, 2976);
-    			attr_dev(div0, "class", "buttons svelte-fi5nbv");
-    			add_location(div0, file$2, 120, 8, 2808);
-    			attr_dev(label, "class", "svelte-fi5nbv");
-    			add_location(label, file$2, 104, 4, 2166);
+    			attr_dev(input1, "class", "svelte-1bsmocl");
+    			add_location(input1, file$2, 133, 8, 3008);
+    			attr_dev(button, "class", "svelte-1bsmocl");
+    			add_location(button, file$2, 150, 12, 3760);
+    			attr_dev(div0, "class", "buttons svelte-1bsmocl");
+    			add_location(div0, file$2, 146, 8, 3566);
+    			attr_dev(label, "class", "svelte-1bsmocl");
+    			add_location(label, file$2, 130, 4, 2868);
     			attr_dev(div1, "classname", "create-new");
-    			attr_dev(div1, "class", "svelte-fi5nbv");
-    			add_location(div1, file$2, 102, 0, 2107);
+    			attr_dev(div1, "class", "svelte-1bsmocl");
+    			add_location(div1, file$2, 129, 0, 2835);
 
     			dispose = [
     				listen_dev(input0, "input", ctx.input0_input_handler),
@@ -1198,29 +1201,28 @@ var app = (function () {
 
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
-    			append_dev(div1, t0);
     			append_dev(div1, label);
     			append_dev(label, input0);
 
     			set_input_value(input0, ctx.name);
 
-    			append_dev(label, t1);
+    			append_dev(label, t0);
     			append_dev(label, input1);
 
     			set_input_value(input1, ctx.type);
 
-    			append_dev(label, t2);
+    			append_dev(label, t1);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(label, null);
     			}
 
-    			append_dev(label, t3);
+    			append_dev(label, t2);
     			append_dev(label, div0);
     			if (if_block0) if_block0.m(div0, null);
-    			append_dev(div0, t4);
+    			append_dev(div0, t3);
     			append_dev(div0, button);
-    			insert_dev(target, t6, anchor);
+    			insert_dev(target, t5, anchor);
     			if (if_block1) if_block1.m(target, anchor);
     			insert_dev(target, if_block1_anchor, anchor);
     			current = true;
@@ -1231,13 +1233,13 @@ var app = (function () {
     			if (changed.type && (input1.value !== ctx.type)) set_input_value(input1, ctx.type);
 
     			const each_value = ctx.items;
-    			each_blocks = update_keyed_each(each_blocks, changed, get_key, 1, ctx, each_value, each_1_lookup, label, destroy_block, create_each_block, t3, get_each_context);
+    			each_blocks = update_keyed_each(each_blocks, changed, get_key, 1, ctx, each_value, each_1_lookup, label, destroy_block, create_each_block, t2, get_each_context);
 
     			if (ctx.editt) {
     				if (!if_block0) {
     					if_block0 = create_if_block_1(ctx);
     					if_block0.c();
-    					if_block0.m(div0, t4);
+    					if_block0.m(div0, t3);
     				}
     			} else if (if_block0) {
     				if_block0.d(1);
@@ -1283,7 +1285,7 @@ var app = (function () {
     			if (if_block0) if_block0.d();
 
     			if (detaching) {
-    				detach_dev(t6);
+    				detach_dev(t5);
     			}
 
     			if (if_block1) if_block1.d(detaching);
@@ -1466,18 +1468,18 @@ var app = (function () {
 
     const file$3 = "src/components/NewButton.svelte";
 
-    // (31:32) 
+    // (34:32) 
     function create_if_block_1$1(ctx) {
     	const block = {
     		c: noop,
     		m: noop,
     		d: noop
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$1.name, type: "if", source: "(31:32) ", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$1.name, type: "if", source: "(34:32) ", ctx });
     	return block;
     }
 
-    // (29:0) {#if button === 'newlist'}
+    // (32:0) {#if button === 'newlist'}
     function create_if_block$1(ctx) {
     	var button_1, dispose;
 
@@ -1486,8 +1488,8 @@ var app = (function () {
     			button_1 = element("button");
     			button_1.textContent = "+";
     			attr_dev(button_1, "id", "menu-edit-create");
-    			attr_dev(button_1, "class", "svelte-12l3gwj");
-    			add_location(button_1, file$3, 29, 0, 544);
+    			attr_dev(button_1, "class", "svelte-12aiitm");
+    			add_location(button_1, file$3, 32, 0, 653);
     			dispose = listen_dev(button_1, "click", ctx.click_handler);
     		},
 
@@ -1503,7 +1505,7 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(29:0) {#if button === 'newlist'}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(32:0) {#if button === 'newlist'}", ctx });
     	return block;
     }
 
@@ -1618,9 +1620,9 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (81:8) {#if !isSum}
+    // (84:8) {#if !isSum}
     function create_if_block$2(ctx) {
-    	var div1, hr, t0, t1, t2, br, t3, t4, t5, div0, t6, button, dispose;
+    	var div, t0, t1, t2, t3, t4, ul, t5, button, dispose;
 
     	let each_value = ctx.items;
 
@@ -1632,55 +1634,45 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div1 = element("div");
-    			hr = element("hr");
-    			t0 = text("\n            Type: ");
+    			div = element("div");
+    			t0 = text("Type: ");
     			t1 = text(ctx.type);
-    			t2 = space();
-    			br = element("br");
-    			t3 = space();
-    			t4 = text(ctx.itemsnum);
-    			t5 = text(" Stuff here\n            ");
-    			div0 = element("div");
+    			t2 = text(" |\n            ");
+    			t3 = text(ctx.itemsnum);
+    			t4 = text(" Stuff here\n            ");
+    			ul = element("ul");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t6 = space();
+    			t5 = space();
     			button = element("button");
     			button.textContent = "Edit";
-    			set_style(hr, "width", "90%");
-    			set_style(hr, "border-color", "gray");
-    			add_location(hr, file$4, 82, 12, 1781);
-    			add_location(br, file$4, 84, 12, 1864);
-    			attr_dev(div0, "class", "item-list svelte-6w11ws");
-    			add_location(div0, file$4, 86, 12, 1915);
-    			attr_dev(button, "class", "edit-button svelte-6w11ws");
-    			add_location(button, file$4, 91, 12, 2071);
-    			attr_dev(div1, "class", "details svelte-6w11ws");
-    			add_location(div1, file$4, 81, 8, 1747);
+    			attr_dev(ul, "class", "item-list svelte-qjomjz");
+    			add_location(ul, file$4, 88, 12, 2052);
+    			attr_dev(button, "class", "edit-button svelte-qjomjz");
+    			add_location(button, file$4, 93, 12, 2205);
+    			attr_dev(div, "class", "details svelte-qjomjz");
+    			add_location(div, file$4, 84, 8, 1944);
     			dispose = listen_dev(button, "click", ctx.editHandle);
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, div1, anchor);
-    			append_dev(div1, hr);
-    			append_dev(div1, t0);
-    			append_dev(div1, t1);
-    			append_dev(div1, t2);
-    			append_dev(div1, br);
-    			append_dev(div1, t3);
-    			append_dev(div1, t4);
-    			append_dev(div1, t5);
-    			append_dev(div1, div0);
+    			insert_dev(target, div, anchor);
+    			append_dev(div, t0);
+    			append_dev(div, t1);
+    			append_dev(div, t2);
+    			append_dev(div, t3);
+    			append_dev(div, t4);
+    			append_dev(div, ul);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
-    				each_blocks[i].m(div0, null);
+    				each_blocks[i].m(ul, null);
     			}
 
-    			append_dev(div1, t6);
-    			append_dev(div1, button);
+    			append_dev(div, t5);
+    			append_dev(div, button);
     		},
 
     		p: function update(changed, ctx) {
@@ -1700,7 +1692,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block$1(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(div0, null);
+    						each_blocks[i].m(ul, null);
     					}
     				}
 
@@ -1713,7 +1705,7 @@ var app = (function () {
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(div1);
+    				detach_dev(div);
     			}
 
     			destroy_each(each_blocks, detaching);
@@ -1721,48 +1713,44 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$2.name, type: "if", source: "(81:8) {#if !isSum}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$2.name, type: "if", source: "(84:8) {#if !isSum}", ctx });
     	return block;
     }
 
-    // (88:16) {#each items as item,i}
+    // (90:16) {#each items as item,i}
     function create_each_block$1(ctx) {
-    	var t0, t1_value = ctx.item + "", t1, br;
+    	var li, t_value = ctx.item + "", t;
 
     	const block = {
     		c: function create() {
-    			t0 = text("* ");
-    			t1 = text(t1_value);
-    			br = element("br");
-    			add_location(br, file$4, 88, 28, 2007);
+    			li = element("li");
+    			t = text(t_value);
+    			add_location(li, file$4, 90, 20, 2135);
     		},
 
     		m: function mount(target, anchor) {
-    			insert_dev(target, t0, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, br, anchor);
+    			insert_dev(target, li, anchor);
+    			append_dev(li, t);
     		},
 
     		p: function update(changed, ctx) {
-    			if ((changed.items) && t1_value !== (t1_value = ctx.item + "")) {
-    				set_data_dev(t1, t1_value);
+    			if ((changed.items) && t_value !== (t_value = ctx.item + "")) {
+    				set_data_dev(t, t_value);
     			}
     		},
 
     		d: function destroy(detaching) {
     			if (detaching) {
-    				detach_dev(t0);
-    				detach_dev(t1);
-    				detach_dev(br);
+    				detach_dev(li);
     			}
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$1.name, type: "each", source: "(88:16) {#each items as item,i}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_each_block$1.name, type: "each", source: "(90:16) {#each items as item,i}", ctx });
     	return block;
     }
 
     function create_fragment$4(ctx) {
-    	var div1, div0, t0, t1, dispose;
+    	var div1, div0, t0, t1, hr, t2, dispose;
 
     	var if_block = (!ctx.isSum) && create_if_block$2(ctx);
 
@@ -1772,12 +1760,17 @@ var app = (function () {
     			div0 = element("div");
     			t0 = text(ctx.name);
     			t1 = space();
+    			hr = element("hr");
+    			t2 = space();
     			if (if_block) if_block.c();
     			attr_dev(div0, "id", "name");
-    			attr_dev(div0, "class", "svelte-6w11ws");
-    			add_location(div0, file$4, 73, 8, 1624);
-    			attr_dev(div1, "class", "containersum svelte-6w11ws");
-    			add_location(div1, file$4, 71, 4, 1567);
+    			attr_dev(div0, "class", "svelte-qjomjz");
+    			add_location(div0, file$4, 77, 8, 1787);
+    			set_style(hr, "width", "90%");
+    			set_style(hr, "border-color", "#e1e2e186");
+    			add_location(hr, file$4, 80, 8, 1845);
+    			attr_dev(div1, "class", "containersum svelte-qjomjz");
+    			add_location(div1, file$4, 75, 4, 1730);
     			dispose = listen_dev(div1, "click", ctx.details);
     		},
 
@@ -1790,6 +1783,8 @@ var app = (function () {
     			append_dev(div1, div0);
     			append_dev(div0, t0);
     			append_dev(div1, t1);
+    			append_dev(div1, hr);
+    			append_dev(div1, t2);
     			if (if_block) if_block.m(div1, null);
     		},
 
@@ -2468,8 +2463,8 @@ var app = (function () {
     			header.$$.fragment.c();
     			t = space();
     			currentpage.$$.fragment.c();
-    			attr_dev(main, "class", "svelte-1tvcotw");
-    			add_location(main, file$6, 26, 0, 483);
+    			attr_dev(main, "class", "svelte-1og9k99");
+    			add_location(main, file$6, 25, 0, 452);
     		},
 
     		l: function claim(nodes) {

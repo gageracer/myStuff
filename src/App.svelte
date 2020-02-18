@@ -10,10 +10,9 @@
 <style>
 	main{
 		
-		/* border: 2px ridge red; */
 		text-align: center;
 		background-color: #e1e2e1;
-		min-height: 100%;
+		min-height: 88vh;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

@@ -55,45 +55,72 @@
     display: flex;
     flex-direction: column;
     margin-top: 5em;
-    border: 1px solid red;
     width: 90vw;
     font-size: 1.5em;
     }
-    label>*{
-    margin-top: 1em;
-    font-size: 1em;
-    width: 100%;
-    height: auto;
+
+    label{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
+
+    label>*{
+        text-align: center;
+        margin-top: 0.5em;
+        width: 90vw;
+        border-radius: 3%;
+        background-color: #f5f5f6;
+    }
+    label>input{
+        font-size: 1.5em;
+        height: 2em;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+
+    }
+
     .itemslist{
         display: flex;
         flex-direction: row;
         margin-top: 5em;
-        border: 1px solid red;
         width: 100vw;
-        font-size: 1.5em;
     }
+
     .itemslist>input{
         width: 90%;
+        text-align: center;
+        background-color: #f5f5f6;
+        font-size: 1.5em;
+        height: 2em;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     }
+    
     .itemslist>div{
         width: 90%;
     }
     .itemslist>button{
-        width:10%;
+        width:10vw;
+        font-size: 1.5em;
+        background-color: #fff59d;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+
     }
     .buttons{
         display: flex;
         flex-direction: row;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+
     }
     .buttons>button{
         width: 100%;
+        background-color: #fff59d;
+        font-size: 2em;
     }
     .row-buttons{
         display: flex;
         flex-direction: row;
         justify-content: center;
-        height: 2em;
+        
     }
     .row-buttons>button{
         width: 90vw;
@@ -101,16 +128,15 @@
 </style>
 
 <div className="create-new">
-    Create Your Container
     <label>
-        <input type="text" name="name" bind:value={name}
+        <input type="text" name="name" bind:value={name} autocomplete="off"
             placeholder="The Container Name" />
-        <input type="text" name="type" bind:value={type} 
+        <input type="text" name="type" bind:value={type}  autocomplete="off"
         placeholder="The Container Type" />
         
         {#each items as item, i (i)}
             <div class="itemslist">
-                <input type="text" name="tmpitems" 
+                <input type="text" name="tmpitems" autocomplete="off"
                     placeholder={inputMsg} bind:value={item}/>
                 {#if i != 0}
                 <button on:click={remItem.bind(this,i)}>-</button>
@@ -120,7 +146,7 @@
         {/each}
         <div class="buttons">
             {#if editt}
-            <button style="color: red;" on:click="{ () => delModal = true}">Delete</button>
+            <button style="color: red;background-color: #f5f5f6;" on:click="{ () => delModal = true}">Delete</button>
             {/if}
             <button on:click|once={handleSubmit}>Save</button>
         </div>    
