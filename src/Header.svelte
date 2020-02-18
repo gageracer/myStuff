@@ -4,17 +4,17 @@
 
 <style>
     #main_link{
-		border: 2px ridge yellow;
-		width: 90%;
-		font-size: 3em;
+		width: 100%;
+		font-size: 2em;
 		text-decoration: none;
-		color: #61dafb;
+		color: #212121;
 		position: fixed;
 		z-index: 2;
 		padding: 0;
-		background-color: #282c30;
+		background-color: #fff59d;
 		text-align: center;
-		top:5%;
+		top:0;
+		height: 10vh;
 	}
 </style>
 

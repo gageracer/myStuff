@@ -31,6 +31,5 @@
 {:else}
     
     <ContainerSum/>
-    <NewButton button='newlist'
-    />
+    <NewButton button='newlist'/>
 {/if}

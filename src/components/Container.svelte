@@ -28,25 +28,26 @@
 <style>
     .containersum{
         margin-bottom: 1rem;
-        width: 100%;
-        height: 100%;
+        width: 95vw;
+        height: fit-content;
+        padding:5vh 0 5vh 0;
         list-style-type: none;
         display:flex;
         flex-direction: column;
         justify-content: center;
-        background-color:darkslategrey;
+        background-color:#f5f5f6;
         font-size:calc(10px + 4vmin);
+        color: black;
     }
-    #details{
+    .details{
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		align-items: center;
         justify-content: center;
 		/* border: 1px solid green; */
-		zoom: 2;
 		/* transform: scale(1.5); */
 		padding-top: 0;
-		font-size: calc(6px + 1vmin);
+		/* font-size: calc(6px + 1vmin); */
 	}
     .item-list{
         display:flex;
@@ -58,29 +59,40 @@
     .edit-button{
         width: fit-content;
         align-self: center;
+        background-color: #fdd835;
+        float: right;
+    }
+    #name{
+        height: 5vh;
+        margin-top: 2.5vh;
     }
 </style>
 
 
-    <div class="containersum">
-        <div id="details">
-            <input  type="checkbox" on:click="{details}">
-            {#if isSum}Show{:else}Hide{/if} details
+    <div class="containersum" on:click="{details}">
+
+        <div id="name">
+            {name}
         </div>
-        Name: {name}
-        <br>
-        Type: {type}
-        <br>
-        {itemsnum} Stuff here
+            
+            
         
-        {#if !isSum}:
-        <div class="item-list">
-            {#each items as item,i}
-                * {item}<br>
-                {/each}
+        
+        {#if !isSum}
+        <div class="details">
+            <hr style="width: 90%;border-color: gray;" />
+            Type: {type}
+            <br>
+            {itemsnum} Stuff here
+            <div class="item-list">
+                {#each items as item,i}
+                    * {item}<br>
+                    {/each}
+            </div>
+            <button class="edit-button" on:click="{editHandle}">Edit</button>
         </div>
         {/if}
-        <button class="edit-button" on:click="{editHandle}">Edit</button>
+        
         
     </div>
 

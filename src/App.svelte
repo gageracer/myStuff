@@ -10,18 +10,18 @@
 <style>
 	main{
 		
-		border: 2px ridge red;
+		/* border: 2px ridge red; */
 		text-align: center;
-		background-color: #282c34;
-		min-height: 60vh;
+		background-color: #e1e2e1;
+		min-height: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: flex-start;
 		font-size: calc(10px + 2vmin);
-		width: 90%;
-		margin-top: calc(5% + 6rem);;
+		width: 100vw;
+		margin-top: 12vh;
 	}
+	
 </style>
 
 <main>

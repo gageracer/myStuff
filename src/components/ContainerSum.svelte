@@ -8,7 +8,7 @@
 </script>
 
     {#each get(myContainers) as container, i (container.id)}
-		#{i+1}
+		
             <Container 
                 {...container}
             />
