@@ -1330,7 +1330,7 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "-";
     			attr_dev(button, "class", "svelte-1bsmocl");
-    			add_location(button, file$2, 150, 16, 3845);
+    			add_location(button, file$2, 150, 16, 3875);
     			dispose = listen_dev(button, "click", ctx.remItem.bind(this,ctx.i));
     		},
 
@@ -1388,11 +1388,11 @@ var app = (function () {
     			attr_dev(input, "placeholder", ctx.inputMsg);
     			input.required = true;
     			attr_dev(input, "class", "svelte-1bsmocl");
-    			add_location(input, file$2, 147, 16, 3659);
+    			add_location(input, file$2, 147, 16, 3689);
     			attr_dev(button, "class", "svelte-1bsmocl");
-    			add_location(button, file$2, 152, 16, 3934);
+    			add_location(button, file$2, 152, 16, 3964);
     			attr_dev(div, "class", "itemslist svelte-1bsmocl");
-    			add_location(div, file$2, 143, 12, 3511);
+    			add_location(div, file$2, 143, 12, 3541);
 
     			dispose = [
     				listen_dev(input, "input", input_input_handler),
@@ -1498,7 +1498,7 @@ var app = (function () {
     			set_style(button, "color", "red");
     			set_style(button, "background-color", "#f5f5f6");
     			attr_dev(button, "class", "svelte-1bsmocl");
-    			add_location(button, file$2, 157, 12, 4088);
+    			add_location(button, file$2, 157, 12, 4118);
     			dispose = listen_dev(button, "click", ctx.click_handler_1);
     		},
 
@@ -1575,11 +1575,11 @@ var app = (function () {
     			button1.textContent = "No";
     			set_style(button0, "background-color", "red");
     			attr_dev(button0, "class", "svelte-1bsmocl");
-    			add_location(button0, file$2, 168, 12, 4453);
+    			add_location(button0, file$2, 168, 12, 4483);
     			attr_dev(button1, "class", "svelte-1bsmocl");
-    			add_location(button1, file$2, 169, 12, 4546);
+    			add_location(button1, file$2, 169, 12, 4576);
     			attr_dev(div, "class", "row-buttons svelte-1bsmocl");
-    			add_location(div, file$2, 167, 8, 4415);
+    			add_location(div, file$2, 167, 8, 4445);
 
     			dispose = [
     				listen_dev(button0, "click", ctx.deleteSubmit, { once: true }),
@@ -1651,6 +1651,7 @@ var app = (function () {
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "name", "name");
     			attr_dev(input0, "autocomplete", "off");
+    			attr_dev(input0, "maxlength", "16");
     			attr_dev(input0, "placeholder", "The Container Name");
     			input0.required = true;
     			attr_dev(input0, "class", "svelte-1bsmocl");
@@ -1658,14 +1659,15 @@ var app = (function () {
     			attr_dev(input1, "type", "text");
     			attr_dev(input1, "name", "type");
     			attr_dev(input1, "autocomplete", "off");
+    			attr_dev(input1, "maxlength", "16");
     			attr_dev(input1, "placeholder", "The Container Type");
     			input1.required = true;
     			attr_dev(input1, "class", "svelte-1bsmocl");
-    			add_location(input1, file$2, 139, 8, 3331);
+    			add_location(input1, file$2, 139, 8, 3346);
     			attr_dev(button, "class", "svelte-1bsmocl");
-    			add_location(button, file$2, 159, 12, 4224);
+    			add_location(button, file$2, 159, 12, 4254);
     			attr_dev(div0, "class", "buttons svelte-1bsmocl");
-    			add_location(div0, file$2, 155, 8, 4030);
+    			add_location(div0, file$2, 155, 8, 4060);
     			attr_dev(label, "class", "svelte-1bsmocl");
     			add_location(label, file$2, 136, 4, 3173);
     			attr_dev(div1, "classname", "create-new");

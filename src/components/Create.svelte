@@ -135,9 +135,9 @@
 
 <div className="create-new" in:fade="{{ duration: 1000 }}" out:fade="{{duration: 0}}">
     <label>
-        <input autofocus type="text" name="name" bind:value={name} autocomplete="off"
+        <input autofocus type="text" name="name" bind:value={name} autocomplete="off" maxlength="16"
             placeholder="The Container Name" required/>
-        <input type="text" name="type" bind:value={type}  autocomplete="off"
+        <input type="text" name="type" bind:value={type}  autocomplete="off" maxlength="16"
         placeholder="The Container Type"  required/>
         
         {#each items as item, i (i)}
