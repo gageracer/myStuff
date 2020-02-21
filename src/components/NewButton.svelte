@@ -10,31 +10,37 @@
 <style>
     #menu-edit-create{
         position: fixed;
-        width: 4rem;
-        height: 4rem;
+        width: 1.1em;
+        height: 1.1em;
         border: 1px transparent solid;
-        align-items: center;
-        -webkit-border-radius: 50%;
-        -khtml-border-radius: 50%;
-        -moz-border-radius: 50%;
-        border-radius: 50%;
-        bottom: 5vh;
-        right: 5vw;
-        font-size: 4rem;
-        padding-top: 0;
+        
+        -webkit-border-radius: 100%;
+        -khtml-border-radius: 100%;
+        -moz-border-radius: 100%;
+
+        bottom: 6vw;
+        right: 6vw;
+        font-size: 5em;
         color: black;
         text-decoration: none;
         font-family: 'Courier New', Courier, monospace;
         background-color: #cbc26d;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         overflow: hidden;
+        
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        text-align: center;
+        display: flex;
 
     }
+
     
 </style>
 
 {#if button === 'newlist'}
-<button id="menu-edit-create" on:click="{ () => toggle(button)}" >+</button>
+<button id="menu-edit-create" on:click="{ () => toggle(button)}" ><span>+</span></button>
 {:else if button === 'editlist'}
 
 

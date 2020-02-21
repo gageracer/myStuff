@@ -1983,33 +1983,36 @@ var app = (function () {
 
     const file$3 = "src/components/NewButton.svelte";
 
-    // (38:32) 
+    // (44:32) 
     function create_if_block_1$1(ctx) {
     	const block = {
     		c: noop,
     		m: noop,
     		d: noop
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$1.name, type: "if", source: "(38:32) ", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block_1$1.name, type: "if", source: "(44:32) ", ctx });
     	return block;
     }
 
-    // (36:0) {#if button === 'newlist'}
+    // (42:0) {#if button === 'newlist'}
     function create_if_block$1(ctx) {
-    	var button_1, dispose;
+    	var button_1, span, dispose;
 
     	const block = {
     		c: function create() {
     			button_1 = element("button");
-    			button_1.textContent = "+";
+    			span = element("span");
+    			span.textContent = "+";
+    			add_location(span, file$3, 42, 66, 934);
     			attr_dev(button_1, "id", "menu-edit-create");
-    			attr_dev(button_1, "class", "svelte-1ci8vgv");
-    			add_location(button_1, file$3, 36, 0, 783);
+    			attr_dev(button_1, "class", "svelte-1yri8rm");
+    			add_location(button_1, file$3, 42, 0, 868);
     			dispose = listen_dev(button_1, "click", ctx.click_handler);
     		},
 
     		m: function mount(target, anchor) {
     			insert_dev(target, button_1, anchor);
+    			append_dev(button_1, span);
     		},
 
     		d: function destroy(detaching) {
@@ -2020,7 +2023,7 @@ var app = (function () {
     			dispose();
     		}
     	};
-    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(36:0) {#if button === 'newlist'}", ctx });
+    	dispatch_dev("SvelteRegisterBlock", { block, id: create_if_block$1.name, type: "if", source: "(42:0) {#if button === 'newlist'}", ctx });
     	return block;
     }
 
