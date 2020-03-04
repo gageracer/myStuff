@@ -39,7 +39,7 @@
 </style>
 
 {#if button === 'newlist'}
-<button id="menu-edit-create" on:click="{ () => toggle(button)}" ><span>+</span></button>
+<button id="menu-edit-create" on:click="{ () => toggle(button)}" ><span></span></button>
 {:else if button === 'editlist'}
 
 

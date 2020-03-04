@@ -30,6 +30,7 @@
     .containersum{
         margin-bottom: 1rem;
         width: 95vw;
+        min-height: 10vh;
         height: auto;
         padding:5vh 0 2vh 0;
         list-style-type: none;
@@ -46,7 +47,7 @@
 		flex-direction: column;
 		align-items: center;
         justify-content: center;
-        min-height: 10vh;
+        min-height: 20vh;
         max-height: 80vh;
 		/* border: 1px solid green; */
 		/* transform: scale(1.5); */
@@ -61,6 +62,7 @@
         overflow-y: scroll;
     }
     .edit-button{
+        display: block;
         width: fit-content;
         align-self: center;
         background-color: #fff59d;
