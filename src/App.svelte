@@ -15,7 +15,7 @@
 		
 		text-align: center;
 		background-color: #e1e2e1;
-		height: 100%;
+		height: auto;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
