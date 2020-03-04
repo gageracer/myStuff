@@ -30,14 +30,15 @@
     .containersum{
         margin-bottom: 1rem;
         width: 95vw;
-        height: auto;
+        min-height: 10vh;
+        height: fit-content;
         padding:5vh 0 2vh 0;
         list-style-type: none;
         display:flex;
         align-items: center;
         flex-direction: column;
         background-color:#f5f5f6;
-        font-size:calc(10px + 4vmin);
+        font-size:calc(1em + 4vmin);
         color: black;
         box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     }
@@ -46,19 +47,17 @@
 		flex-direction: column;
 		align-items: center;
         justify-content: center;
-        max-height: 50vh;
+        min-height: 10vh;
+        max-height: 80vh;
 		/* border: 1px solid green; */
 		/* transform: scale(1.5); */
 		padding-top: 0;
 		/* font-size: calc(6px + 1vmin); */
 	}
     .item-list{
-        /* display:flex;
-        flex-direction: column;
-        justify-content: center; */
         text-align: left;
         color:coral;
-        width: 70%;
+        width: 75%;
         overflow-x: hidden;
         overflow-y: scroll;
     }
