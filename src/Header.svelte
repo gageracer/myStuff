@@ -1,5 +1,5 @@
 <script>
-    import { toggle } from './store.js';
+    import { toggle, version } from './store.js';
 </script>
 
 <style>
@@ -20,4 +20,4 @@
 	}
 </style>
 
-<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff <span style="font-size: 1rem; color: gray;">0.302</span> </button>
+<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff <span style="font-size: 1rem; color: gray;">{$version}</span> </button>
