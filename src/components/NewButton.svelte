@@ -9,8 +9,8 @@
 <style>
     #menu-edit-create{
         position: fixed;
-        width: 1.1em;
-        height: 1.1em;
+        width: 120px;
+        height: 120px;
         border: 1px transparent solid;
         
         -webkit-border-radius: 100%;
