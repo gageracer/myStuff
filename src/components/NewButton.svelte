@@ -9,9 +9,9 @@
 <style>
     #menu-edit-create{
         position: fixed;
-        width: 120px;
-        height: 120px;
-        border: 1px transparent solid;
+        width: 1.1em;
+        height: 1.1em;
+        border: 1px red solid;
         
         -webkit-border-radius: 100%;
         -khtml-border-radius: 100%;
@@ -39,7 +39,7 @@
 </style>
 
 {#if button === 'newlist'}
-<button id="menu-edit-create" on:click="{ () => toggle(button)}" ><span></span></button>
+<button id="menu-edit-create" on:click="{ () => toggle(button)}" ><span>+</span></button>
 {:else if button === 'editlist'}
 
 
