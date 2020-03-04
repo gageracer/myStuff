@@ -46,6 +46,7 @@
 		flex-direction: column;
 		align-items: center;
         justify-content: center;
+        max-height: 50vh;
 		/* border: 1px solid green; */
 		/* transform: scale(1.5); */
 		padding-top: 0;
@@ -58,7 +59,8 @@
         text-align: left;
         color:coral;
         width: 70%;
-        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
     .edit-button{
         width: fit-content;

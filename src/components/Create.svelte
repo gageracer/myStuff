@@ -135,9 +135,9 @@
 
 <div className="create-new" in:fade="{{ duration: 1000 }}" out:fade="{{duration: 0}}">
     <label>
-        <input type="text" name="name" bind:value={name} autocomplete="off" maxlength="16"
+        <input type="text" name="name" bind:value={name} autocomplete="off" maxlength="25"
             placeholder="The Container Name" required/>
-        <input type="text" name="type" bind:value={type}  autocomplete="off" maxlength="16"
+        <input type="text" name="type" bind:value={type}  autocomplete="off" maxlength="32"
         placeholder="The Container Type"  required/>
         
         {#each items as item, i (i)}
@@ -145,7 +145,7 @@
                     transition:fade="{{key: i}}"
                     animate:flip="{{key: i}}"
             >
-                <input type="text" name="tmpitems" autocomplete="off" maxlength="16"
+                <input type="text" name="tmpitems" autocomplete="off" maxlength="48"
                     placeholder={inputMsg} bind:value={item} required/>
                 {#if i != 0}
                 <button on:click={remItem.bind(this,i)}>-</button>

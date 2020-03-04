@@ -20,4 +20,4 @@
 	}
 </style>
 
-<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff</button>
+<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff 0.3</button>
