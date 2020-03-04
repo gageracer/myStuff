@@ -30,7 +30,7 @@
         
         justify-content: center;
         align-items: center;
-        border-radius: 100%;
+        border-radius: 50%;
         text-align: center;
         display: flex;
 

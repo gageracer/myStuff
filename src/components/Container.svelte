@@ -30,7 +30,6 @@
     .containersum{
         margin-bottom: 1rem;
         width: 95vw;
-        min-height: 10vh;
         height: fit-content;
         padding:5vh 0 2vh 0;
         list-style-type: none;
@@ -57,7 +56,7 @@
     .item-list{
         text-align: left;
         color:coral;
-        width: 75%;
+        width: 80%;
         overflow-x: hidden;
         overflow-y: scroll;
     }
@@ -84,7 +83,7 @@
         
         
         {#if !isSum}
-        <div class="details" transition:fly="{{ y: -200, duration: 100 }}"
+        <div class="details" transition:fly="{{ y: -10, duration: 200 }}"
             
         >
             
