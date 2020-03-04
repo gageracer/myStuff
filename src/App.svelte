@@ -12,7 +12,7 @@
 		
 		text-align: center;
 		background-color: #e1e2e1;
-		min-height: 88vh;
+		height: 100%;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

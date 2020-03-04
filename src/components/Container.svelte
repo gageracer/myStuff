@@ -30,7 +30,7 @@
     .containersum{
         margin-bottom: 1rem;
         width: 95vw;
-        height: fit-content;
+        height: auto;
         padding:5vh 0 2vh 0;
         list-style-type: none;
         display:flex;
