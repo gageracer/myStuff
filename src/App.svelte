@@ -5,6 +5,9 @@
 	import {reLoad} from './store.js';
 	
 	reLoad();
+	let w,h;
+
+	$: console.log("main w and h: " ,w ," ", h);
 </script>
 
 <style>
@@ -23,9 +26,11 @@
 	
 </style>
 
-<main>
+<main bind:clientWidth={w} bind:clientHeight={h}>
 	<Header/>
-	<CurrentPage/>
+	<CurrentPage
+	w={w}
+	h={h}/>
 </main>
 
 

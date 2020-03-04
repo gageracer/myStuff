@@ -1,10 +1,10 @@
-import { writable,get } from 'svelte/store';
+import { writable,get, readable } from 'svelte/store';
 
 export const mypage = writable("main");
 export const myContainers = writable([]);
 export const tmpCont = writable({id:"",name:"",type:"",items:[""]});
 export const unSaved = writable({ id: "", name: "", type: "", items: [""] });
-export const version = writable("0.303");
+export const version = readable("0.304");
 
 export function reLoad() {
     myContainers.set(getList("myStuff"));

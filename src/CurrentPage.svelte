@@ -7,7 +7,10 @@
     import NewButton from './components/NewButton.svelte';
 
     $: console.log("Current page is: " + $mypage);
+    export let w,h;
+    let ratio;
 
+    $: ratio = w / h;
 </script>
 
 {#if $mypage === "newlist"}
@@ -29,7 +32,7 @@
             editt={true}
             /> 
 {:else}
-    
+    width:{w} height:{h} ratio: {ratio}
     <ContainerSum/>
     <NewButton button='newlist'/>
 {/if}
