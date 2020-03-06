@@ -57,7 +57,7 @@
     .item-list{
         text-align: left;
         color:coral;
-        width: 80%;
+        width: 80vw;
         overflow-x: hidden;
         overflow-y: scroll;
     }

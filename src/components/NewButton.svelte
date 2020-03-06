@@ -13,9 +13,9 @@
         height: 1.1em;
         border: 1px transparent solid;
         
-        -webkit-border-radius: 100%;
-        -khtml-border-radius: 100%;
-        -moz-border-radius: 100%;
+        -webkit-border-radius: 50%;
+        -khtml-border-radius: 50%;
+        -moz-border-radius: 50%;
 
         bottom: 6vw;
         right: 6vw;
