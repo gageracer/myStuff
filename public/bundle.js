@@ -2060,11 +2060,11 @@ var app = (function () {
     			button_1 = element("button");
     			div = element("div");
     			attr_dev(div, "id", "cross");
-    			attr_dev(div, "class", "svelte-9v18vn");
-    			add_location(div, file$3, 54, 66, 1170);
+    			attr_dev(div, "class", "svelte-1mm4f4r");
+    			add_location(div, file$3, 54, 66, 1169);
     			attr_dev(button_1, "id", "menu-edit-create");
-    			attr_dev(button_1, "class", "svelte-9v18vn");
-    			add_location(button_1, file$3, 54, 0, 1104);
+    			attr_dev(button_1, "class", "svelte-1mm4f4r");
+    			add_location(button_1, file$3, 54, 0, 1103);
     			dispose = listen_dev(button_1, "click", ctx.click_handler);
     		},
 

@@ -42,7 +42,7 @@
         background: black;
         content: "";
         height: 0.25em;
-        left: -1.05em;
+        left: -1.1em;
         position: absolute;
         top: 1em;
         width: 2.5em;
