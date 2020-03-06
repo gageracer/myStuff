@@ -11,7 +11,7 @@
         position: fixed;
         width: 1.1em;
         height: 1.1em;
-        border: 1px red solid;
+        border: 1px transparent solid;
         
         -webkit-border-radius: 100%;
         -khtml-border-radius: 100%;
