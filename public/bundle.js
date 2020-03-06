@@ -3115,7 +3115,7 @@ var app = (function () {
 
     	$$self.$$.update = ($$dirty = { $mypage: 1, w: 1, h: 1 }) => {
     		if ($$dirty.$mypage) { console.log("Current page is: " + $mypage); }
-    		if ($$dirty.w || $$dirty.h) { $$invalidate('ratio', ratio = w / h); }
+    		if ($$dirty.w || $$dirty.h) { $$invalidate('ratio', ratio = (w / h).toFixed(2)); }
     	};
 
     	return { w, h, ratio, $mypage, $unSaved, $tmpCont };

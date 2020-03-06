@@ -10,7 +10,7 @@
     export let w,h;
     let ratio;
 
-    $: ratio = w / h;
+    $: ratio = (w / h).toFixed(2);
 </script>
 
 {#if $mypage === "newlist"}
