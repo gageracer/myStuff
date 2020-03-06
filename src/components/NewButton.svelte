@@ -9,8 +9,8 @@
 <style>
     #menu-edit-create{
         position: fixed;
-        width: 5em;
-        height: 5em;
+        width: 3em;
+        height: 3em;
         
         -webkit-border-radius: 50%;
         -khtml-border-radius: 50%;
@@ -34,18 +34,18 @@
     }
     #cross {
         background: black;
-        height: 2.5em;
+        height: 1.5em;
         position: relative;
-        width: 0.25em;
+        width: 0.1em;
     }
     #cross:after {
         background: black;
         content: "";
-        height: 0.25em;
-        left: -1.1em;
+        height: 0.1em;
+        left: -0.7em;
         position: absolute;
-        top: 1em;
-        width: 2.5em;
+        top: 0.7em;
+        width: 1.5em;
     }
 
     
