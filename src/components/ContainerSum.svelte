@@ -13,6 +13,7 @@
                 {...container}
             />
     {:else}
+        <br/>
         Welcome to MyStuff! Start adding Containers to the app using the plus button so you
         can keep track of stuff you have, even when you forgot the app remembers!
         <br/>

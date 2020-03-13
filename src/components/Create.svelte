@@ -164,7 +164,7 @@
     </label>
 </div>
 {#if delModal}
-    <Modal content="Are you sure you wanna delete this container?">
+    <Modal content="Are you sure you wanna delete this container?" on:cancel="{ () => delModal = false}" on:close="{ () => delModal = false}">
         <div class="row-buttons">
             <button on:click|once={deleteSubmit} style="background-color: red;">Yes</button>
             <button on:click="{ () => delModal = false}">No</button>

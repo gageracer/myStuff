@@ -1,10 +1,14 @@
 <script>
 
+    import { createEventDispatcher } from "svelte";
+
+    const dispatch = createEventDispatcher();
+
     export let content;
 
 </script>
 
-<style type="text/css">
+<style type="text/css"> 
     .modal-bg{
         position: fixed;
         top:0;
@@ -32,9 +36,11 @@
 </style>
 
 
-<div class="modal-bg"></div>
+<div class="modal-bg" on:click="{ () => dispatch('cancel')}"></div>
 
 <div class="modal">
     {content}
-    <slot></slot>
+    <slot>
+        <button on:click="{ () => dispatch('close')}">Close</button>
+    </slot>
 </div>
