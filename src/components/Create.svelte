@@ -106,7 +106,10 @@
     }
     .itemslist>button{
         width:10vw;
-        font-size: 1.5em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         background-color: #fff59d;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 
@@ -131,6 +134,30 @@
     .row-buttons>button{
         width: 90vw;
     }
+    .cross {
+        background: black;
+        height: 1.5em;
+        position: relative;
+        width: 0.075em;
+        left: 0;
+    }
+
+    .cross:after {
+        background: black;
+        content: "";
+        height: 0.075em;
+        left: -0.7em;
+        position: absolute;
+        top: 0.7em;
+        width: 1.5em;
+    }
+
+    .minus {
+        background: black;
+        height: 0.075em;
+        position: relative;
+        width: 1.5em;
+    }
 </style>
 
 <div className="create-new" in:fade="{{ duration: 1000 }}" out:fade="{{duration: 0}}">
@@ -143,14 +170,17 @@
         {#each items as item, i (i)}
             <div class="itemslist"
                     transition:fade="{{key: i}}"
-                    animate:flip="{{key: i}}"
-            >
+                    animate:flip="{{key: i}}">
                 <input type="text" name="tmpitems" autocomplete="off" maxlength="48"
                     placeholder={inputMsg} bind:value={item} required/>
                 {#if i != 0}
-                <button on:click={remItem.bind(this,i)}>-</button>
+                <button on:click={remItem.bind(this,i)}>
+                    <div class="minus"></div>
+                </button>
                 {/if}
-                <button on:click="{ () => newItem(item)}">+</button>
+                <button on:click="{ () => newItem(item)}">
+                    <div class="cross"></div>
+                </button>
             </div>
         {/each}
         <div class="buttons">

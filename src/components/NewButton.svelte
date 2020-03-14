@@ -52,7 +52,9 @@
 </style>
 
 {#if button === 'newlist'}
-<button id="menu-edit-create" on:click="{ () => toggle(button)}" ><div id="cross"></div></button>
+<button id="menu-edit-create" on:click="{ () => toggle(button)}" >
+    <div id="cross"></div>
+</button>
 {:else if button === 'editlist'}
 
 
