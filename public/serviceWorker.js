@@ -7,6 +7,7 @@ const assets = [
     "/bundle.css",
     "/android-chrome-192x192.png",
     "/android-chrome-512x512.png",
+    "/apple-touch-icon.png",
 ]
 
 self.addEventListener("install", installEvent => {
