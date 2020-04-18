@@ -41,6 +41,6 @@
 <div class="modal">
     {content}
     <slot>
-        <button on:click="{ () => dispatch('close')}">Close</button>
+        <button name="modal-close" on:click="{ () => dispatch('close')}">Close</button>
     </slot>
 </div>

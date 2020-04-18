@@ -25,14 +25,14 @@
 {:else if $mypage === "editlist"}
 
     <Create 
-            name={$tmpCont.name}
-            type={$tmpCont.type}
-            items={$tmpCont.items}
-            id={$tmpCont.id}
-            editt={true}
-            /> 
+        name={$tmpCont.name}
+        type={$tmpCont.type}
+        items={$tmpCont.items}
+        id={$tmpCont.id}
+        editt={true}
+        /> 
 {:else}
     width:{w} height:{h} ratio: {ratio}
-    <ContainerSum/>
-    <NewButton button='newlist'/>
+    <ContainerSum alt="Welcome-Page"/>
+    <NewButton button='newlist' NewList/>
 {/if}

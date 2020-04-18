@@ -96,7 +96,7 @@
                     <li>{item}</li>
                 {/each}
             </ul>
-            <button class="edit-button" on:click="{editHandle}">Edit</button>
+            <button class="edit-button" name="edit-button" on:click="{editHandle}">Edit</button>
         </div>
         {/if}
         

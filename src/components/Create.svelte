@@ -174,20 +174,20 @@
                 <input type="text" name="tmpitems" autocomplete="off" maxlength="48"
                     placeholder={inputMsg} bind:value={item} required/>
                 {#if i != 0}
-                <button on:click={remItem.bind(this,i)}>
+                <button name="rem-item" on:click={remItem.bind(this,i)}>
                     <div class="minus"></div>
                 </button>
                 {/if}
-                <button on:click="{ () => newItem(item)}">
+                <button name="add-item" on:click="{ () => newItem(item)}">
                     <div class="cross"></div>
                 </button>
             </div>
         {/each}
         <div class="buttons">
             {#if editt}
-            <button style="color: red;background-color: #f5f5f6;" on:click="{ () => delModal = true}">Delete</button>
+            <button name="delete-container" style="color: red;background-color: #f5f5f6;" on:click="{ () => delModal = true}">Delete</button>
             {/if}
-            <button on:click|once={handleSubmit}>Save</button>
+            <button name="save-container" on:click|once={handleSubmit}>Save</button>
         </div>    
         
 
@@ -195,6 +195,7 @@
 </div>
 {#if delModal}
     <Modal content="Are you sure you wanna delete this container?" on:cancel="{ () => delModal = false}" on:close="{ () => delModal = false}">
+        Delete Confirm Modal
         <div class="row-buttons">
             <button on:click|once={deleteSubmit} style="background-color: red;">Yes</button>
             <button on:click="{ () => delModal = false}">No</button>
