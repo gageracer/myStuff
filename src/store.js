@@ -4,7 +4,7 @@ export const mypage = writable("main");
 export const myContainers = writable([]);
 export const tmpCont = writable({id:"",name:"",type:"",items:[""]});
 export const unSaved = writable({ id: "", name: "", type: "", items: [""] });
-export const version = readable("0.417g");
+export const version = readable("0.417h");
 
 export function reLoad() {
     myContainers.set(getList("myStuff"));
