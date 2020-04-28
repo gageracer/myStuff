@@ -14,7 +14,7 @@
 
     let inputMsg = "Start adding items to your container!";
 
-    $: if(items.length > 1){ inputMsg= "And another one"}
+    $: if(items.length > 1){ inputMsg= "And another one"};
 
     function handleSubmit(){
         if(name && type && items) {
@@ -23,6 +23,7 @@
 
             console.log("handleSubmitted");
             toggle("main");
+            editt = false;
         }
         
     }

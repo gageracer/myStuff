@@ -34,5 +34,5 @@
 {:else}
     width:{w} height:{h} ratio: {ratio}
     <ContainerSum alt="Welcome-Page"/>
-    <NewButton button='newlist' NewList/>
+    <NewButton button='newlist'/>
 {/if}

@@ -4,7 +4,7 @@ export const mypage = writable("main");
 export const myContainers = writable([]);
 export const tmpCont = writable({id:"",name:"",type:"",items:[""]});
 export const unSaved = writable({ id: "", name: "", type: "", items: [""] });
-export const version = readable("0.427a");
+export const version = readable("0.427b");
 
 export function reLoad() {
     myContainers.set(getList("myStuff"));
@@ -47,12 +47,8 @@ export function addContainer(nname, ntype, nitems, oId = ""){
             type: ntype,
             items: nitems
         }]
-
         );
         setList({ id: "", name: "", type: "", items: [""] }, "unSaved");
-        
-        
-        
     }
     else{
         let x = get(myContainers).findIndex(x => x.id === oId);
@@ -93,7 +89,7 @@ export function toggle(msg) {
 
 // These are set and get functions for the whole Containers list
 export function setList(item,lsName) {
-    console.log(item);
+    // console.log(lsName," ----------------------->",item);
     localStorage.setItem(lsName, JSON.stringify(item));
 }
 

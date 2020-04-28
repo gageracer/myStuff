@@ -1,10 +1,18 @@
 <script>
     import Container from './Container.svelte';
     import { myContainers } from '../store.js';
+    import { onDestroy } from 'svelte';
 
-    import { get } from 'svelte/store';
-    
-    $: console.log("myContainers list has: ", get(myContainers));
+    let containers;
+    const subs = myContainers.subscribe(stuff => {
+        containers = stuff;
+    });
+
+    onDestroy(() => {
+        subs && subs();
+    })
+
+    $: console.log("myContainers list has: ", containers);
 </script>
 
 <style>
@@ -19,7 +27,7 @@
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
 </style>
-    {#each get(myContainers) as container, i (container.id)}
+    {#each containers as container, i (container.id)}
 		
             <Container
                 {...container}
