@@ -4,10 +4,10 @@ This is a simple Web App Project for me to learn and hopefully share to anyone i
 
 Stuff I want to add are:
 
-- PWA compatibility :heavy_check_mark:
-- Add quantity for some items like Eggs,sock pairs etc.
-- Low quantity threshold setting for certain items.
-- Alert system for periodicly updating items or changing/removing/cleanig.
+- [x] PWA compatibility :heavy_check_mark:
+- [ ] Add quantity for some items like Eggs,sock pairs etc.
+- [ ] Low quantity threshold setting for certain items.
+- [ ] Alert system for periodicly updating items or changing/removing/cleanig.
 
 Please give me feedback on anything to make me a better Svelter, Thanks!
 
