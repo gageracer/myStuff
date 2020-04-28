@@ -12,9 +12,6 @@
     //     subs && subs();
     // })
 
-
-
-    $: console.log("myContainers list has: ", containers);
 </script>
 
 <style>
