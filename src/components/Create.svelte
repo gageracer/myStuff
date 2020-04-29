@@ -14,7 +14,7 @@
 
     let inputMsg = "Start adding items to your container!";
 
-    $: if(items.length > 1){ inputMsg= "And another one"};
+    $: if(items.length > 1){ inputMsg= "And another one"}
 
     function handleSubmit(){
         if(name && type && items) {
@@ -61,6 +61,7 @@
     .create-new{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     margin-top: 5em;
     width: 90vw;
     font-size: 1.5em;
@@ -89,7 +90,6 @@
     .itemslist{
         display: flex;
         flex-direction: row;
-        margin-top: 5em;
         width: 100vw;
     }
 
