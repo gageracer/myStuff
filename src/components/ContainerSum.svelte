@@ -1,7 +1,8 @@
 <script>
     import Container from './Container.svelte';
     import { myContainers } from '../store.js';
-    import { onDestroy } from 'svelte';
+    
+    // import { onDestroy } from 'svelte';
 
     // let containers;
     // const subs = myContainers.subscribe(stuff => {
@@ -11,7 +12,6 @@
     // onDestroy(() => {
     //     subs && subs();
     // })
-
 </script>
 
 <style>

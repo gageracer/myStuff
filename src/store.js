@@ -1,18 +1,63 @@
 import { writable,get, readable } from 'svelte/store';
 
+export const version = readable("0.505a");
+
 export const mypage = writable("main");
 export const myContainers = writable([]);
 export const tmpCont = writable({id:"",name:"",type:"",items:[""]});
 export const unSaved = writable({ id: "", name: "", type: "", items: [""] });
-export const version = readable("0.428b");
+export const contInt = writable( [{id: "", items: []}] );
 
 export function reLoad() {
+    
     myContainers.set(getList("myStuff"));
     mypage.set(getLastPage("lastPage"));
     unSaved.set(getList("unSaved"));
     tmpCont.set(getList("tmpCont"));
+    contInt.set(getList("contInt"));
+    verUpdate(getList("myVersion"));
+    //interactSync();
+    
 }
 
+export function interactSync(){
+    if(get(contInt)[0].id == undefined){
+        const tmp = get(myContainers).map(e => [{id: e.id, items: e.items.map(() => {
+            return "aaa"})}]
+        );
+        console.log("Interact Sync-TMP: ", tmp);
+        contInt.update(
+            () => tmp
+        );
+    }else{
+        const tmp = get(myContainers).map(e => [{
+            id: e.id, items: e.items.map(() => {
+                return "aaa"
+            })
+        }]
+        );
+        console.log("Interact Sync-TMP: ", tmp);
+        contInt.update(
+            () => tmp
+        );
+        // contInt.update(
+        //     tmp => [{ id: tmp.id, items: (tmp.items = true) }]
+        // );
+    }
+    const finaltmp = get(myContainers).map(e => [{
+        id: e.id, 
+        name: e.name, 
+        type: e.type,
+        items: [e.items.map( ele => [ele,
+            get(contInt).find( x => x.id == e.id)]
+        )]
+        }]//EN SON BURDA KALDIN
+    );
+    console.log("Interact Sync--- FINALTMP: ", finaltmp);
+    totalContainers.update(() => finaltmp);
+    setList(get(contInt),"contInt");
+    console.log("Interact Sync: ", get(contInt));
+}
 // Editing any Container Function
 export function editCont(name,type,items,id) {
     console.log("tmpContis: " + id);
@@ -38,7 +83,10 @@ export function deleteContainer(oId){
 }
 
 export function addContainer(nname, ntype, nitems, oId = ""){
-    
+    // if (!nitems.every((cell) => Array.isArray(cell))) {
+    //     let tmp = nitems.map( item => [item,true]);
+    //     nitems = tmp;
+    // }
     if(oId == ""){
         console.log("I am Creating new one");
         myContainers.update(existing => [...existing, {
@@ -93,13 +141,26 @@ export function setList(item,lsName) {
     localStorage.setItem(lsName, JSON.stringify(item));
 }
 
+function verUpdate(localver){
+    if(localver < get(version)){
+        console.log("version is old ",localver,"... gonna do stuff");
+    }
+    else{
+        console.log("version is good!");
+        setList(get(version), "myVersion");
+    }
+    
+}
 export function getList(str) {
     // console.log("inside getTODO: "+ str);
-    if (localStorage.getItem(str)) { return JSON.parse(localStorage.getItem(str)); }
+    if (localStorage.getItem(str))  return JSON.parse(localStorage.getItem(str)); 
     else { 
+        if(str === "myVersion") return "0";
         if(str === "myStuff") return new Array;
+        if(str === "totalContainers") return new Array;
         if(str === "unSaved") return { id: "", name: "", type: "", items: [""] };
-        if (str === "tmpCont") return { id: "", name: "", type: "", items: [""] };
+        if(str === "tmpCont") return { id: "", name: "", type: "", items: [""] };
+        if(str === "contInt") return [{ id: "", items: [] }];
         }
 }
 

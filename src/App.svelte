@@ -27,7 +27,7 @@
 </style>
 
 <main bind:clientWidth={w} bind:clientHeight={h} alt="Main Page">
-	<Header Header/>
+	<Header />
 	<CurrentPage
 	w={w}
 	h={h}/>

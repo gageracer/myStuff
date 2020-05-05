@@ -8,10 +8,12 @@
     export let name = "TestName";
     export let type = "TestType";
     export let items = ["sugar"];
+    //export let intItems = [];
+    
     let itemsnum = items.length;
-
+    let isInteract = true;
     export let isSum = true;
-
+    
     export function editHandle() {
             
         editCont(name, type, items, id);
@@ -24,6 +26,13 @@
     function details() {
             isSum = !isSum;
     }
+    function interact(){
+            isInteract = !isInteract;
+    }
+    function isRed(event){
+        !event.target.style.color ? event.target.style.color="red": event.target.style.color="";
+        console.log(event.target.style.color);
+    }
 </script>
 
 <style>
@@ -32,7 +41,7 @@
         width: 95vw;
         min-height: 10vh;
         height: auto;
-        padding:5vh 0 2vh 0;
+        padding:2vh 0 2vh 0;
         list-style-type: none;
         display:flex;
         align-items: center;
@@ -51,15 +60,19 @@
         max-height: 80vh;
 		/* border: 1px solid green; */
 		/* transform: scale(1.5); */
+        color: chocolate;
 		padding-top: 0;
 		/* font-size: calc(6px + 1vmin); */
 	}
     .item-list{
         text-align: left;
-        color:coral;
         width: 80vw;
         overflow-x: hidden;
         overflow-y: scroll;
+    }
+    .item-list>li{
+        font-size: calc(1rem + 2vmin);
+        color:coral;
     }
     .edit-button{
         display: block;
@@ -69,16 +82,26 @@
         float: right;
         font-size: 1.5em;
     }
+    .interactive-button{
+        zoom: 2;
+    }
     #name{
         height: 5vh;
         margin-top: 2.5vh;
     }
+    .options{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        color: black;
+    }
 </style>
 
 
-    <div class="containersum" on:click="{details}" in:fade="{{ duration: 500 }}" out:fade="{{duration: 0}}">
+    <div class="containersum"  in:fade="{{ duration: 500 }}" out:fade="{{duration: 0}}">
 
-        <div id="name">
+        <div id="name"on:click="{details}" >
             {name}
         </div>
         <hr style="width: 90%; border-color: #e1e2e186;" />
@@ -93,10 +116,13 @@
             {itemsnum} Stuff here
             <ul class="item-list">
                 {#each items as item,i}
-                    <li>{item}</li>
+                    <li on:click="{isRed}">{item}</li>
                 {/each}
             </ul>
-            <button class="edit-button" name="edit-button" on:click="{editHandle}">Edit</button>
+            <div class="options">
+                <button class="edit-button" name="edit-button" on:click="{editHandle}">Edit</button>
+                <input class="interactive-button" name="interactive-button" type="checkbox" on:click="{interact}"/>Interactive
+            </div>  
         </div>
         {/if}
         
