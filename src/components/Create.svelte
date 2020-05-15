@@ -23,8 +23,9 @@
         if(name && type && items) {
             // items = items.filter(Boolean);
             items[items.length - 1][0] === "" ? items.splice( (items.length-1),1): null
+            items[items.length - 1][1] === true ? items[items.length - 1][1] = false : null
+            
             addContainer(name, type, items, id);
-
             console.log("handleSubmitted");
             toggle("main");
             editt = false;

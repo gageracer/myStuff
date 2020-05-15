@@ -1,7 +1,7 @@
 import { writable, readable, get } from 'svelte/store';
 import {getList, setList, setLastPage, getLastPage} from './stores/localOps';
 
-export const version = readable("0.514e");
+export const version = readable("0.514f");
 
 export const mypage = writable("main");
 export const myContainers = writable([]);
