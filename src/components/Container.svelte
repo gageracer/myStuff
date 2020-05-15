@@ -1,6 +1,7 @@
 <script>
     import Create from './Create.svelte';
     import {toggle} from '../store';
+    import {addContainer} from '../stores/containers';
     import {editCont} from '../stores/containers';
     import NewButton from './NewButton.svelte';
     
@@ -27,12 +28,20 @@
     }
     function theInteract(){
             interact = !interact;
+            addContainer(name, type, items, id, interact);
     }
-    function isRed(event){
-        // THIS IS THE PART NOW
-        !event.target.style.color ? event.target.style.color="red": event.target.style.color="";
-        console.log(event.target.style.color);
+    function isRed(index){
+        
+        if(interact){
+            items[index][1] = !items[index][1];
+            addContainer(name,type,items,id,interact);
+            // !event.target.style.color ? event.target.style.color = "red" : event.target.style.color = "";
+            // console.log(event.target.style.color);
+            // console.log(event.target);
+        }
+        
     }
+    $: console.log("interaction is: ", interact);
 </script>
 
 <style>
@@ -46,10 +55,15 @@
         display:flex;
         align-items: center;
         flex-direction: column;
-        background-color:#f5f5f6;
         font-size:calc(1em + 4vmin);
         color: black;
         box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+    }
+    .containersum-on{
+        background-color: #fcec60;
+    }
+    .containersum-off{
+        background-color:#e6e6e9;
     }
     .details{
 		display: flex;
@@ -70,10 +84,6 @@
         overflow-x: hidden;
         overflow-y: scroll;
     }
-    .item-list>li{
-        font-size: calc(1rem + 2vmin);
-        color:coral;
-    }
     .edit-button{
         display: block;
         width: fit-content;
@@ -85,9 +95,24 @@
     .interactive-button{
         zoom: 2;
     }
+    .interactive-text-off{
+        color: grey;
+    }
+    .interactive-text-on{
+        color: red;
+    }
+    .item-red{
+        font-size: calc(1rem + 2vmin);
+        color:red;
+    }
+    .item-not-red{
+        font-size: calc(1rem + 2vmin);
+        color:coral;
+    }
     #name{
         height: 5vh;
         margin-top: 2.5vh;
+        width: 100%;
     }
     .options{
         display: flex;
@@ -95,11 +120,12 @@
         justify-content: space-around;
         width: 100%;
         color: black;
+        font-size: 5vw;
     }
 </style>
 
 
-    <div class="containersum"  in:fade="{{ duration: 500 }}" out:fade="{{duration: 0}}">
+    <div class="{ interact ? 'containersum containersum-on':'containersum containersum-off' }"  in:fade="{{ duration: 500 }}" out:fade="{{duration: 0}}">
 
         <div id="name"on:click="{details}" >
             {name}
@@ -116,12 +142,14 @@
             {itemsnum} Stuff here
             <ul class="item-list">
                 {#each items as item,i}
-                    <li on:click="{isRed}">{item[0]}</li>
+                    <li on:click="{isRed.bind(this,i)}" class="{ item[1] ? 'item-red':'item-not-red' }">{item[0]}</li>
                 {/each}
             </ul>
             <div class="options">
                 <button class="edit-button" name="edit-button" on:click="{editHandle}">Edit</button>
-                <input class="interactive-button" name="interactive-button" type="checkbox" on:click="{theInteract}"/>Interactive
+                <div class="{ interact ? 'interactive-text-on':'interactive-text-off' }" on:click="{theInteract}"> 
+                    Interactive Mode
+                </div>
             </div>  
         </div>
         {/if}

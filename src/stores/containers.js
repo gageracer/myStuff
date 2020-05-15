@@ -1,5 +1,5 @@
 import { setList } from './localOps';
-import {tmpCont,myContainers, contInt,  } from '../store';
+import {tmpCont,myContainers } from '../store';
 
 import {get} from 'svelte/store';
 
@@ -28,7 +28,7 @@ export function deleteContainer(oId) {
     setList(get(myContainers), "myStuff");
 }
 
-export function addContainer(nname, ntype, nitems, oId = "") {
+export function addContainer(nname, ntype, nitems, oId = "", ninteract= false) {
     // if (!nitems.every((cell) => Array.isArray(cell))) {
     //     let tmp = nitems.map( item => [item,true]);
     //     nitems = tmp;
@@ -54,7 +54,7 @@ export function addContainer(nname, ntype, nitems, oId = "") {
             name: nname,
             type: ntype,
             items: nitems,
-            interact: false
+            interact: ninteract
 
         });
         myContainers.update(() => tmpContainer);

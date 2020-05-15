@@ -15,7 +15,6 @@ export function getList(str) {
         if (str === "totalContainers") return new Array;
         if (str === "unSaved") return { id: "", name: "", type: "", items: [["",false]] };
         if (str === "tmpCont") return { id: "", name: "", type: "", items: [["", false]] };
-        if (str === "contInt") return [{ id: "", items: [] }];
     }
 }
 
