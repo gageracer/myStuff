@@ -1,17 +1,18 @@
 <script>
     import Create from './Create.svelte';
-    import { toggle, editCont} from '../store.js';
+    import {toggle} from '../store';
+    import {editCont} from '../stores/containers';
     import NewButton from './NewButton.svelte';
+    
     import { fly,fade } from 'svelte/transition';
 
     export let id = "";
     export let name = "TestName";
     export let type = "TestType";
     export let items = ["sugar"];
-    //export let intItems = [];
+    export let interact = false;
     
     let itemsnum = items.length;
-    let isInteract = true;
     export let isSum = true;
     
     export function editHandle() {
@@ -19,17 +20,16 @@
         editCont(name, type, items, id);
         toggle("editlist");
         console.log("handleSubmitted by editCont");
-            
-    
     }
 
     function details() {
             isSum = !isSum;
     }
-    function interact(){
-            isInteract = !isInteract;
+    function theInteract(){
+            interact = !interact;
     }
     function isRed(event){
+        // THIS IS THE PART NOW
         !event.target.style.color ? event.target.style.color="red": event.target.style.color="";
         console.log(event.target.style.color);
     }
@@ -116,12 +116,12 @@
             {itemsnum} Stuff here
             <ul class="item-list">
                 {#each items as item,i}
-                    <li on:click="{isRed}">{item}</li>
+                    <li on:click="{isRed}">{item[0]}</li>
                 {/each}
             </ul>
             <div class="options">
                 <button class="edit-button" name="edit-button" on:click="{editHandle}">Edit</button>
-                <input class="interactive-button" name="interactive-button" type="checkbox" on:click="{interact}"/>Interactive
+                <input class="interactive-button" name="interactive-button" type="checkbox" on:click="{theInteract}"/>Interactive
             </div>  
         </div>
         {/if}

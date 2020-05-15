@@ -1,5 +1,8 @@
 <script>
-    import {addContainer, toggle, setList, deleteContainer} from '../store.js';
+    import { addContainer, deleteContainer } from '../stores/containers';
+    import { toggle } from '../store';
+    import { setList } from '../stores/localOps';
+    
     import Modal from './Modal.svelte';
     import { fade,fly } from 'svelte/transition';
     import { flip } from 'svelte/animate';
@@ -7,7 +10,7 @@
     export let id = "";
     export let name = "";
     export let type = "";
-    export let items = [""];
+    export let items = [["",false]];
     export let editt = false;
 
     let delModal = false;
@@ -19,6 +22,7 @@
     function handleSubmit(){
         if(name && type && items) {
             items = items.filter(Boolean);
+            typeof items.slice(-1)[1] === 'undefined' ? items[items.length - 1][1] = false: null
             addContainer(name, type, items, id);
 
             console.log("handleSubmitted");
@@ -38,6 +42,7 @@
         
         editt? setList({ name: name, type: type, items: items }, "tmpCont") 
         :setList({name: name, type: type, items: items},"unSaved");
+        console.log("the last item is::::::::::::::::::::::" , items.slice(-1)[1])
     }
 
     $: {
@@ -46,8 +51,8 @@
 
     function newItem(itm){
         if(items[items.length-1] !== ""){
-            items[items.length - 1] = itm;
-            items = [...items, ""];
+            items[items.length - 1] = [itm, false];
+            items = [...items, [""]];
         }
     }
 
@@ -173,13 +178,13 @@
                     transition:fade="{{key: i}}"
                     animate:flip="{{key: i}}">
                 <input type="text" name="tmpitems" autocomplete="off" maxlength="48"
-                    placeholder={inputMsg} bind:value={item} required/>
+                    placeholder={inputMsg} bind:value={item[0]} required/>
                 {#if i != 0}
                 <button name="rem-item" on:click={remItem.bind(this,i)}>
                     <div class="minus"></div>
                 </button>
                 {/if}
-                <button name="add-item" on:click="{ () => newItem(item)}">
+                <button name="add-item" on:click="{ () => newItem(item[0])}">
                     <div class="cross"></div>
                 </button>
             </div>

@@ -1,5 +1,5 @@
 <script>
-    import { toggle } from '../store.js';
+    import {toggle} from '../store';
 
 
     export let button;

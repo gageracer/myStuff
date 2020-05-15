@@ -1,6 +1,6 @@
 <script>
     import Container from './Container.svelte';
-    import { myContainers } from '../store.js';
+    import {myContainers} from '../store.js';
     
     // import { onDestroy } from 'svelte';
 

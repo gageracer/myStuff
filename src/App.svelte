@@ -2,7 +2,7 @@
 	import Header from './Header.svelte';
 	import Container from './components/Container.svelte';
 	import CurrentPage from './CurrentPage.svelte';
-	import {reLoad} from './store.js';
+	import {reLoad} from './store';
 	
 	reLoad();
 	let w,h;
