@@ -21,8 +21,8 @@
 
     function handleSubmit(){
         if(name && type && items) {
-            items = items.filter(Boolean);
-            typeof items.slice(-1)[1] === 'undefined' ? items[items.length - 1][1] = false: null
+            // items = items.filter(Boolean);
+            items[items.length - 1][1] ? items.splice( (items.length-1),1): null
             addContainer(name, type, items, id);
 
             console.log("handleSubmitted");
@@ -50,9 +50,9 @@
     }
 
     function newItem(itm){
-        if(items[items.length-1] !== ""){
+        if(items[items.length-1][0] !== ""){
             items[items.length - 1] = [itm, false];
-            items = [...items, [""]];
+            items = [...items, ["",true]];
         }
     }
 

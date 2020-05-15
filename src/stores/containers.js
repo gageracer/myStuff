@@ -24,7 +24,7 @@ export function deleteContainer(oId) {
     tmpContainer.splice(x, 1);
     myContainers.update(() => tmpContainer);
 
-    setList({ id: "", name: "", type: "", items: [""] }, "tmpCont");
+    setList({ id: "", name: "", type: "", items: [["", false]] }, "tmpCont");
     setList(get(myContainers), "myStuff");
 }
 
@@ -43,7 +43,7 @@ export function addContainer(nname, ntype, nitems, oId = "", ninteract= false) {
             interact: false
         }]
         );
-        setList({ id: "", name: "", type: "", items: [""] }, "unSaved");
+        setList({ id: "", name: "", type: "", items: [["", false]] }, "unSaved");
     }
     else {
         console.log("updating the container...");
@@ -59,7 +59,7 @@ export function addContainer(nname, ntype, nitems, oId = "", ninteract= false) {
         });
         myContainers.update(() => tmpContainer);
 
-        setList({ id: "", name: "", type: "", items: [""] }, "tmpCont");
+        setList({ id: "", name: "", type: "", items: [["", false]] }, "tmpCont");
     }
 
     setList(get(myContainers), "myStuff");

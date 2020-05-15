@@ -80,7 +80,7 @@
 	}
     .item-list{
         text-align: left;
-        width: 80vw;
+        width: 90vw;
         overflow-x: hidden;
         overflow-y: scroll;
     }
@@ -142,7 +142,7 @@
             {itemsnum} Stuff here
             <ul class="item-list">
                 {#each items as item,i}
-                    <li on:click="{isRed.bind(this,i)}" class="{ item[1] ? 'item-red':'item-not-red' }">{item[0]}</li>
+                    <li on:click="{isRed.bind(this,i)}" class="{ item[1] ? 'item-not-red':'item-red' }">{item[0]}</li>
                 {/each}
             </ul>
             <div class="options">

@@ -1,7 +1,7 @@
 import { writable, readable, get } from 'svelte/store';
 import {getList, setList, setLastPage, getLastPage} from './stores/localOps';
 
-export const version = readable("0.514c");
+export const version = readable("0.514d");
 
 export const mypage = writable("main");
 export const myContainers = writable([]);
@@ -17,7 +17,6 @@ export function reLoad() {
     unSaved.set(getList("unSaved"));
     tmpCont.set(getList("tmpCont"));
 
-    //interactSync();
 }
 
 function verUpdate1(localver) {
@@ -41,6 +40,8 @@ function verUpdate1(localver) {
         console.log("temp is---------------------------->",get(myContainers));
         setList(get(myContainers), "myStuff");
         setList(get(version), "myVersion");
+        setList({ id: "", name: "", type: "", items: [["", false]] },"unSaved");
+        setList({ id: "", name: "", type: "", items: [["", false]] },"tmpCont");
     }
     else {
         console.log("version is good!");
