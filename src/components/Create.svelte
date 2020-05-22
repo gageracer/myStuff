@@ -61,6 +61,7 @@
         console.log(index+ " th item deleted");
         items = items.filter((i,idx) => { return idx !== index;});
     }
+
 </script>
 
 <style>
