@@ -4,7 +4,7 @@
     import { setList } from '../stores/localOps';
     
     import Modal from './Modal.svelte';
-    import { fade,fly } from 'svelte/transition';
+    import { fade,slide } from 'svelte/transition';
     import { flip } from 'svelte/animate';
 
     export let id = "";
@@ -177,8 +177,8 @@
         
         {#each items as item, i (i)}
             <div class="itemslist"
-                    transition:fade="{{key: i}}"
-                    animate:flip="{{key: i}}">
+                    transition:slide="{{key: i}}"
+                    >
                 <input type="text" name="tmpitems" autocomplete="off" maxlength="48"
                     placeholder={inputMsg} bind:value={item[0]} required/>
                 {#if i != 0}
@@ -191,7 +191,7 @@
                 </button>
             </div>
         {/each}
-        <div class="buttons">
+        <div class="buttons" transition:slide>
             {#if editt}
             <button name="delete-container" style="color: red;background-color: #f5f5f6;" on:click="{ () => delModal = true}">Delete</button>
             {/if}

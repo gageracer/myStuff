@@ -125,7 +125,7 @@
 </style>
 
 
-    <div class="{ interact ? 'containersum containersum-on':'containersum containersum-off' }"  in:fade="{{ duration: 500 }}" out:fade="{{duration: 0}}">
+    <div class="{ interact ? 'containersum containersum-on':'containersum containersum-off' }"  in:fade="{{ duration: 200 }}" out:fade="{{duration: 0}}">
 
         <div id="name"on:click="{details}" >
             {name}

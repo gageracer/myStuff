@@ -280,75 +280,6 @@ function clear_rules() {
     });
 }
 
-function create_animation(node, from, fn, params) {
-    if (!from)
-        return noop;
-    const to = node.getBoundingClientRect();
-    if (from.left === to.left && from.right === to.right && from.top === to.top && from.bottom === to.bottom)
-        return noop;
-    const { delay = 0, duration = 300, easing = identity, 
-    // @ts-ignore todo: should this be separated from destructuring? Or start/end added to public api and documentation?
-    start: start_time = now() + delay, 
-    // @ts-ignore todo:
-    end = start_time + duration, tick = noop, css } = fn(node, { from, to }, params);
-    let running = true;
-    let started = false;
-    let name;
-    function start() {
-        if (css) {
-            name = create_rule(node, 0, 1, duration, delay, easing, css);
-        }
-        if (!delay) {
-            started = true;
-        }
-    }
-    function stop() {
-        if (css)
-            delete_rule(node, name);
-        running = false;
-    }
-    loop(now => {
-        if (!started && now >= start_time) {
-            started = true;
-        }
-        if (started && now >= end) {
-            tick(1, 0);
-            stop();
-        }
-        if (!running) {
-            return false;
-        }
-        if (started) {
-            const p = now - start_time;
-            const t = 0 + 1 * easing(p / duration);
-            tick(t, 1 - t);
-        }
-        return true;
-    });
-    start();
-    tick(0, 1);
-    return stop;
-}
-function fix_position(node) {
-    const style = getComputedStyle(node);
-    if (style.position !== 'absolute' && style.position !== 'fixed') {
-        const { width, height } = style;
-        const a = node.getBoundingClientRect();
-        node.style.position = 'absolute';
-        node.style.width = width;
-        node.style.height = height;
-        add_transform(node, a);
-    }
-}
-function add_transform(node, a) {
-    const b = node.getBoundingClientRect();
-    if (a.left !== b.left || a.top !== b.top) {
-        const style = getComputedStyle(node);
-        const transform = style.transform === 'none' ? '' : style.transform;
-        node.style.transform = `${transform} translate(${a.left - b.left}px, ${a.top - b.top}px)`;
-    }
-}
-
 let current_component;
 function set_current_component(component) {
     current_component = component;
@@ -720,10 +651,6 @@ function outro_and_destroy_block(block, lookup) {
     transition_out(block, 1, 1, () => {
         lookup.delete(block.key);
     });
-}
-function fix_and_outro_and_destroy_block(block, lookup) {
-    block.f();
-    outro_and_destroy_block(block, lookup);
 }
 function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block, next, get_context) {
     let o = old_blocks.length;
@@ -1131,7 +1058,7 @@ function setLastPage(str) {
     localStorage.setItem("lastPage", JSON.stringify(str));
 }
 
-const version = readable("0.521a");
+const version = readable("0.608a");
 
 const mypage = writable("main");
 const myContainers = writable([]);
@@ -1392,6 +1319,60 @@ function addContainer(nname, ntype, nitems, oId = "", ninteract= false) {
 //     console.log("Interact Sync: ", get(contInt));
 // }
 
+function cubicOut(t) {
+    const f = t - 1.0;
+    return f * f * f + 1.0;
+}
+
+function fade(node, { delay = 0, duration = 400, easing = identity }) {
+    const o = +getComputedStyle(node).opacity;
+    return {
+        delay,
+        duration,
+        easing,
+        css: t => `opacity: ${t * o}`
+    };
+}
+function fly(node, { delay = 0, duration = 400, easing = cubicOut, x = 0, y = 0, opacity = 0 }) {
+    const style = getComputedStyle(node);
+    const target_opacity = +style.opacity;
+    const transform = style.transform === 'none' ? '' : style.transform;
+    const od = target_opacity * (1 - opacity);
+    return {
+        delay,
+        duration,
+        easing,
+        css: (t, u) => `
+			transform: ${transform} translate(${(1 - t) * x}px, ${(1 - t) * y}px);
+			opacity: ${target_opacity - (od * u)}`
+    };
+}
+function slide(node, { delay = 0, duration = 400, easing = cubicOut }) {
+    const style = getComputedStyle(node);
+    const opacity = +style.opacity;
+    const height = parseFloat(style.height);
+    const padding_top = parseFloat(style.paddingTop);
+    const padding_bottom = parseFloat(style.paddingBottom);
+    const margin_top = parseFloat(style.marginTop);
+    const margin_bottom = parseFloat(style.marginBottom);
+    const border_top_width = parseFloat(style.borderTopWidth);
+    const border_bottom_width = parseFloat(style.borderBottomWidth);
+    return {
+        delay,
+        duration,
+        easing,
+        css: t => `overflow: hidden;` +
+            `opacity: ${Math.min(t * 20, 1) * opacity};` +
+            `height: ${t * height}px;` +
+            `padding-top: ${t * padding_top}px;` +
+            `padding-bottom: ${t * padding_bottom}px;` +
+            `margin-top: ${t * margin_top}px;` +
+            `margin-bottom: ${t * margin_bottom}px;` +
+            `border-top-width: ${t * border_top_width}px;` +
+            `border-bottom-width: ${t * border_bottom_width}px;`
+    };
+}
+
 /* src/components/Modal.svelte generated by Svelte v3.21.0 */
 const file$1 = "src/components/Modal.svelte";
 
@@ -1405,7 +1386,7 @@ function fallback_block(ctx) {
 			button = element("button");
 			button.textContent = "Close";
 			attr_dev(button, "name", "modal-close");
-			add_location(button, file$1, 43, 8, 829);
+			add_location(button, file$1, 43, 8, 889);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, button, anchor);
@@ -1436,6 +1417,7 @@ function create_fragment$1(ctx) {
 	let div1;
 	let t1;
 	let t2;
+	let div1_transition;
 	let current;
 	let dispose;
 	const default_slot_template = /*$$slots*/ ctx[3].default;
@@ -1451,9 +1433,9 @@ function create_fragment$1(ctx) {
 			t2 = space();
 			if (default_slot_or_fallback) default_slot_or_fallback.c();
 			attr_dev(div0, "class", "modal-bg svelte-1df7d0c");
-			add_location(div0, file$1, 38, 0, 707);
+			add_location(div0, file$1, 38, 0, 751);
 			attr_dev(div1, "class", "modal svelte-1df7d0c");
-			add_location(div1, file$1, 40, 0, 776);
+			add_location(div1, file$1, 40, 0, 821);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1485,10 +1467,18 @@ function create_fragment$1(ctx) {
 		i: function intro(local) {
 			if (current) return;
 			transition_in(default_slot_or_fallback, local);
+
+			add_render_callback(() => {
+				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fly, {}, true);
+				div1_transition.run(1);
+			});
+
 			current = true;
 		},
 		o: function outro(local) {
 			transition_out(default_slot_or_fallback, local);
+			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fly, {}, false);
+			div1_transition.run(0);
 			current = false;
 		},
 		d: function destroy(detaching) {
@@ -1496,6 +1486,7 @@ function create_fragment$1(ctx) {
 			if (detaching) detach_dev(t0);
 			if (detaching) detach_dev(div1);
 			if (default_slot_or_fallback) default_slot_or_fallback.d(detaching);
+			if (detaching && div1_transition) div1_transition.end();
 			dispose();
 		}
 	};
@@ -1530,7 +1521,12 @@ function instance$1($$self, $$props, $$invalidate) {
 		if ("$$scope" in $$props) $$invalidate(2, $$scope = $$props.$$scope);
 	};
 
-	$$self.$capture_state = () => ({ createEventDispatcher, dispatch, content });
+	$$self.$capture_state = () => ({
+		createEventDispatcher,
+		fly,
+		dispatch,
+		content
+	});
 
 	$$self.$inject_state = $$props => {
 		if ("content" in $$props) $$invalidate(0, content = $$props.content);
@@ -1570,35 +1566,6 @@ class Modal extends SvelteComponentDev {
 	set content(value) {
 		throw new Error("<Modal>: Props cannot be set directly on the component instance unless compiling with 'accessors: true' or '<svelte:options accessors/>'");
 	}
-}
-
-function cubicOut(t) {
-    const f = t - 1.0;
-    return f * f * f + 1.0;
-}
-
-function fade(node, { delay = 0, duration = 400, easing = identity }) {
-    const o = +getComputedStyle(node).opacity;
-    return {
-        delay,
-        duration,
-        easing,
-        css: t => `opacity: ${t * o}`
-    };
-}
-function fly(node, { delay = 0, duration = 400, easing = cubicOut, x = 0, y = 0, opacity = 0 }) {
-    const style = getComputedStyle(node);
-    const target_opacity = +style.opacity;
-    const transform = style.transform === 'none' ? '' : style.transform;
-    const od = target_opacity * (1 - opacity);
-    return {
-        delay,
-        duration,
-        easing,
-        css: (t, u) => `
-			transform: ${transform} translate(${(1 - t) * x}px, ${(1 - t) * y}px);
-			opacity: ${target_opacity - (od * u)}`
-    };
 }
 
 function flip(node, animation, params) {
@@ -1642,10 +1609,10 @@ function create_if_block_2(ctx) {
 			button = element("button");
 			div = element("div");
 			attr_dev(div, "class", "minus svelte-dfzaog");
-			add_location(div, file$2, 185, 20, 4899);
+			add_location(div, file$2, 185, 20, 4877);
 			attr_dev(button, "name", "rem-item");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 184, 16, 4822);
+			add_location(button, file$2, 184, 16, 4800);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, button, anchor);
@@ -1692,8 +1659,6 @@ function create_each_block(key_1, ctx) {
 	let button;
 	let div0;
 	let div1_transition;
-	let rect;
-	let stop_animation = noop;
 	let current;
 	let dispose;
 
@@ -1725,14 +1690,14 @@ function create_each_block(key_1, ctx) {
 			attr_dev(input, "placeholder", /*inputMsg*/ ctx[5]);
 			input.required = true;
 			attr_dev(input, "class", "svelte-dfzaog");
-			add_location(input, file$2, 181, 16, 4633);
+			add_location(input, file$2, 181, 16, 4611);
 			attr_dev(div0, "class", "cross svelte-dfzaog");
-			add_location(div0, file$2, 189, 20, 5071);
+			add_location(div0, file$2, 189, 20, 5049);
 			attr_dev(button, "name", "add-item");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 188, 16, 4989);
+			add_location(button, file$2, 188, 16, 4967);
 			attr_dev(div1, "class", "itemslist svelte-dfzaog");
-			add_location(div1, file$2, 178, 12, 4498);
+			add_location(div1, file$2, 178, 12, 4500);
 			this.first = div1;
 		},
 		m: function mount(target, anchor, remount) {
@@ -1776,30 +1741,18 @@ function create_each_block(key_1, ctx) {
 				if_block = null;
 			}
 		},
-		r: function measure() {
-			rect = div1.getBoundingClientRect();
-		},
-		f: function fix() {
-			fix_position(div1);
-			stop_animation();
-			add_transform(div1, rect);
-		},
-		a: function animate() {
-			stop_animation();
-			stop_animation = create_animation(div1, rect, flip, { key: /*i*/ ctx[21] });
-		},
 		i: function intro(local) {
 			if (current) return;
 
 			add_render_callback(() => {
-				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fade, { key: /*i*/ ctx[21] }, true);
+				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { key: /*i*/ ctx[21] }, true);
 				div1_transition.run(1);
 			});
 
 			current = true;
 		},
 		o: function outro(local) {
-			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fade, { key: /*i*/ ctx[21] }, false);
+			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { key: /*i*/ ctx[21] }, false);
 			div1_transition.run(0);
 			current = false;
 		},
@@ -1835,7 +1788,7 @@ function create_if_block_1(ctx) {
 			set_style(button, "color", "red");
 			set_style(button, "background-color", "#f5f5f6");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 195, 12, 5224);
+			add_location(button, file$2, 195, 12, 5219);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, button, anchor);
@@ -1938,11 +1891,11 @@ function create_default_slot(ctx) {
 			button1.textContent = "No";
 			set_style(button0, "background-color", "red");
 			attr_dev(button0, "class", "svelte-dfzaog");
-			add_location(button0, file$2, 207, 12, 5739);
+			add_location(button0, file$2, 207, 12, 5734);
 			attr_dev(button1, "class", "svelte-dfzaog");
-			add_location(button1, file$2, 208, 12, 5832);
+			add_location(button1, file$2, 208, 12, 5827);
 			attr_dev(div, "class", "row-buttons svelte-dfzaog");
-			add_location(div, file$2, 206, 8, 5701);
+			add_location(div, file$2, 206, 8, 5696);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, t0, anchor);
@@ -1989,6 +1942,7 @@ function create_fragment$2(ctx) {
 	let div0;
 	let t3;
 	let button;
+	let div0_transition;
 	let div1_intro;
 	let div1_outro;
 	let t5;
@@ -2038,7 +1992,7 @@ function create_fragment$2(ctx) {
 			attr_dev(input0, "placeholder", "The Container Name");
 			input0.required = true;
 			attr_dev(input0, "class", "svelte-dfzaog");
-			add_location(input0, file$2, 172, 8, 4156);
+			add_location(input0, file$2, 172, 8, 4158);
 			attr_dev(input1, "type", "text");
 			attr_dev(input1, "name", "type");
 			attr_dev(input1, "autocomplete", "off");
@@ -2046,17 +2000,17 @@ function create_fragment$2(ctx) {
 			attr_dev(input1, "placeholder", "The Container Type");
 			input1.required = true;
 			attr_dev(input1, "class", "svelte-dfzaog");
-			add_location(input1, file$2, 174, 8, 4303);
+			add_location(input1, file$2, 174, 8, 4305);
 			attr_dev(button, "name", "save-container");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 197, 12, 5384);
+			add_location(button, file$2, 197, 12, 5379);
 			attr_dev(div0, "class", "buttons svelte-dfzaog");
-			add_location(div0, file$2, 193, 8, 5166);
+			add_location(div0, file$2, 193, 8, 5144);
 			attr_dev(label, "class", "svelte-dfzaog");
-			add_location(label, file$2, 171, 4, 4140);
+			add_location(label, file$2, 171, 4, 4142);
 			attr_dev(div1, "classname", "create-new");
 			attr_dev(div1, "class", "svelte-dfzaog");
-			add_location(div1, file$2, 170, 0, 4049);
+			add_location(div1, file$2, 170, 0, 4051);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2105,10 +2059,8 @@ function create_fragment$2(ctx) {
 				const each_value = /*items*/ ctx[2];
 				validate_each_argument(each_value);
 				group_outros();
-				for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].r();
 				validate_each_keys(ctx, each_value, get_each_context, get_key);
-				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, label, fix_and_outro_and_destroy_block, create_each_block, t2, get_each_context);
-				for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].a();
+				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, label, outro_and_destroy_block, create_each_block, t2, get_each_context);
 				check_outros();
 			}
 
@@ -2156,6 +2108,11 @@ function create_fragment$2(ctx) {
 			}
 
 			add_render_callback(() => {
+				if (!div0_transition) div0_transition = create_bidirectional_transition(div0, slide, {}, true);
+				div0_transition.run(1);
+			});
+
+			add_render_callback(() => {
 				if (div1_outro) div1_outro.end(1);
 				if (!div1_intro) div1_intro = create_in_transition(div1, fade, { duration: 1000 });
 				div1_intro.start();
@@ -2169,6 +2126,8 @@ function create_fragment$2(ctx) {
 				transition_out(each_blocks[i]);
 			}
 
+			if (!div0_transition) div0_transition = create_bidirectional_transition(div0, slide, {}, false);
+			div0_transition.run(0);
 			if (div1_intro) div1_intro.invalidate();
 			div1_outro = create_out_transition(div1, fade, { duration: 0 });
 			transition_out(if_block1);
@@ -2182,6 +2141,7 @@ function create_fragment$2(ctx) {
 			}
 
 			if (if_block0) if_block0.d();
+			if (detaching && div0_transition) div0_transition.end();
 			if (detaching && div1_outro) div1_outro.end();
 			if (detaching) detach_dev(t5);
 			if (if_block1) if_block1.d(detaching);
@@ -2293,7 +2253,7 @@ function instance$2($$self, $$props, $$invalidate) {
 		setList,
 		Modal,
 		fade,
-		fly,
+		slide,
 		flip,
 		id,
 		name,
@@ -2913,7 +2873,7 @@ function create_fragment$4(ctx) {
 
 			add_render_callback(() => {
 				if (div1_outro) div1_outro.end(1);
-				if (!div1_intro) div1_intro = create_in_transition(div1, fade, { duration: 500 });
+				if (!div1_intro) div1_intro = create_in_transition(div1, fade, { duration: 200 });
 				div1_intro.start();
 			});
 
@@ -3882,7 +3842,7 @@ function create_fragment$7(ctx) {
 			attr_dev(main, "alt", "Main Page");
 			attr_dev(main, "class", "svelte-10d9n07");
 			add_render_callback(() => /*main_elementresize_handler*/ ctx[2].call(main));
-			add_location(main, file$6, 28, 0, 505);
+			add_location(main, file$6, 32, 0, 769);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3963,6 +3923,9 @@ function instance$7($$self, $$props, $$invalidate) {
 
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*w, h*/ 3) {
+			// const testTypes = [{ kg: 1, price: 20 }, { kg: 3, price: 40 }, { kg: 2, price: 60 }, { kg: 5, price: 80 }, { kg: 4, price: 50 }]
+			// getMaxValue(carrotTypes,36);
+			// getMaxValue(testTypes, 35);
 			 console.log("main w and h: ", w, " ", h);
 		}
 	};
