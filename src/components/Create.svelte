@@ -4,7 +4,7 @@
     import { setList } from '../stores/localOps';
     
     import Modal from './Modal.svelte';
-    import { fade,slide } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
     import { flip } from 'svelte/animate';
 
     export let id = "";
@@ -168,7 +168,7 @@
     }
 </style>
 
-<div className="create-new" in:fade="{{ duration: 1000 }}" out:fade="{{duration: 0}}">
+<div className="create-new" transition:slide="{{ duration: 500}}">
     <label>
         <input type="text" name="name" bind:value={name} autocomplete="off" maxlength="25"
             placeholder="The Container Name" required/>

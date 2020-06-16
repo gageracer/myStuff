@@ -280,6 +280,75 @@ function clear_rules() {
     });
 }
 
+function create_animation(node, from, fn, params) {
+    if (!from)
+        return noop;
+    const to = node.getBoundingClientRect();
+    if (from.left === to.left && from.right === to.right && from.top === to.top && from.bottom === to.bottom)
+        return noop;
+    const { delay = 0, duration = 300, easing = identity, 
+    // @ts-ignore todo: should this be separated from destructuring? Or start/end added to public api and documentation?
+    start: start_time = now() + delay, 
+    // @ts-ignore todo:
+    end = start_time + duration, tick = noop, css } = fn(node, { from, to }, params);
+    let running = true;
+    let started = false;
+    let name;
+    function start() {
+        if (css) {
+            name = create_rule(node, 0, 1, duration, delay, easing, css);
+        }
+        if (!delay) {
+            started = true;
+        }
+    }
+    function stop() {
+        if (css)
+            delete_rule(node, name);
+        running = false;
+    }
+    loop(now => {
+        if (!started && now >= start_time) {
+            started = true;
+        }
+        if (started && now >= end) {
+            tick(1, 0);
+            stop();
+        }
+        if (!running) {
+            return false;
+        }
+        if (started) {
+            const p = now - start_time;
+            const t = 0 + 1 * easing(p / duration);
+            tick(t, 1 - t);
+        }
+        return true;
+    });
+    start();
+    tick(0, 1);
+    return stop;
+}
+function fix_position(node) {
+    const style = getComputedStyle(node);
+    if (style.position !== 'absolute' && style.position !== 'fixed') {
+        const { width, height } = style;
+        const a = node.getBoundingClientRect();
+        node.style.position = 'absolute';
+        node.style.width = width;
+        node.style.height = height;
+        add_transform(node, a);
+    }
+}
+function add_transform(node, a) {
+    const b = node.getBoundingClientRect();
+    if (a.left !== b.left || a.top !== b.top) {
+        const style = getComputedStyle(node);
+        const transform = style.transform === 'none' ? '' : style.transform;
+        node.style.transform = `${transform} translate(${a.left - b.left}px, ${a.top - b.top}px)`;
+    }
+}
+
 let current_component;
 function set_current_component(component) {
     current_component = component;
@@ -418,124 +487,6 @@ function transition_out(block, local, detach, callback) {
     }
 }
 const null_transition = { duration: 0 };
-function create_in_transition(node, fn, params) {
-    let config = fn(node, params);
-    let running = false;
-    let animation_name;
-    let task;
-    let uid = 0;
-    function cleanup() {
-        if (animation_name)
-            delete_rule(node, animation_name);
-    }
-    function go() {
-        const { delay = 0, duration = 300, easing = identity, tick = noop, css } = config || null_transition;
-        if (css)
-            animation_name = create_rule(node, 0, 1, duration, delay, easing, css, uid++);
-        tick(0, 1);
-        const start_time = now() + delay;
-        const end_time = start_time + duration;
-        if (task)
-            task.abort();
-        running = true;
-        add_render_callback(() => dispatch(node, true, 'start'));
-        task = loop(now => {
-            if (running) {
-                if (now >= end_time) {
-                    tick(1, 0);
-                    dispatch(node, true, 'end');
-                    cleanup();
-                    return running = false;
-                }
-                if (now >= start_time) {
-                    const t = easing((now - start_time) / duration);
-                    tick(t, 1 - t);
-                }
-            }
-            return running;
-        });
-    }
-    let started = false;
-    return {
-        start() {
-            if (started)
-                return;
-            delete_rule(node);
-            if (is_function(config)) {
-                config = config();
-                wait().then(go);
-            }
-            else {
-                go();
-            }
-        },
-        invalidate() {
-            started = false;
-        },
-        end() {
-            if (running) {
-                cleanup();
-                running = false;
-            }
-        }
-    };
-}
-function create_out_transition(node, fn, params) {
-    let config = fn(node, params);
-    let running = true;
-    let animation_name;
-    const group = outros;
-    group.r += 1;
-    function go() {
-        const { delay = 0, duration = 300, easing = identity, tick = noop, css } = config || null_transition;
-        if (css)
-            animation_name = create_rule(node, 1, 0, duration, delay, easing, css);
-        const start_time = now() + delay;
-        const end_time = start_time + duration;
-        add_render_callback(() => dispatch(node, false, 'start'));
-        loop(now => {
-            if (running) {
-                if (now >= end_time) {
-                    tick(0, 1);
-                    dispatch(node, false, 'end');
-                    if (!--group.r) {
-                        // this will result in `end()` being called,
-                        // so we don't need to clean up here
-                        run_all(group.c);
-                    }
-                    return false;
-                }
-                if (now >= start_time) {
-                    const t = easing((now - start_time) / duration);
-                    tick(1 - t, t);
-                }
-            }
-            return running;
-        });
-    }
-    if (is_function(config)) {
-        wait().then(() => {
-            // @ts-ignore
-            config = config();
-            go();
-        });
-    }
-    else {
-        go();
-    }
-    return {
-        end(reset) {
-            if (reset && config.tick) {
-                config.tick(1, 0);
-            }
-            if (running) {
-                if (animation_name)
-                    delete_rule(node, animation_name);
-                running = false;
-            }
-        }
-    };
-}
 function create_bidirectional_transition(node, fn, params, intro) {
     let config = fn(node, params);
     let t = intro ? 0 : 1;
@@ -651,6 +602,10 @@ function outro_and_destroy_block(block, lookup) {
     transition_out(block, 1, 1, () => {
         lookup.delete(block.key);
     });
+}
+function fix_and_outro_and_destroy_block(block, lookup) {
+    block.f();
+    outro_and_destroy_block(block, lookup);
 }
 function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block, next, get_context) {
     let o = old_blocks.length;
@@ -1058,7 +1013,7 @@ function setLastPage(str) {
     localStorage.setItem("lastPage", JSON.stringify(str));
 }
 
-const version = readable("0.608a");
+const version = readable("0.616a");
 
 const mypage = writable("main");
 const myContainers = writable([]);
@@ -1319,11 +1274,26 @@ function addContainer(nname, ntype, nitems, oId = "", ninteract= false) {
 //     console.log("Interact Sync: ", get(contInt));
 // }
 
+function cubicInOut(t) {
+    return t < 0.5 ? 4.0 * t * t * t : 0.5 * Math.pow(2.0 * t - 2.0, 3.0) + 1.0;
+}
 function cubicOut(t) {
     const f = t - 1.0;
     return f * f * f + 1.0;
 }
 
+function blur(node, { delay = 0, duration = 400, easing = cubicInOut, amount = 5, opacity = 0 }) {
+    const style = getComputedStyle(node);
+    const target_opacity = +style.opacity;
+    const f = style.filter === 'none' ? '' : style.filter;
+    const od = target_opacity * (1 - opacity);
+    return {
+        delay,
+        duration,
+        easing,
+        css: (_t, u) => `opacity: ${target_opacity - (od * u)}; filter: ${f} blur(${u * amount}px);`
+    };
+}
 function fade(node, { delay = 0, duration = 400, easing = identity }) {
     const o = +getComputedStyle(node).opacity;
     return {
@@ -1386,7 +1356,7 @@ function fallback_block(ctx) {
 			button = element("button");
 			button.textContent = "Close";
 			attr_dev(button, "name", "modal-close");
-			add_location(button, file$1, 43, 8, 889);
+			add_location(button, file$1, 43, 8, 941);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, button, anchor);
@@ -1413,6 +1383,7 @@ function fallback_block(ctx) {
 
 function create_fragment$1(ctx) {
 	let div0;
+	let div0_transition;
 	let t0;
 	let div1;
 	let t1;
@@ -1433,9 +1404,9 @@ function create_fragment$1(ctx) {
 			t2 = space();
 			if (default_slot_or_fallback) default_slot_or_fallback.c();
 			attr_dev(div0, "class", "modal-bg svelte-1df7d0c");
-			add_location(div0, file$1, 38, 0, 751);
+			add_location(div0, file$1, 38, 0, 761);
 			attr_dev(div1, "class", "modal svelte-1df7d0c");
-			add_location(div1, file$1, 40, 0, 821);
+			add_location(div1, file$1, 40, 0, 862);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -1466,23 +1437,32 @@ function create_fragment$1(ctx) {
 		},
 		i: function intro(local) {
 			if (current) return;
+
+			add_render_callback(() => {
+				if (!div0_transition) div0_transition = create_bidirectional_transition(div0, blur, { amount: 10 }, true);
+				div0_transition.run(1);
+			});
+
 			transition_in(default_slot_or_fallback, local);
 
 			add_render_callback(() => {
-				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fly, {}, true);
+				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fly, { y: 300 }, true);
 				div1_transition.run(1);
 			});
 
 			current = true;
 		},
 		o: function outro(local) {
+			if (!div0_transition) div0_transition = create_bidirectional_transition(div0, blur, { amount: 10 }, false);
+			div0_transition.run(0);
 			transition_out(default_slot_or_fallback, local);
-			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fly, {}, false);
+			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, fly, { y: 300 }, false);
 			div1_transition.run(0);
 			current = false;
 		},
 		d: function destroy(detaching) {
 			if (detaching) detach_dev(div0);
+			if (detaching && div0_transition) div0_transition.end();
 			if (detaching) detach_dev(t0);
 			if (detaching) detach_dev(div1);
 			if (default_slot_or_fallback) default_slot_or_fallback.d(detaching);
@@ -1524,6 +1504,8 @@ function instance$1($$self, $$props, $$invalidate) {
 	$$self.$capture_state = () => ({
 		createEventDispatcher,
 		fly,
+		fade,
+		blur,
 		dispatch,
 		content
 	});
@@ -1609,10 +1591,10 @@ function create_if_block_2(ctx) {
 			button = element("button");
 			div = element("div");
 			attr_dev(div, "class", "minus svelte-dfzaog");
-			add_location(div, file$2, 185, 20, 4877);
+			add_location(div, file$2, 185, 20, 4852);
 			attr_dev(button, "name", "rem-item");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 184, 16, 4800);
+			add_location(button, file$2, 184, 16, 4775);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, button, anchor);
@@ -1690,14 +1672,14 @@ function create_each_block(key_1, ctx) {
 			attr_dev(input, "placeholder", /*inputMsg*/ ctx[5]);
 			input.required = true;
 			attr_dev(input, "class", "svelte-dfzaog");
-			add_location(input, file$2, 181, 16, 4611);
+			add_location(input, file$2, 181, 16, 4586);
 			attr_dev(div0, "class", "cross svelte-dfzaog");
-			add_location(div0, file$2, 189, 20, 5049);
+			add_location(div0, file$2, 189, 20, 5024);
 			attr_dev(button, "name", "add-item");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 188, 16, 4967);
+			add_location(button, file$2, 188, 16, 4942);
 			attr_dev(div1, "class", "itemslist svelte-dfzaog");
-			add_location(div1, file$2, 178, 12, 4500);
+			add_location(div1, file$2, 178, 12, 4475);
 			this.first = div1;
 		},
 		m: function mount(target, anchor, remount) {
@@ -1788,7 +1770,7 @@ function create_if_block_1(ctx) {
 			set_style(button, "color", "red");
 			set_style(button, "background-color", "#f5f5f6");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 195, 12, 5219);
+			add_location(button, file$2, 195, 12, 5194);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, button, anchor);
@@ -1891,11 +1873,11 @@ function create_default_slot(ctx) {
 			button1.textContent = "No";
 			set_style(button0, "background-color", "red");
 			attr_dev(button0, "class", "svelte-dfzaog");
-			add_location(button0, file$2, 207, 12, 5734);
+			add_location(button0, file$2, 207, 12, 5709);
 			attr_dev(button1, "class", "svelte-dfzaog");
-			add_location(button1, file$2, 208, 12, 5827);
+			add_location(button1, file$2, 208, 12, 5802);
 			attr_dev(div, "class", "row-buttons svelte-dfzaog");
-			add_location(div, file$2, 206, 8, 5696);
+			add_location(div, file$2, 206, 8, 5671);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, t0, anchor);
@@ -1943,8 +1925,7 @@ function create_fragment$2(ctx) {
 	let t3;
 	let button;
 	let div0_transition;
-	let div1_intro;
-	let div1_outro;
+	let div1_transition;
 	let t5;
 	let if_block1_anchor;
 	let current;
@@ -1992,7 +1973,7 @@ function create_fragment$2(ctx) {
 			attr_dev(input0, "placeholder", "The Container Name");
 			input0.required = true;
 			attr_dev(input0, "class", "svelte-dfzaog");
-			add_location(input0, file$2, 172, 8, 4158);
+			add_location(input0, file$2, 172, 8, 4133);
 			attr_dev(input1, "type", "text");
 			attr_dev(input1, "name", "type");
 			attr_dev(input1, "autocomplete", "off");
@@ -2000,17 +1981,17 @@ function create_fragment$2(ctx) {
 			attr_dev(input1, "placeholder", "The Container Type");
 			input1.required = true;
 			attr_dev(input1, "class", "svelte-dfzaog");
-			add_location(input1, file$2, 174, 8, 4305);
+			add_location(input1, file$2, 174, 8, 4280);
 			attr_dev(button, "name", "save-container");
 			attr_dev(button, "class", "svelte-dfzaog");
-			add_location(button, file$2, 197, 12, 5379);
+			add_location(button, file$2, 197, 12, 5354);
 			attr_dev(div0, "class", "buttons svelte-dfzaog");
-			add_location(div0, file$2, 193, 8, 5144);
+			add_location(div0, file$2, 193, 8, 5119);
 			attr_dev(label, "class", "svelte-dfzaog");
-			add_location(label, file$2, 171, 4, 4142);
+			add_location(label, file$2, 171, 4, 4117);
 			attr_dev(div1, "classname", "create-new");
 			attr_dev(div1, "class", "svelte-dfzaog");
-			add_location(div1, file$2, 170, 0, 4051);
+			add_location(div1, file$2, 170, 0, 4046);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2113,9 +2094,8 @@ function create_fragment$2(ctx) {
 			});
 
 			add_render_callback(() => {
-				if (div1_outro) div1_outro.end(1);
-				if (!div1_intro) div1_intro = create_in_transition(div1, fade, { duration: 1000 });
-				div1_intro.start();
+				if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { duration: 500 }, true);
+				div1_transition.run(1);
 			});
 
 			transition_in(if_block1);
@@ -2128,8 +2108,8 @@ function create_fragment$2(ctx) {
 
 			if (!div0_transition) div0_transition = create_bidirectional_transition(div0, slide, {}, false);
 			div0_transition.run(0);
-			if (div1_intro) div1_intro.invalidate();
-			div1_outro = create_out_transition(div1, fade, { duration: 0 });
+			if (!div1_transition) div1_transition = create_bidirectional_transition(div1, slide, { duration: 500 }, false);
+			div1_transition.run(0);
 			transition_out(if_block1);
 			current = false;
 		},
@@ -2142,7 +2122,7 @@ function create_fragment$2(ctx) {
 
 			if (if_block0) if_block0.d();
 			if (detaching && div0_transition) div0_transition.end();
-			if (detaching && div1_outro) div1_outro.end();
+			if (detaching && div1_transition) div1_transition.end();
 			if (detaching) detach_dev(t5);
 			if (if_block1) if_block1.d(detaching);
 			if (detaching) detach_dev(if_block1_anchor);
@@ -2252,7 +2232,6 @@ function instance$2($$self, $$props, $$invalidate) {
 		toggle,
 		setList,
 		Modal,
-		fade,
 		slide,
 		flip,
 		id,
@@ -2580,7 +2559,7 @@ function get_each_context$1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (136:8) {#if !isSum}
+// (135:8) {#if !isSum}
 function create_if_block$2(ctx) {
 	let div2;
 	let t0;
@@ -2629,20 +2608,20 @@ function create_if_block$2(ctx) {
 			div0 = element("div");
 			t8 = text("Interactive Mode");
 			attr_dev(ul, "class", "item-list svelte-1lmvq93");
-			add_location(ul, file$4, 142, 12, 3624);
+			add_location(ul, file$4, 141, 12, 3557);
 			attr_dev(button, "class", "edit-button svelte-1lmvq93");
 			attr_dev(button, "name", "edit-button");
-			add_location(button, file$4, 148, 16, 3898);
+			add_location(button, file$4, 147, 16, 3831);
 
 			attr_dev(div0, "class", div0_class_value = "" + (null_to_empty(/*interact*/ ctx[1]
 			? "interactive-text-on"
 			: "interactive-text-off") + " svelte-1lmvq93"));
 
-			add_location(div0, file$4, 149, 16, 3999);
+			add_location(div0, file$4, 148, 16, 3932);
 			attr_dev(div1, "class", "options svelte-1lmvq93");
-			add_location(div1, file$4, 147, 12, 3860);
+			add_location(div1, file$4, 146, 12, 3793);
 			attr_dev(div2, "class", "details svelte-1lmvq93");
-			add_location(div2, file$4, 136, 8, 3449);
+			add_location(div2, file$4, 135, 8, 3382);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, div2, anchor);
@@ -2731,14 +2710,14 @@ function create_if_block$2(ctx) {
 		block,
 		id: create_if_block$2.name,
 		type: "if",
-		source: "(136:8) {#if !isSum}",
+		source: "(135:8) {#if !isSum}",
 		ctx
 	});
 
 	return block;
 }
 
-// (144:16) {#each items as item,i}
+// (143:16) {#each items as item,i}
 function create_each_block$1(ctx) {
 	let li;
 	let t_value = /*item*/ ctx[11][0] + "";
@@ -2751,7 +2730,7 @@ function create_each_block$1(ctx) {
 			li = element("li");
 			t = text(t_value);
 			attr_dev(li, "class", li_class_value = "" + (null_to_empty(/*item*/ ctx[11][1] ? "item-not-red" : "item-red") + " svelte-1lmvq93"));
-			add_location(li, file$4, 144, 20, 3707);
+			add_location(li, file$4, 143, 20, 3640);
 		},
 		m: function mount(target, anchor, remount) {
 			insert_dev(target, li, anchor);
@@ -2777,7 +2756,7 @@ function create_each_block$1(ctx) {
 		block,
 		id: create_each_block$1.name,
 		type: "each",
-		source: "(144:16) {#each items as item,i}",
+		source: "(143:16) {#each items as item,i}",
 		ctx
 	});
 
@@ -2792,8 +2771,6 @@ function create_fragment$4(ctx) {
 	let hr;
 	let t2;
 	let div1_class_value;
-	let div1_intro;
-	let div1_outro;
 	let current;
 	let dispose;
 	let if_block = !/*isSum*/ ctx[2] && create_if_block$2(ctx);
@@ -2809,16 +2786,16 @@ function create_fragment$4(ctx) {
 			if (if_block) if_block.c();
 			attr_dev(div0, "id", "name");
 			attr_dev(div0, "class", "svelte-1lmvq93");
-			add_location(div0, file$4, 129, 8, 3271);
+			add_location(div0, file$4, 128, 8, 3204);
 			set_style(hr, "width", "90%");
 			set_style(hr, "border-color", "#e1e2e186");
-			add_location(hr, file$4, 132, 8, 3350);
+			add_location(hr, file$4, 131, 8, 3283);
 
 			attr_dev(div1, "class", div1_class_value = "" + (null_to_empty(/*interact*/ ctx[1]
 			? "containersum containersum-on"
 			: "containersum containersum-off") + " svelte-1lmvq93"));
 
-			add_location(div1, file$4, 127, 4, 3112);
+			add_location(div1, file$4, 126, 4, 3102);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -2870,25 +2847,15 @@ function create_fragment$4(ctx) {
 		i: function intro(local) {
 			if (current) return;
 			transition_in(if_block);
-
-			add_render_callback(() => {
-				if (div1_outro) div1_outro.end(1);
-				if (!div1_intro) div1_intro = create_in_transition(div1, fade, { duration: 200 });
-				div1_intro.start();
-			});
-
 			current = true;
 		},
 		o: function outro(local) {
 			transition_out(if_block);
-			if (div1_intro) div1_intro.invalidate();
-			div1_outro = create_out_transition(div1, fade, { duration: 0 });
 			current = false;
 		},
 		d: function destroy(detaching) {
 			if (detaching) detach_dev(div1);
 			if (if_block) if_block.d();
-			if (detaching && div1_outro) div1_outro.end();
 			dispose();
 		}
 	};
@@ -2961,7 +2928,6 @@ function instance$4($$self, $$props, $$invalidate) {
 		editCont,
 		NewButton,
 		fly,
-		fade,
 		id,
 		name,
 		type,
@@ -3116,10 +3082,10 @@ function create_else_block(ctx) {
 			div1 = element("div");
 			div1.textContent = "This app saves all data to your local store so all your data is on your device.";
 			t3 = space();
-			add_location(div0, file$5, 37, 12, 902);
-			add_location(div1, file$5, 42, 12, 1142);
+			add_location(div0, file$5, 37, 12, 1001);
+			add_location(div1, file$5, 42, 12, 1241);
 			attr_dev(div2, "class", "welcome svelte-lppm3v");
-			add_location(div2, file$5, 35, 8, 854);
+			add_location(div2, file$5, 35, 8, 953);
 		},
 		m: function mount(target, anchor) {
 			insert_dev(target, div2, anchor);
@@ -3146,7 +3112,10 @@ function create_else_block(ctx) {
 
 // (29:4) {#each $myContainers as container, i (container.id)}
 function create_each_block$2(key_1, ctx) {
-	let first;
+	let div;
+	let t;
+	let rect;
+	let stop_animation = noop;
 	let current;
 	const container_spread_levels = [/*container*/ ctx[1]];
 	let container_props = {};
@@ -3161,13 +3130,16 @@ function create_each_block$2(key_1, ctx) {
 		key: key_1,
 		first: null,
 		c: function create() {
-			first = empty();
+			div = element("div");
 			create_component(container.$$.fragment);
-			this.first = first;
+			t = space();
+			add_location(div, file$5, 29, 12, 795);
+			this.first = div;
 		},
 		m: function mount(target, anchor) {
-			insert_dev(target, first, anchor);
-			mount_component(container, target, anchor);
+			insert_dev(target, div, anchor);
+			mount_component(container, div, null);
+			append_dev(div, t);
 			current = true;
 		},
 		p: function update(ctx, dirty) {
@@ -3176,6 +3148,17 @@ function create_each_block$2(key_1, ctx) {
 			: {};
 
 			container.$set(container_changes);
+		},
+		r: function measure() {
+			rect = div.getBoundingClientRect();
+		},
+		f: function fix() {
+			fix_position(div);
+			stop_animation();
+		},
+		a: function animate() {
+			stop_animation();
+			stop_animation = create_animation(div, rect, flip, { duration: 200 });
 		},
 		i: function intro(local) {
 			if (current) return;
@@ -3187,8 +3170,8 @@ function create_each_block$2(key_1, ctx) {
 			current = false;
 		},
 		d: function destroy(detaching) {
-			if (detaching) detach_dev(first);
-			destroy_component(container, detaching);
+			if (detaching) detach_dev(div);
+			destroy_component(container);
 		}
 	};
 
@@ -3258,8 +3241,10 @@ function create_fragment$5(ctx) {
 				const each_value = /*$myContainers*/ ctx[0];
 				validate_each_argument(each_value);
 				group_outros();
+				for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].r();
 				validate_each_keys(ctx, each_value, get_each_context$2, get_key);
-				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, each_1_anchor.parentNode, outro_and_destroy_block, create_each_block$2, each_1_anchor, get_each_context$2);
+				each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value, each_1_lookup, each_1_anchor.parentNode, fix_and_outro_and_destroy_block, create_each_block$2, each_1_anchor, get_each_context$2);
+				for (let i = 0; i < each_blocks.length; i += 1) each_blocks[i].a();
 				check_outros();
 
 				if (each_value.length) {
@@ -3323,7 +3308,14 @@ function instance$5($$self, $$props, $$invalidate) {
 
 	let { $$slots = {}, $$scope } = $$props;
 	validate_slots("ContainerSum", $$slots, []);
-	$$self.$capture_state = () => ({ Container, myContainers, $myContainers });
+
+	$$self.$capture_state = () => ({
+		Container,
+		myContainers,
+		flip,
+		$myContainers
+	});
+
 	return [$myContainers];
 }
 
@@ -3344,8 +3336,9 @@ class ContainerSum extends SvelteComponentDev {
 /* src/CurrentPage.svelte generated by Svelte v3.21.0 */
 
 const { console: console_1$2 } = globals;
+const file$6 = "src/CurrentPage.svelte";
 
-// (52:0) {:else}
+// (59:0) {:else}
 function create_else_block$1(ctx) {
 	let t0;
 	let t1;
@@ -3354,8 +3347,11 @@ function create_else_block$1(ctx) {
 	let t4;
 	let t5;
 	let t6;
+	let div;
 	let t7;
+	let div_transition;
 	let current;
+	let dispose;
 	const containersum = new ContainerSum({ $$inline: true });
 
 	const newbutton = new NewButton({
@@ -3370,13 +3366,16 @@ function create_else_block$1(ctx) {
 			t2 = text(" height:");
 			t3 = text(/*h*/ ctx[1]);
 			t4 = text(" ratio: ");
-			t5 = text(/*ratio*/ ctx[2]);
+			t5 = text(/*ratio*/ ctx[3]);
 			t6 = space();
+			div = element("div");
 			create_component(containersum.$$.fragment);
 			t7 = space();
 			create_component(newbutton.$$.fragment);
+			attr_dev(div, "class", "content svelte-60qh7n");
+			add_location(div, file$6, 60, 4, 1558);
 		},
-		m: function mount(target, anchor) {
+		m: function mount(target, anchor, remount) {
 			insert_dev(target, t0, anchor);
 			insert_dev(target, t1, anchor);
 			insert_dev(target, t2, anchor);
@@ -3384,25 +3383,36 @@ function create_else_block$1(ctx) {
 			insert_dev(target, t4, anchor);
 			insert_dev(target, t5, anchor);
 			insert_dev(target, t6, anchor);
-			mount_component(containersum, target, anchor);
-			insert_dev(target, t7, anchor);
-			mount_component(newbutton, target, anchor);
+			insert_dev(target, div, anchor);
+			mount_component(containersum, div, null);
+			append_dev(div, t7);
+			mount_component(newbutton, div, null);
 			current = true;
+			if (remount) dispose();
+			dispose = listen_dev(div, "outroend", /*outroend_handler*/ ctx[7], false, false, false);
 		},
 		p: function update(ctx, dirty) {
 			if (!current || dirty & /*w*/ 1) set_data_dev(t1, /*w*/ ctx[0]);
 			if (!current || dirty & /*h*/ 2) set_data_dev(t3, /*h*/ ctx[1]);
-			if (!current || dirty & /*ratio*/ 4) set_data_dev(t5, /*ratio*/ ctx[2]);
+			if (!current || dirty & /*ratio*/ 8) set_data_dev(t5, /*ratio*/ ctx[3]);
 		},
 		i: function intro(local) {
 			if (current) return;
 			transition_in(containersum.$$.fragment, local);
 			transition_in(newbutton.$$.fragment, local);
+
+			add_render_callback(() => {
+				if (!div_transition) div_transition = create_bidirectional_transition(div, slide, { duration: 500 }, true);
+				div_transition.run(1);
+			});
+
 			current = true;
 		},
 		o: function outro(local) {
 			transition_out(containersum.$$.fragment, local);
 			transition_out(newbutton.$$.fragment, local);
+			if (!div_transition) div_transition = create_bidirectional_transition(div, slide, { duration: 500 }, false);
+			div_transition.run(0);
 			current = false;
 		},
 		d: function destroy(detaching) {
@@ -3413,9 +3423,11 @@ function create_else_block$1(ctx) {
 			if (detaching) detach_dev(t4);
 			if (detaching) detach_dev(t5);
 			if (detaching) detach_dev(t6);
-			destroy_component(containersum, detaching);
-			if (detaching) detach_dev(t7);
-			destroy_component(newbutton, detaching);
+			if (detaching) detach_dev(div);
+			destroy_component(containersum);
+			destroy_component(newbutton);
+			if (detaching && div_transition) div_transition.end();
+			dispose();
 		}
 	};
 
@@ -3423,14 +3435,14 @@ function create_else_block$1(ctx) {
 		block,
 		id: create_else_block$1.name,
 		type: "else",
-		source: "(52:0) {:else}",
+		source: "(59:0) {:else}",
 		ctx
 	});
 
 	return block;
 }
 
-// (43:33) 
+// (50:33) 
 function create_if_block_1$2(ctx) {
 	let switch_instance_anchor;
 	let current;
@@ -3439,10 +3451,10 @@ function create_if_block_1$2(ctx) {
 	function switch_props(ctx) {
 		return {
 			props: {
-				name: /*$tmpCont*/ ctx[5].name,
-				type: /*$tmpCont*/ ctx[5].type,
-				items: /*$tmpCont*/ ctx[5].items,
-				id: /*$tmpCont*/ ctx[5].id,
+				name: /*$tmpCont*/ ctx[6].name,
+				type: /*$tmpCont*/ ctx[6].type,
+				items: /*$tmpCont*/ ctx[6].items,
+				id: /*$tmpCont*/ ctx[6].id,
 				editt: true
 			},
 			$$inline: true
@@ -3468,10 +3480,10 @@ function create_if_block_1$2(ctx) {
 		},
 		p: function update(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*$tmpCont*/ 32) switch_instance_changes.name = /*$tmpCont*/ ctx[5].name;
-			if (dirty & /*$tmpCont*/ 32) switch_instance_changes.type = /*$tmpCont*/ ctx[5].type;
-			if (dirty & /*$tmpCont*/ 32) switch_instance_changes.items = /*$tmpCont*/ ctx[5].items;
-			if (dirty & /*$tmpCont*/ 32) switch_instance_changes.id = /*$tmpCont*/ ctx[5].id;
+			if (dirty & /*$tmpCont*/ 64) switch_instance_changes.name = /*$tmpCont*/ ctx[6].name;
+			if (dirty & /*$tmpCont*/ 64) switch_instance_changes.type = /*$tmpCont*/ ctx[6].type;
+			if (dirty & /*$tmpCont*/ 64) switch_instance_changes.items = /*$tmpCont*/ ctx[6].items;
+			if (dirty & /*$tmpCont*/ 64) switch_instance_changes.id = /*$tmpCont*/ ctx[6].id;
 
 			if (switch_value !== (switch_value = Create)) {
 				if (switch_instance) {
@@ -3516,14 +3528,14 @@ function create_if_block_1$2(ctx) {
 		block,
 		id: create_if_block_1$2.name,
 		type: "if",
-		source: "(43:33) ",
+		source: "(50:33) ",
 		ctx
 	});
 
 	return block;
 }
 
-// (34:0) {#if $mypage === "newlist"}
+// (41:0) {#if $mypage === "newlist"}
 function create_if_block$3(ctx) {
 	let switch_instance_anchor;
 	let current;
@@ -3532,9 +3544,9 @@ function create_if_block$3(ctx) {
 	function switch_props(ctx) {
 		return {
 			props: {
-				name: /*$unSaved*/ ctx[4].name,
-				type: /*$unSaved*/ ctx[4].type,
-				items: /*$unSaved*/ ctx[4].items,
+				name: /*$unSaved*/ ctx[5].name,
+				type: /*$unSaved*/ ctx[5].type,
+				items: /*$unSaved*/ ctx[5].items,
 				editt: false
 			},
 			$$inline: true
@@ -3560,9 +3572,9 @@ function create_if_block$3(ctx) {
 		},
 		p: function update(ctx, dirty) {
 			const switch_instance_changes = {};
-			if (dirty & /*$unSaved*/ 16) switch_instance_changes.name = /*$unSaved*/ ctx[4].name;
-			if (dirty & /*$unSaved*/ 16) switch_instance_changes.type = /*$unSaved*/ ctx[4].type;
-			if (dirty & /*$unSaved*/ 16) switch_instance_changes.items = /*$unSaved*/ ctx[4].items;
+			if (dirty & /*$unSaved*/ 32) switch_instance_changes.name = /*$unSaved*/ ctx[5].name;
+			if (dirty & /*$unSaved*/ 32) switch_instance_changes.type = /*$unSaved*/ ctx[5].type;
+			if (dirty & /*$unSaved*/ 32) switch_instance_changes.items = /*$unSaved*/ ctx[5].items;
 
 			if (switch_value !== (switch_value = Create)) {
 				if (switch_instance) {
@@ -3607,7 +3619,7 @@ function create_if_block$3(ctx) {
 		block,
 		id: create_if_block$3.name,
 		type: "if",
-		source: "(34:0) {#if $mypage === \\\"newlist\\\"}",
+		source: "(41:0) {#if $mypage === \\\"newlist\\\"}",
 		ctx
 	});
 
@@ -3623,8 +3635,8 @@ function create_fragment$6(ctx) {
 	const if_blocks = [];
 
 	function select_block_type(ctx, dirty) {
-		if (/*$mypage*/ ctx[3] === "newlist") return 0;
-		if (/*$mypage*/ ctx[3] === "editlist") return 1;
+		if (/*$mypage*/ ctx[4] === "newlist") return 0;
+		if (/*$mypage*/ ctx[4] === "editlist") return 1;
 		return 2;
 	}
 
@@ -3700,11 +3712,12 @@ function instance$6($$self, $$props, $$invalidate) {
 	let $unSaved;
 	let $tmpCont;
 	validate_store(mypage, "mypage");
-	component_subscribe($$self, mypage, $$value => $$invalidate(3, $mypage = $$value));
+	component_subscribe($$self, mypage, $$value => $$invalidate(4, $mypage = $$value));
 	validate_store(unSaved, "unSaved");
-	component_subscribe($$self, unSaved, $$value => $$invalidate(4, $unSaved = $$value));
+	component_subscribe($$self, unSaved, $$value => $$invalidate(5, $unSaved = $$value));
 	validate_store(tmpCont, "tmpCont");
-	component_subscribe($$self, tmpCont, $$value => $$invalidate(5, $tmpCont = $$value));
+	component_subscribe($$self, tmpCont, $$value => $$invalidate(6, $tmpCont = $$value));
+	let status;
 	let { w } = $$props, { h } = $$props;
 	let ratio;
 	const writable_props = ["w", "h"];
@@ -3715,6 +3728,7 @@ function instance$6($$self, $$props, $$invalidate) {
 
 	let { $$slots = {}, $$scope } = $$props;
 	validate_slots("CurrentPage", $$slots, []);
+	const outroend_handler = () => $$invalidate(2, status = "outro ended");
 
 	$$self.$set = $$props => {
 		if ("w" in $$props) $$invalidate(0, w = $$props.w);
@@ -3729,6 +3743,8 @@ function instance$6($$self, $$props, $$invalidate) {
 		Create,
 		ContainerSum,
 		NewButton,
+		slide,
+		status,
 		w,
 		h,
 		ratio,
@@ -3738,9 +3754,10 @@ function instance$6($$self, $$props, $$invalidate) {
 	});
 
 	$$self.$inject_state = $$props => {
+		if ("status" in $$props) $$invalidate(2, status = $$props.status);
 		if ("w" in $$props) $$invalidate(0, w = $$props.w);
 		if ("h" in $$props) $$invalidate(1, h = $$props.h);
-		if ("ratio" in $$props) $$invalidate(2, ratio = $$props.ratio);
+		if ("ratio" in $$props) $$invalidate(3, ratio = $$props.ratio);
 	};
 
 	if ($$props && "$$inject" in $$props) {
@@ -3748,31 +3765,20 @@ function instance$6($$self, $$props, $$invalidate) {
 	}
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*$mypage*/ 8) {
-			// import('./components/Create.svelte')
-			//     .then(module => module.default)
-			//     .then(Create => { return Create })
-			//     .catch(err => console.error(err))
-			// let cmp
-			// const setComponent = module => {
-			//     cmp = module.default
-			// }
-			// const logError = err => {
-			//     console.error(err && err.stack || err)
-			// }
-			// const loadCreate = e => {
-			//     e.preventDefault()
-			//     import('./components/Create.svelte').then(setComponent).catch(logError)
-			// }
+		if ($$self.$$.dirty & /*status*/ 4) {
+			 console.log(status);
+		}
+
+		if ($$self.$$.dirty & /*$mypage*/ 16) {
 			 console.log("Current page is: " + $mypage);
 		}
 
 		if ($$self.$$.dirty & /*w, h*/ 3) {
-			 $$invalidate(2, ratio = (w / h).toFixed(2));
+			 $$invalidate(3, ratio = (w / h).toFixed(2));
 		}
 	};
 
-	return [w, h, ratio, $mypage, $unSaved, $tmpCont];
+	return [w, h, status, ratio, $mypage, $unSaved, $tmpCont, outroend_handler];
 }
 
 class CurrentPage extends SvelteComponentDev {
@@ -3819,7 +3825,7 @@ class CurrentPage extends SvelteComponentDev {
 /* src/App.svelte generated by Svelte v3.21.0 */
 
 const { console: console_1$3 } = globals;
-const file$6 = "src/App.svelte";
+const file$7 = "src/App.svelte";
 
 function create_fragment$7(ctx) {
 	let main;
@@ -3842,7 +3848,7 @@ function create_fragment$7(ctx) {
 			attr_dev(main, "alt", "Main Page");
 			attr_dev(main, "class", "svelte-10d9n07");
 			add_render_callback(() => /*main_elementresize_handler*/ ctx[2].call(main));
-			add_location(main, file$6, 32, 0, 769);
+			add_location(main, file$7, 32, 0, 769);
 		},
 		l: function claim(nodes) {
 			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

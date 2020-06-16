@@ -1,7 +1,7 @@
 <script>
     import Container from './Container.svelte';
     import {myContainers} from '../store.js';
-    
+    import { flip } from 'svelte/animate';
     // import { onDestroy } from 'svelte';
 
     // let containers;
@@ -27,11 +27,11 @@
     }
 </style>
     {#each $myContainers as container, i (container.id)}
-		
-            <Container
-                {...container}
-                
-            />
+            <div animate:flip={{duration: 200}} >
+                <Container
+                    {...container}
+                />
+            </div>
     {:else}
         <div class="welcome"> 
             

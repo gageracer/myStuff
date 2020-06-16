@@ -4,8 +4,7 @@
     import {addContainer} from '../stores/containers';
     import {editCont} from '../stores/containers';
     import NewButton from './NewButton.svelte';
-    
-    import { fly,fade } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
 
     export let id = "";
     export let name = "TestName";
@@ -125,7 +124,7 @@
 </style>
 
 
-    <div class="{ interact ? 'containersum containersum-on':'containersum containersum-off' }"  in:fade="{{ duration: 200 }}" out:fade="{{duration: 0}}">
+    <div class="{ interact ? 'containersum containersum-on':'containersum containersum-off' }" >
 
         <div id="name"on:click="{details}" >
             {name}
