@@ -45,6 +45,7 @@
 
 <style>
     .containersum{
+        transition: background-color 0.5s ease;
         margin-bottom: 1rem;
         width: 95vw;
         min-height: 10vh;

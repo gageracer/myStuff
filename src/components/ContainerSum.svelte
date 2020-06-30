@@ -2,6 +2,7 @@
     import Container from './Container.svelte';
     import {myContainers} from '../store.js';
     import { flip } from 'svelte/animate';
+    import GoogleSignInButton from './GoogleSignInButton.svelte';
     // import { onDestroy } from 'svelte';
 
     // let containers;
@@ -26,6 +27,7 @@
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
 </style>
+    <!-- <GoogleSignInButton/> -->
     {#each $myContainers as container, i (container.id)}
             <div animate:flip={{duration: 200}} >
                 <Container

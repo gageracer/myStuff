@@ -34,7 +34,7 @@
 </script>
 <style>
 .content{
-    height: 90vmin;
+    height: 80vmin;
 }
 
 </style>
