@@ -32,6 +32,7 @@
     function isRed(index){
         
         if(interact){
+            
             items[index][1] = !items[index][1];
             addContainer(name,type,items,id,interact);
             // !event.target.style.color ? event.target.style.color = "red" : event.target.style.color = "";

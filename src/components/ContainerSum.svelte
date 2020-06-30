@@ -1,4 +1,5 @@
 <script>
+    import { get } from 'svelte/store';
     import Container from './Container.svelte';
     import {myContainers} from '../store.js';
     import { flip } from 'svelte/animate';
@@ -28,7 +29,7 @@
     }
 </style>
     <!-- <GoogleSignInButton/> -->
-    {#each $myContainers.reverse() as container, i (container.id)}
+    {#each [...get(myContainers)].reverse() as container, i (container.id)}
             <div animate:flip={{duration: 200}} >
                 <Container
                     {...container}
