@@ -28,7 +28,7 @@
     }
 </style>
     <!-- <GoogleSignInButton/> -->
-    {#each $myContainers as container, i (container.id)}
+    {#each $myContainers.reverse() as container, i (container.id)}
             <div animate:flip={{duration: 200}} >
                 <Container
                     {...container}
