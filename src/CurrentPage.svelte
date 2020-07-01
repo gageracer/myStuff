@@ -62,5 +62,6 @@
 >
         <ContainerSum />
         <NewButton button='newlist'/>
+        <NewButton button='sortReverse'/>
     </div>
 {/if}

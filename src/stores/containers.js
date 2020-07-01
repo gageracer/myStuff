@@ -22,7 +22,7 @@ export function deleteContainer(oId) {
     let x = get(myContainers).findIndex(x => x.id === oId);
     let tmpContainer = get(myContainers);
     tmpContainer.splice(x, 1);
-    myContainers.update(() => tmpContainer);
+    myContainers.update(() => tmpContainer.sort((a, b) => a.id - b.id));
 
     setList({ id: "", name: "", type: "", items: [["", false]] }, "tmpCont");
     setList(get(myContainers), "myStuff");
@@ -57,7 +57,7 @@ export function addContainer(nname, ntype, nitems, oId = "", ninteract= false) {
             interact: ninteract
 
         });
-        myContainers.update(() => tmpContainer);
+        myContainers.update(() => tmpContainer.sort((a, b) => a.id - b.id));
 
         setList({ id: "", name: "", type: "", items: [["", false]] }, "tmpCont");
     }

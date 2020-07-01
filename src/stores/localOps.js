@@ -11,6 +11,7 @@ export function getList(str) {
     if (localStorage.getItem(str)) return JSON.parse(localStorage.getItem(str));
     else {
         if (str === "myVersion") return "0";
+        if (str === "sortReverse") return "false";
         if (str === "myStuff") return new Array;
         if (str === "totalContainers") return new Array;
         if (str === "unSaved") return { id: "", name: "", type: "", items: [["",false]] };

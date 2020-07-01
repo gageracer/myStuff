@@ -1,7 +1,7 @@
 <script>
     import { get } from 'svelte/store';
     import Container from './Container.svelte';
-    import {myContainers} from '../store.js';
+    import {myContainers, sortReverse} from '../store.js';
     import { flip } from 'svelte/animate';
     import GoogleSignInButton from './GoogleSignInButton.svelte';
     // import { onDestroy } from 'svelte';
@@ -14,6 +14,8 @@
     // onDestroy(() => {
     //     subs && subs();
     // })
+    let localContainers = get(sortReverse) ? get(myContainers).reverse() : get(myContainers);
+    $: { $sortReverse; localContainers = localContainers.reverse(); }
 </script>
 
 <style>
@@ -29,7 +31,8 @@
     }
 </style>
     <!-- <GoogleSignInButton/> -->
-    {#each [...get(myContainers)].reverse() as container, i (container.id)}
+    
+    {#each localContainers as container, i (container.id)}
             <div animate:flip={{duration: 200}} >
                 <Container
                     {...container}

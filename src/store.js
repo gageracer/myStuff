@@ -1,7 +1,8 @@
 import { writable, readable, get } from 'svelte/store';
 import {getList, setList, setLastPage, getLastPage} from './stores/localOps';
 
-export const version = readable("0.630c");
+export const version = readable("0.630d");
+export const sortReverse = writable(false);
 
 export const mypage = writable("main");
 export const myContainers = writable([]);
@@ -16,7 +17,13 @@ export function reLoad() {
     mypage.set(getLastPage("lastPage"));
     unSaved.set(getList("unSaved"));
     tmpCont.set(getList("tmpCont"));
+    sortReverse.set(getList("sortReverse"));
+}
 
+export function sortOption(){
+    sortReverse.set(!get(sortReverse));
+    console.log("sortReverse is: ",get(sortReverse));
+    setList(get(sortReverse),"sortReverse");
 }
 
 function verUpdate1(localver) {
