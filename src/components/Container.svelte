@@ -82,7 +82,12 @@
         width: 90vw;
         overflow-x: hidden;
         overflow-y: scroll;
+        scrollbar-width: none; /* For Firefox */
+        -ms-overflow-style: none; /* For Internet Explorer and Edge */
     }
+    .item-list::-webkit-scrollbar {
+    width: 0px; /* For Chrome, Safari, and Opera */
+}
     .edit-button{
         display: block;
         width: fit-content;
