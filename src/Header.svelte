@@ -5,6 +5,7 @@
 <style>
     #main_link{
 		width: 100%;
+		font-family: Noto Sans;
 		font-size: 2em;
 		text-decoration: none;
 		color: #212121;
@@ -19,4 +20,4 @@
 
 	}
 </style>
-<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff <span style="font-size: 1rem; color: gray;">{$version}</span> </button>
+<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff <span style="font-size: 1rem; color: black; opacity: 66%">{$version}</span> </button>

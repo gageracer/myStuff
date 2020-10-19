@@ -1,9 +1,7 @@
 <script>
-    import Create from './Create.svelte';
     import {toggle} from '../store';
     import {addContainer} from '../stores/containers';
     import {editCont} from '../stores/containers';
-    import NewButton from './NewButton.svelte';
     import { fly } from 'svelte/transition';
 
     export let id = "";
@@ -93,9 +91,9 @@
         float: right;
         font-size: 1.5em;
     }
-    .interactive-button{
+    /* .interactive-button{
         zoom: 2;
-    }
+    } */
     .interactive-text-off{
         color: grey;
     }
@@ -103,11 +101,11 @@
         color: red;
     }
     .item-red{
-        font-size: calc(1rem + 2vmin);
+        font-size: calc(1rem + 3vmin);
         color:red;
     }
     .item-not-red{
-        font-size: calc(1rem + 2vmin);
+        font-size: calc(1rem + 3vmin);
         color:coral;
     }
     #name{
@@ -121,7 +119,7 @@
         justify-content: space-around;
         width: 100%;
         color: black;
-        font-size: 5vw;
+        font-size: (1em + 4vmin);
     }
 </style>
 
@@ -135,12 +133,9 @@
         
         
         {#if !isSum}
-        <div class="details" transition:fly="{{ y: -10, duration: 200 }}"
+        <div class="details" transition:fly="{{ y: -10, duration: 200 }}">
             
-        >
-            
-            Type: {type} |
-            {itemsnum} Stuff here
+            <span>{type} | {itemsnum} Stuff here</span>
             <ul class="item-list">
                 {#each items as item,i}
                     <li on:click="{isRed.bind(this,i)}" class="{ item[1] ? 'item-not-red':'item-red' }">{item[0]}</li>

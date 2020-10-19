@@ -27,7 +27,7 @@
         font-size: 2em;
         opacity: 75%;
         height: 80vh;
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-family: Noto Sans, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     }
 </style>
     <!-- <GoogleSignInButton/> -->

@@ -5,7 +5,6 @@
     
     import Modal from './Modal.svelte';
     import { slide } from 'svelte/transition';
-    import { flip } from 'svelte/animate';
 
     export let id = "";
     export let name = "";
@@ -203,7 +202,7 @@
 </div>
 {#if delModal}
     <Modal content="Are you sure you wanna delete this container?" on:cancel="{ () => delModal = false}" on:close="{ () => delModal = false}">
-        Delete Confirm Modal
+        <br>
         <div class="row-buttons">
             <button on:click|once={deleteSubmit} style="background-color: red;">Yes</button>
             <button on:click="{ () => delModal = false}">No</button>

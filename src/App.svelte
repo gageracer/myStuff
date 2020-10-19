@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Header from './Header.svelte';
 	// import Container from './components/Container.svelte';
 	import CurrentPage from './CurrentPage.svelte';
@@ -18,7 +18,7 @@
 	main{
 		
 		text-align: center;
-		background-color: #e1e2e1;
+		background-color: #f3f3f3;
 		height: auto;
 		display: flex;
 		flex-direction: column;

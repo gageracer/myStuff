@@ -1,7 +1,6 @@
 <script>
     import { mypage,tmpCont,unSaved } from './store.js';
-
-    import Container from './components/Container.svelte';
+    
     import Create from './components/Create.svelte';
     import ContainerSum from './components/ContainerSum.svelte';
     import NewButton from './components/NewButton.svelte';
@@ -57,9 +56,14 @@
         editt={true}
         /> 
 {:else}
-    width:{w} height:{h} ratio: {ratio}
-    <div class="content" transition:slide="{{ duration: 500}}" on:outroend="{() => status = 'outro ended'}"
->
+    Pages width:{w} height:{h} ratio: {ratio}
+    <div class="content" transition:slide="{{ duration: 500}}" on:outroend="{() => status = 'outro ended'}">
+        
+        <!-- <svg width="100vw" height="20vh">
+            <circle cx="50%" cy="50%" r="40" stroke="green" stroke-width="4" fill="yellow" />
+            <text fill="#0f0f0f" font-size="40" font-family="Verdana" x="50%" y="50%">SVG</text>
+        </svg> -->
+
         <ContainerSum />
         <NewButton button='newlist'/>
         <NewButton button='sortReverse'/>

@@ -1,7 +1,7 @@
 <script>
 
     import { createEventDispatcher } from "svelte";
-    import { fly,fade,blur } from 'svelte/transition';
+    import { fly, blur } from 'svelte/transition';
     const dispatch = createEventDispatcher();
 
     export let content;

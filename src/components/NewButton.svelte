@@ -77,8 +77,8 @@
 </style>
 
 {#if button === 'newlist'}
-<button id="menu-edit-create" name="new-list" on:click="{ () => toggle(button)}" >
-    <div id="cross"></div>
+<button id="menu-edit-create" name="new-list" on:click="{ () => toggle(button)}" aria-label="Create Container">
+    <div id="cross" aria-hidden="true"></div>
 </button>
 {:else if button === 'sortReverse'}
 <button id="sort-reverse" on:click="{sortOption}">
