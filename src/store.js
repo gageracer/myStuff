@@ -1,7 +1,7 @@
 import { writable, readable, get } from 'svelte/store';
 import {getList, setList, setLastPage, getLastPage} from './stores/localOps';
 
-export const version = readable("0.1019b");
+export const version = readable("0.11041");
 export const sortReverse = writable(false);
 
 export const mypage = writable("main");
