@@ -43,6 +43,23 @@
 		box-sizing: border-box;
 		font-family: Noto Sans, Roboto;
 }
+	:global(label) {
+		display: block;
+	}
+	:global(input, button, select, textarea) {
+		font-family: inherit;
+		font-size: inherit;
+		
+		box-sizing: border-box;
+		border: 1px solid #ccc;
+		border-radius: 2px;
+	}
+	:global(button) {
+		outline: none;
+	}
+	:global(input:disabled) {
+		color: #ccc;
+	}
 </style>
 
 <main bind:clientWidth={w} bind:clientHeight={h} alt="Main Page">
