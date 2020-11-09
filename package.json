@@ -10,6 +10,7 @@
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-svelte": "^5.0.3",
+    "rollup-plugin-svelte-svg": "^0.2.3",
     "rollup-plugin-terser": "^4.0.4",
     "svelte": "^3.0.0",
     "svelte-check": "^1.0.7",
@@ -23,7 +24,7 @@
     "sirv-cli": "^0.4.4"
   },
   "scripts": {
-    "start:dev": "sirv public --single --dev",
+    "start:dev": "sirv public --single --dev --host 0.0.0.0",
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
     "dev": "run-p start:dev autobuild",

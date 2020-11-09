@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
     import { addContainer, deleteContainer } from '../stores/containers';
     import { toggle } from '../store';
     import { setList } from '../stores/localOps';
     
     import Modal from './Modal.svelte';
     import { slide } from 'svelte/transition';
+import App from '../App.svelte';
 
     export let id = "";
     export let name = "";
@@ -49,14 +50,14 @@
         console.log(items.length+" items:"+items);
     }
 
-    function newItem(itm){
+    function newItem(itm:string | boolean){
         if(items[items.length-1][0] !== ""){
             items[items.length - 1] = [itm, false];
-            items = [...items, ["",true]];
+            items = [...items, ["",false]];
         }
     }
 
-    function remItem(index) {
+    function remItem(index:number) {
         console.log(index+ " th item deleted");
         items = items.filter((i,idx) => { return idx !== index;});
     }
@@ -87,7 +88,7 @@
         background-color: #f5f5f6;
     }
     label>input{
-        font-size: 1.5em;
+        font-size: 1.3em;
         height: 2em;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
 
@@ -103,7 +104,7 @@
         width: 90%;
         text-align: center;
         background-color: #f5f5f6;
-        font-size: 1.5em;
+        font-size: 1.3em;
         height: 2em;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     }
@@ -169,14 +170,14 @@
 
 <div className="create-new" transition:slide="{{ duration: 500}}">
     <label>
-        <input type="text" name="name" bind:value={name} autocomplete="off" maxlength="25"
+        <input type="text" name="name" bind:value={name} autocomplete="off" maxlength="28"
             placeholder="The Container Name" required/>
         <input type="text" name="type" bind:value={type}  autocomplete="off" maxlength="32"
         placeholder="The Container Type"  required/>
         
         {#each items as item, i (i)}
             <div class="itemslist"
-                    transition:slide="{{key: i}}"
+                    transition:slide|local
                     >
                 <input type="text" name="tmpitems" autocomplete="off" maxlength="48"
                     placeholder={inputMsg} bind:value={item[0]} required/>

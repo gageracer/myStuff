@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import {toggle} from '../store';
     import {addContainer} from '../stores/containers';
     import {editCont} from '../stores/containers';
@@ -27,7 +27,7 @@
             interact = !interact;
             addContainer(name, type, items, id, interact);
     }
-    function isRed(index){
+    function isRed(index:number){
         
         if(interact){
             
@@ -54,7 +54,7 @@
         display:flex;
         align-items: center;
         flex-direction: column;
-        font-size:calc(1em + 4vmin);
+        font-size:calc(1rem + 4vmin);
         color: black;
         box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     }
@@ -65,6 +65,7 @@
         background-color:#e6e6e9;
     }
     .details{
+        font-size:calc(1rem + 3vmin);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -106,16 +107,16 @@
         color: red;
     }
     .item-red{
-        font-size: calc(1rem + 3vmin);
+        font-size: calc(1rem + 2vmin);
         color:red;
     }
     .item-not-red{
-        font-size: calc(1rem + 3vmin);
+        font-size: calc(1rem + 2vmin);
         color:coral;
     }
     #name{
+        font-size:calc(1rem + 4vmin);
         height: 5vh;
-        margin-top: 2.5vh;
         width: 100%;
     }
     .options{

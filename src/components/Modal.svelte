@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
 
     import { createEventDispatcher } from "svelte";
     import { fly, blur } from 'svelte/transition';
     const dispatch = createEventDispatcher();
 
-    export let content;
+    export let content: HTMLElement | string;
 
 </script>
 

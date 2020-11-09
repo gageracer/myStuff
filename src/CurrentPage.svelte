@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { mypage,tmpCont,unSaved } from './store.js';
     
     import Create from './components/Create.svelte';
@@ -26,8 +26,8 @@
     let status;
     $: console.log(status);
     $: console.log("Current page is: " + $mypage);
-    export let w,h;
-    let ratio;
+    export let w:number,h:number;
+    let ratio:string;
 
     $: ratio = (w / h).toFixed(2);
 </script>
@@ -56,7 +56,7 @@
         editt={true}
         /> 
 {:else}
-    Pages width:{w} height:{h} ratio: {ratio}
+    <!-- Page width:{w} height:{h} ratio: {ratio} -->
     <div class="content" transition:slide="{{ duration: 500}}" on:outroend="{() => status = 'outro ended'}">
         
         <!-- <svg width="100vw" height="20vh">

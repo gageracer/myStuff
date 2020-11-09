@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
     import {toggle, sortOption} from '../store';
 
 
-    export let button;
+    export let button:string;
 
 </script>
 
@@ -16,8 +16,8 @@
         -khtml-border-radius: 50%;
         -moz-border-radius: 50%;
 
-        bottom: 6vw;
-        right: 6vw;
+        bottom: 2vh;
+        left: 43.3vw;
         color: black;
         text-decoration: none;
         font-family: 'Courier New', Courier, monospace;
