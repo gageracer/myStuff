@@ -1,13 +1,21 @@
 import { writable, readable, get } from 'svelte/store';
 import {getList, setList, setLastPage, getLastPage} from './stores/localOps';
 
-export const version = readable("0.11090");
+export const version = readable("0.11100");
 export const sortReverse = writable(false);
 
 export const mypage = writable("main");
 export const myContainers = writable([]);
 export const tmpCont = writable({ id: "", name: "", type: "", items: [["", false]]});
 export const unSaved = writable({ id: "", name: "", type: "", items: [["", false]]});
+export const containerColors = readable([
+    ["nadePink", "#E9AFC3"],
+    ["lightBlue", "#BCD3F2"],
+    ["ashGray","#C3D5C9"],
+    ["blizzardBlue","#AEE6EA"],
+    ["babyPink", "#DFB9BA"],
+    ["columbiaBlue","#CADCE2"]
+    ]);
 
 export function reLoad() {
     // if(get(myContainers).length == 0){

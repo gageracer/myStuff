@@ -7,12 +7,19 @@
     export let id = "";
     export let name = "TestName";
     export let type = "TestType";
-    export let items = ["sugar"];
+    export let items: (string | boolean)[] = ["sugar",false];
     export let interact = false;
-    
+    export let containerColor = "#e6e6e9";
     let itemsnum = items.length;
     export let isSum = true;
-    
+    let interactColor = "#CADCE2";
+    let remaining: number;
+    $: {
+        remaining = items.filter(t => !t[1]).length;
+        console.log("remaining is:",remaining);
+    }
+
+    // TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
     export function editHandle() {
             
         editCont(name, type, items, id);
@@ -59,13 +66,13 @@
         box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
     }
     .containersum-on{
-        background-color: #fcec60;
+        background-color: var(--container-color-on);
     }
     .containersum-off{
-        background-color:#e6e6e9;
+        background-color:var(--container-color-off);
     }
     .details{
-        font-size:calc(1rem + 3vmin);
+        font-size:calc(1rem + 2vmin);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -88,7 +95,10 @@
     }
     .item-list::-webkit-scrollbar {
     width: 0px; /* For Chrome, Safari, and Opera */
-}
+    }
+    .item-list>li{
+        transition: color 1s;
+    }
     .edit-button{
         display: block;
         width: fit-content;
@@ -104,15 +114,17 @@
         color: grey;
     }
     .interactive-text-on{
-        color: red;
+        transition: color 1s;
+        color: rgb(255, 111, 0);
     }
     .item-red{
         font-size: calc(1rem + 2vmin);
-        color:red;
+        color:black;
     }
     .item-not-red{
         font-size: calc(1rem + 2vmin);
-        color:coral;
+        text-decoration: line-through;
+        color:rgba(90, 90, 90, 0.9);
     }
     #name{
         font-size:calc(1rem + 4vmin);
@@ -120,6 +132,7 @@
         width: 100%;
     }
     .options{
+        transition: color 1s;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -130,7 +143,7 @@
 </style>
 
 
-    <div class="{ interact ? 'containersum containersum-on':'containersum containersum-off' }" >
+    <div class="{ interact ? 'containersum containersum-on':'containersum containersum-off' }" style="--container-color-off: {containerColor}; --container-color-on: {interactColor}">
 
         <div id="name"on:click="{details}" >
             {name}
@@ -140,8 +153,12 @@
         
         {#if !isSum}
         <div class="details" transition:fly="{{ y: -10, duration: 200 }}">
-            
-            <span>{type} | {itemsnum} Stuff here</span>
+            {#if remaining == itemsnum}
+                <span>{type} | {itemsnum} Stuff here</span>
+            {:else}
+                <span>{type} | {remaining} / {itemsnum} Stuff</span>
+            {/if}
+
             <ul class="item-list">
                 {#each items as item,i}
                     <li on:click="{isRed.bind(this,i)}" class="{ item[1] ? 'item-not-red':'item-red' }">{item[0]}</li>

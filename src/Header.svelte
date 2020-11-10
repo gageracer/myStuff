@@ -20,4 +20,4 @@
 
 	}
 </style>
-<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff <span style="font-size: 1rem; color: black; opacity: 66%">{$version}</span> </button>
+<button id="main_link" on:click="{ () => toggle('main')}">My_Stuff <span style="font-size: 0.75rem; color: black; opacity: 66%">{$version}</span> </button>

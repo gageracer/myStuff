@@ -1,8 +1,9 @@
 <script lang="ts">
     import { get } from 'svelte/store';
     import Container from './Container.svelte';
-    import {myContainers, sortReverse} from '../store.js';
+    import {myContainers, sortReverse, containerColors} from '../store.js';
     import { flip } from 'svelte/animate';
+    import { fade } from 'svelte/transition';
     import Github from "../assets/github2.svg";
     // import GoogleSignInButton from './GoogleSignInButton.svelte';
     // import { onDestroy } from 'svelte';
@@ -15,8 +16,19 @@
     // onDestroy(() => {
     //     subs && subs();
     // })
+
+    // Sort Button Reactive Function
     let localContainers = get(sortReverse) ? get(myContainers).reverse() : get(myContainers);
     $: { $sortReverse; localContainers = localContainers.reverse(); }
+    
+    // Github Button Animation Controller
+    let githubVisible = false;
+    const githubTimer = setTimeout(() => {
+        githubVisible = true
+    }, 3000);
+
+    // test The Container Colors
+    console.log($containerColors)
 </script>
 
 <style>
@@ -34,8 +46,9 @@
     .github{
         position: fixed;
         text-decoration: none;
-        bottom: 2vh;
-        right: 2vw;
+        top: 2vh;
+        right: 3vw;
+        z-index: 5;
     }
 </style>
     <!-- <GoogleSignInButton/> -->
@@ -58,6 +71,8 @@
             </div>
         </div>
     {/each}
-        <a class="github" href="https://github.com/gageracer/myStuff" target="_blank" type="image/svg+xml">
+    {#if githubVisible}
+        <a class="github" href="https://github.com/gageracer/myStuff" target="_blank" type="image/svg+xml" transition:fade>
             <Github/>
         </a>
+    {/if}

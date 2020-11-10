@@ -1,11 +1,10 @@
 <script lang="ts">
     import { addContainer, deleteContainer } from '../stores/containers';
-    import { toggle } from '../store';
+    import { toggle, containerColors } from '../store';
     import { setList } from '../stores/localOps';
     
     import Modal from './Modal.svelte';
     import { slide } from 'svelte/transition';
-import App from '../App.svelte';
 
     export let id = "";
     export let name = "";
