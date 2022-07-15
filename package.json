@@ -12,7 +12,7 @@
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-svelte-svg": "^0.2.3",
     "rollup-plugin-terser": "^4.0.4",
-    "svelte": "^3.0.0",
+    "svelte": "^3.49.0",
     "svelte-check": "^1.0.7",
     "svelte-preprocess": "^4.0.10",
     "tslib": "^2.0.0",
