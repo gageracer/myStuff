@@ -1,7 +1,8 @@
+import type { stuff, temp } from "./types";
 
 
 // These are set and get functions for the whole Containers list
-export function setList(item: string | boolean, lsName: string) {
+export function setList(item: stuff | stuff[] | string | boolean | temp, lsName: string) {
   $inspect(lsName, " ----------------------->", item);
   localStorage.setItem(lsName, JSON.stringify(item));
 }
@@ -27,6 +28,6 @@ export function getLastPage(str: string) {
 }
 
 export function setLastPage(str: string) {
-  console.log(str);
+  $inspect(str);
   localStorage.setItem("lastPage", JSON.stringify(str));
 }

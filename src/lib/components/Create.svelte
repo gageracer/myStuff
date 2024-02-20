@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { addContainer, deleteContainer } from '$lib/stores/containers';
-	import { toggle, containerColors } from '$lib/stores/store.svelte';
+	import { getMyStuff } from '$lib/stores/store.svelte';
 	import { setList } from '$lib/stores/localOps.svelte';
-
 	import Modal from './Modal.svelte';
 	import { slide } from 'svelte/transition';
 
-	export let id = '';
-	export let name = '';
-	export let type = '';
-	export let items = [['', false]];
-	export let editt = false;
+	type props = {
+		id: string;
+		name: string;
+		type: string;
+		items: [string, boolean][];
+		editt: boolean;
+	};
+	let { id = '', name = '', type = '', items = [['', false]], editt = false } = $props<props>();
 
-	let delModal = false;
+	let delModal = $state(false);
+	let inputMsg = $derived(
+		items.length > 1 ? 'And another one' : 'Start adding items to your container!'
+	);
 
-	let inputMsg = 'Start adding items to your container!';
-
-	$: if (items.length > 1) {
-		inputMsg = 'And another one';
-	}
+	const mystuff = getMyStuff();
 
 	function handleSubmit() {
 		if (name && type && items) {
@@ -26,30 +26,22 @@
 			items[items.length - 1][0] === '' ? items.splice(items.length - 1, 1) : null;
 			items[items.length - 1][1] === true ? (items[items.length - 1][1] = false) : null;
 
-			addContainer(name, type, items, id);
-			console.log('handleSubmitted');
-			toggle('main');
+			mystuff.addContainer(name, type, items, id);
+			$inspect('handleSubmitted');
+			// toggle('main');
 			editt = false;
 		}
 	}
 
 	function deleteSubmit() {
-		deleteContainer(id);
-		toggle('main');
+		mystuff.deleteContainer(id);
+		// toggle('main');
 	}
+	editt
+		? setList({ name: name, type: type, items: items }, 'tmpCont')
+		: setList({ name: name, type: type, items: items }, 'unSaved');
 
-	$: {
-		console.log(name + ':' + type + ':' + items);
-
-		editt
-			? setList({ name: name, type: type, items: items }, 'tmpCont')
-			: setList({ name: name, type: type, items: items }, 'unSaved');
-		console.log('the last item is::::::::::::::::::::::', items.slice(-1)[1]);
-	}
-
-	$: {
-		console.log(items.length + ' items:' + items);
-	}
+	$inspect('the last item is::::::::::::::::::::::', items.slice(-1)[1]);
 
 	function newItem(itm: string | boolean) {
 		if (items[items.length - 1][0] !== '') {
@@ -59,7 +51,7 @@
 	}
 
 	function remItem(index: number) {
-		console.log(index + ' th item deleted');
+		$inspect(index + ' th item deleted');
 		items = items.filter((i, idx) => {
 			return idx !== index;
 		});
@@ -128,8 +120,8 @@
 	>
 		<br />
 		<div class="row-buttons">
-			<button on:click|once={deleteSubmit} style="background-color: red;">Yes</button>
-			<button on:click={() => (delModal = false)}>No</button>
+			<button onclick={deleteSubmit} style="background-color: red;">Yes</button>
+			<button onclick={() => (delModal = false)}>No</button>
 		</div>
 	</Modal>
 {/if}

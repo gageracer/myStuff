@@ -1,13 +1,10 @@
 <script lang="ts">
-	import { mypage } from '$lib/stores/store.svelte';
-
 	import ContainerSum from '$lib/components/ContainerSum.svelte';
 	import NewButton from '$lib/components/NewButton.svelte';
 	import { slide } from 'svelte/transition';
 
 	let status = $state('');
 	$inspect(status);
-	$inspect('Current page is: ' + $mypage);
 	let { w, h } = $props<{ w: number; h: number }>();
 	let ratio = $derived((w / h).toFixed(2));
 </script>

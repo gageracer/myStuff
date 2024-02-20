@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { toggle } from '$lib/stores/store.svelte';
-	import { addContainer } from '$lib/stores/containers';
-	import { editCont } from '$lib/stores/containers';
+	import { getMyStuff } from '$lib/stores/store.svelte';
 	import { fly } from 'svelte/transition';
 	type props = {
 		id: string;
@@ -27,13 +25,12 @@
 	let interactColor = $state('#CADCE2');
 	let remaining = $derived(items.filter((e) => !e[1]).length);
 
+	const mystuff = getMyStuff();
 	$inspect('remaining is:', remaining);
-
 	// TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
 	function editHandle() {
-		editCont(name, type, items, id);
-		toggle('editlist');
-		console.log('handleSubmitted by editCont');
+		mystuff.editCont(name, type, items, id);
+		$inspect('handleSubmitted by editCont');
 	}
 
 	function details() {
@@ -41,15 +38,13 @@
 	}
 	function theInteract() {
 		interact = !interact;
-		addContainer(name, type, items, id, interact);
+		mystuff.addContainer(name, type, items, id, interact);
 	}
 	function isRed(index: number) {
 		if (interact) {
 			items[index][1] = !items[index][1];
-			addContainer(name, type, items, id, interact);
+			mystuff.addContainer(name, type, items, id, interact);
 			// !event.target.style.color ? event.target.style.color = "red" : event.target.style.color = "";
-			// console.log(event.target.style.color);
-			// console.log(event.target);
 		}
 	}
 	$inspect('interaction is: ', interact);

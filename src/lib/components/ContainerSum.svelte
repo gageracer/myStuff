@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { get } from 'svelte/store';
 	import Container from '$lib/components/Container.svelte';
-	import { myContainers, sortReverse, containerColors } from '$lib/stores/store.svelte';
+	import { getMyStuff } from '$lib/stores/store.svelte';
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
-	import Github from '$lib/assets/github2.svg';
+	import GitHub from '$lib/assets/github2.svelte';
 	// import GoogleSignInButton from './GoogleSignInButton.svelte';
 	// import { onDestroy } from 'svelte';
 
@@ -18,24 +17,17 @@
 	// })
 
 	// Sort Button Reactive Function
-	let localContainers = get(sortReverse) ? get(myContainers).reverse() : get(myContainers);
-	$: {
-		$sortReverse;
-		localContainers = localContainers.reverse();
-	}
+	const mystuff = getMyStuff();
 
 	// Github Button Animation Controller
-	let githubVisible = false;
-	const githubTimer = setTimeout(() => {
+	let githubVisible = $state(false);
+	setTimeout(() => {
 		githubVisible = true;
 	}, 3000);
-
-	// test The Container Colors
-	console.log($containerColors);
 </script>
 
 <!-- <GoogleSignInButton/> -->
-{#each localContainers as container, i (container.id)}
+{#each mystuff.stuff as container, i (container.id)}
 	<div animate:flip={{ duration: 200 }}>
 		<Container {...container} />
 	</div>
@@ -57,7 +49,7 @@
 		type="image/svg+xml"
 		transition:fade
 	>
-		<Github />
+		<GitHub />
 	</a>
 {/if}
 
