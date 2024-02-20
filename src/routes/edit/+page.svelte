@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { mypage, tmpCont } from '$lib/stores/store';
+	import { mypage, tmpCont } from '$lib/stores/store.svelte';
 	import Create from '$lib/components/Create.svelte';
 
 	$inspect('Current page is: ' + $mypage);

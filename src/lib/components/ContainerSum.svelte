@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { get } from 'svelte/store';
 	import Container from '$lib/components/Container.svelte';
-	import { myContainers, sortReverse, containerColors } from '$lib/stores/store';
+	import { myContainers, sortReverse, containerColors } from '$lib/stores/store.svelte';
 	import { flip } from 'svelte/animate';
 	import { fade } from 'svelte/transition';
 	import Github from '$lib/assets/github2.svg';

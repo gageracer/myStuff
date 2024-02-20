@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { addContainer, deleteContainer } from '$lib/stores/containers';
-	import { toggle, containerColors } from '$lib/stores/store';
-	import { setList } from '$lib/stores/localOps';
+	import { toggle, containerColors } from '$lib/stores/store.svelte';
+	import { setList } from '$lib/stores/localOps.svelte';
 
 	import Modal from './Modal.svelte';
 	import { slide } from 'svelte/transition';

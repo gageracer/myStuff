@@ -1,67 +1,65 @@
-import { setList } from '$lib/stores/localOps';
-import { tmpCont, myContainers } from '$lib/stores/store';
-
-import { get } from 'svelte/store';
-
+import { setList } from '$lib/stores/localOps.svelte';
+import { getMyStuff } from '$lib/stores/store.svelte';
+import type { stuff } from './types';
 // Editing any Container Function
-export function editCont(name, type, items, id) {
-	console.log('tmpContis: ' + id);
+export function editCont({ ...stuff }) {
+  console.log('tmpContis: ' + id);
 
-	tmpCont.set({
-		name: name,
-		type: type,
-		items: items,
-		id: id
-	});
+  tmpCont.set({
+    name: name,
+    type: type,
+    items: items,
+    id: id
+  });
 
-	console.log(tmpCont);
+  console.log(tmpCont);
 }
 
 export function deleteContainer(oId) {
-	let x = get(myContainers).findIndex((x) => x.id === oId);
-	let tmpContainer = get(myContainers);
-	tmpContainer.splice(x, 1);
-	myContainers.update(() => tmpContainer.sort((a, b) => a.id - b.id));
+  let x = get(myContainers).findIndex((x) => x.id === oId);
+  let tmpContainer = get(myContainers);
+  tmpContainer.splice(x, 1);
+  myContainers.update(() => tmpContainer.sort((a, b) => a.id - b.id));
 
-	setList({ id: '', name: '', type: '', items: [['', false]] }, 'tmpCont');
-	setList(get(myContainers), 'myStuff');
+  setList({ id: '', name: '', type: '', items: [['', false]] }, 'tmpCont');
+  setList(get(myContainers), 'myStuff');
 }
 
 export function addContainer(nname, ntype, nitems, oId = '', ninteract = false) {
-	// if (!nitems.every((cell) => Array.isArray(cell))) {
-	//     let tmp = nitems.map( item => [item,true]);
-	//     nitems = tmp;
-	// }
-	if (oId == '') {
-		console.log('I am Creating new one');
-		myContainers.update((existing) => [
-			...existing,
-			{
-				id: existing.length + Math.random(),
-				name: nname,
-				type: ntype,
-				items: nitems,
-				interact: false
-			}
-		]);
-		setList({ id: '', name: '', type: '', items: [['', false]] }, 'unSaved');
-	} else {
-		console.log('updating the container...');
-		let x = get(myContainers).findIndex((x) => x.id === oId);
-		let tmpContainer = get(myContainers);
-		tmpContainer.splice(x, 1, {
-			id: oId,
-			name: nname,
-			type: ntype,
-			items: nitems,
-			interact: ninteract
-		});
-		myContainers.update(() => tmpContainer.sort((a, b) => a.id - b.id));
+  // if (!nitems.every((cell) => Array.isArray(cell))) {
+  //     let tmp = nitems.map( item => [item,true]);
+  //     nitems = tmp;
+  // }
+  if (oId == '') {
+    console.log('I am Creating new one');
+    myContainers.update((existing) => [
+      ...existing,
+      {
+        id: existing.length + Math.random(),
+        name: nname,
+        type: ntype,
+        items: nitems,
+        interact: false
+      }
+    ]);
+    setList({ id: '', name: '', type: '', items: [['', false]] }, 'unSaved');
+  } else {
+    console.log('updating the container...');
+    let x = get(myContainers).findIndex((x) => x.id === oId);
+    let tmpContainer = get(myContainers);
+    tmpContainer.splice(x, 1, {
+      id: oId,
+      name: nname,
+      type: ntype,
+      items: nitems,
+      interact: ninteract
+    });
+    myContainers.update(() => tmpContainer.sort((a, b) => a.id - b.id));
 
-		setList({ id: '', name: '', type: '', items: [['', false]] }, 'tmpCont');
-	}
+    setList({ id: '', name: '', type: '', items: [['', false]] }, 'tmpCont');
+  }
 
-	setList(get(myContainers), 'myStuff');
+  setList(get(myContainers), 'myStuff');
 }
 
 // export function interactSync() {

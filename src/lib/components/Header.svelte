@@ -1,5 +1,5 @@
 <script>
-	import { version } from '$lib/stores/store';
+	import { version } from '$lib/stores/store.svelte';
 </script>
 
 <div id="main_link">

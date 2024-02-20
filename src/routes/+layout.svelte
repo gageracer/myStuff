@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
-	import { reLoad } from '$lib/stores/store';
+	import { reLoad } from '$lib/stores/store.svelte';
 
 	$effect(() => {
 		reLoad();

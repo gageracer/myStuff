@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { toggle, sortOption } from '$lib/stores/store';
+	import { toggle, sortOption } from '$lib/stores/store.svelte';
 	type button = { button: string };
 	let { button } = $props<button>();
 </script>

@@ -2,13 +2,13 @@
 
 // These are set and get functions for the whole Containers list
 export function setList(item: string | boolean, lsName: string) {
-  // console.log(lsName," ----------------------->",item);
+  $inspect(lsName, " ----------------------->", item);
   localStorage.setItem(lsName, JSON.stringify(item));
 }
 
 export function getList(str: string) {
-  // console.log("inside getTODO: "+ str);
-  if (localStorage.getItem(str)) return JSON.parse(window.localStorage.getItem(str)!);
+  $inspect("inside getTODO: " + str);
+  if (localStorage.getItem(str)) return JSON.parse(localStorage.getItem(str)!);
   else {
     if (str === "myVersion") return "0";
     if (str === "sortReverse") return "false";
@@ -22,7 +22,7 @@ export function getList(str: string) {
 // These are set and get functions for the last visited page
 export function getLastPage(str: string) {
   // console.log("inside getTODO: "+ str);
-  if (localStorage.getItem(str)) { return JSON.parse(window.localStorage.getItem(str)!); }
+  if (localStorage.getItem(str)) { return JSON.parse(localStorage.getItem(str)!); }
   else { return "main"; }
 }
 

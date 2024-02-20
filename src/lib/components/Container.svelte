@@ -1,26 +1,36 @@
 <script lang="ts">
-	import { toggle } from '$lib/stores/store';
+	import { toggle } from '$lib/stores/store.svelte';
 	import { addContainer } from '$lib/stores/containers';
 	import { editCont } from '$lib/stores/containers';
 	import { fly } from 'svelte/transition';
+	type props = {
+		id: string;
+		name: string;
+		type: string;
+		items: [[string, boolean]];
+		interact: boolean;
+		containerColor: string;
+		itemsnum: number;
+		isSum: boolean;
+	};
+	let {
+		id = '',
+		name = 'TestName',
+		type = 'TestType',
+		items = [['sugar', false]],
+		interact = false,
+		containerColor = '#e6e6e9',
+		itemsnum = 1,
+		isSum = true
+	} = $props<props>();
 
-	export let id = '';
-	export let name = 'TestName';
-	export let type = 'TestType';
-	export let items: (string | boolean)[] = ['sugar', false];
-	export let interact = false;
-	export let containerColor = '#e6e6e9';
-	let itemsnum = items.length;
-	export let isSum = true;
-	let interactColor = '#CADCE2';
-	let remaining: number;
-	$: {
-		remaining = items.filter((t) => !t[1]).length;
-		console.log('remaining is:', remaining);
-	}
+	let interactColor = $state('#CADCE2');
+	let remaining = $derived(items.filter((e) => !e[1]).length);
+
+	$inspect('remaining is:', remaining);
 
 	// TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
-	export function editHandle() {
+	function editHandle() {
 		editCont(name, type, items, id);
 		toggle('editlist');
 		console.log('handleSubmitted by editCont');
@@ -42,16 +52,16 @@
 			// console.log(event.target);
 		}
 	}
-	$: console.log('interaction is: ', interact);
+	$inspect('interaction is: ', interact);
 </script>
 
 <div
 	class={interact ? 'containersum containersum-on' : 'containersum containersum-off'}
 	style="--container-color-off: {containerColor}; --container-color-on: {interactColor}"
 >
-	<div id="name" role="button" aria-pressed="false" onclick={details}>
+	<button id="name" role="button" aria-pressed="false" onclick={details}>
 		{name}
-	</div>
+	</button>
 	<hr style="width: 90%; border-color: #e1e2e186;" />
 
 	{#if !isSum}
@@ -64,19 +74,21 @@
 
 			<ul class="item-list">
 				{#each items as item, i}
-					<li on:click={isRed.bind(this, i)} class={item[1] ? 'item-not-red' : 'item-red'}>
-						{item[0]}
+					<li>
+						<button onclick={isRed.bind(this, i)} class={item[1] ? 'item-not-red' : 'item-red'}
+							>{item[0]}
+						</button>
 					</li>
 				{/each}
 			</ul>
 			<div class="options">
 				<button class="edit-button" name="edit-button" on:click={editHandle}>Edit</button>
-				<div
+				<button
 					class={interact ? 'interactive-text-on' : 'interactive-text-off'}
-					on:click={theInteract}
+					onclick={theInteract}
 				>
 					Interactive Mode
-				</div>
+				</button>
 			</div>
 		</div>
 	{/if}

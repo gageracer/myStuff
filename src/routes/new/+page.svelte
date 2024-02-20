@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { unSaved } from '$lib/stores/store';
+	import { unSaved } from '$lib/stores/store.svelte';
 	import Create from '$lib/components/Create.svelte';
 </script>
 

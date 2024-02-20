@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { mypage } from '$lib/stores/store';
+	import { mypage } from '$lib/stores/store.svelte';
 
 	import ContainerSum from '$lib/components/ContainerSum.svelte';
 	import NewButton from '$lib/components/NewButton.svelte';
