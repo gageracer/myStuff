@@ -1,15 +1,15 @@
 <script lang="ts">
-	import Header from '$lib/components/Header.svelte';
-	import { setMyStuff } from '$lib/stores/store.svelte';
-	import { setContext } from 'svelte';
-	const mystuff = setMyStuff();
-	let w = $state(0);
-	let h = $state(0);
-	let { children } = $props();
+	import Header from '$lib/components/Header.svelte'
+	import { setMyStuff } from '$lib/stores/store.svelte'
+	import { setContext } from 'svelte'
+	const mystuff = setMyStuff()
+	let w = $state(0)
+	let h = $state(0)
+	let { children } = $props()
 	$effect(() => {
-		mystuff.reLoad();
-		setContext('clientSize', { w, h });
-	});
+		mystuff.reLoad()
+		setContext('clientSize', { w, h })
+	})
 </script>
 
 <main bind:clientWidth={w} bind:clientHeight={h}>
@@ -18,6 +18,12 @@
 		{@render children()}
 	{/if}
 </main>
+
+<svelte:head>
+	<title>My2Stuff</title>
+	<meta name="theme-color" content="#fff59d" />
+	<meta name="description" content="A simple app to track your stuff, made with Svelte!" />
+</svelte:head>
 
 <style>
 	main {
