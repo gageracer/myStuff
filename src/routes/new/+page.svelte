@@ -1,12 +1,15 @@
 <script lang="ts">
-	import { unSaved } from '$lib/stores/store.svelte';
+	import { getMyStuff } from '$lib/stores/store.svelte';
 	import Create from '$lib/components/Create.svelte';
+
+	const mystuff = getMyStuff();
 </script>
 
 <svelte:component
 	this={Create}
-	name={$unSaved.name}
-	type={$unSaved.type}
-	items={$unSaved.items}
+	id={mystuff.unSaved.id}
+	name={mystuff.unSaved.name}
+	type={mystuff.unSaved.type}
+	items={mystuff.unSaved.items}
 	editt={false}
 />

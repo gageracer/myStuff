@@ -1,10 +1,11 @@
 <script>
-	import { version } from '$lib/stores/store.svelte';
+	import { getMyStuff } from '$lib/stores/store.svelte';
+	const mystuff = getMyStuff();
 </script>
 
 <div id="main_link">
 	<a class="headlink" href="/">My_Stuff</a>
-	<span class="verspan">{$version}</span>
+	<span class="verspan">{mystuff.version}</span>
 </div>
 
 <style>

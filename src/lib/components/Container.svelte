@@ -28,8 +28,9 @@
 	const mystuff = getMyStuff();
 	$inspect('remaining is:', remaining);
 	// TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
+
 	function editHandle() {
-		mystuff.editCont(name, type, items, id);
+		mystuff.editCont({ id, name, type, items, interact: false });
 		$inspect('handleSubmitted by editCont');
 	}
 
@@ -54,7 +55,7 @@
 	class={interact ? 'containersum containersum-on' : 'containersum containersum-off'}
 	style="--container-color-off: {containerColor}; --container-color-on: {interactColor}"
 >
-	<button id="name" role="button" aria-pressed="false" onclick={details}>
+	<button id="name" aria-pressed="false" onclick={details}>
 		{name}
 	</button>
 	<hr style="width: 90%; border-color: #e1e2e186;" />
@@ -77,7 +78,8 @@
 				{/each}
 			</ul>
 			<div class="options">
-				<button class="edit-button" name="edit-button" on:click={editHandle}>Edit</button>
+				<a href="/edit" class="edit-button" on:click={editHandle}> Edit</a>
+
 				<button
 					class={interact ? 'interactive-text-on' : 'interactive-text-off'}
 					onclick={theInteract}
@@ -148,6 +150,11 @@
 		background-color: #fff59d;
 		float: right;
 		font-size: 1.5em;
+		color: black;
+		text-decoration: none;
+		box-sizing: border-box;
+		border: 1px solid #ccc;
+		border-radius: 2px;
 	}
 	/* .interactive-button{
         zoom: 2;

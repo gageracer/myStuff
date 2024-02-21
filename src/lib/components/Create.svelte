@@ -3,6 +3,7 @@
 	import { setList } from '$lib/stores/localOps.svelte';
 	import Modal from './Modal.svelte';
 	import { slide } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 
 	type props = {
 		id: string;
@@ -30,6 +31,7 @@
 			$inspect('handleSubmitted');
 			// toggle('main');
 			editt = false;
+			goto('/', { replaceState: true });
 		}
 	}
 
@@ -37,6 +39,7 @@
 		mystuff.deleteContainer(id);
 		// toggle('main');
 	}
+	// TODO:This whole thing should be a form and items should be object or something strict
 	editt
 		? setList({ name: name, type: type, items: items }, 'tmpCont')
 		: setList({ name: name, type: type, items: items }, 'unSaved');
@@ -52,7 +55,7 @@
 
 	function remItem(index: number) {
 		$inspect(index + ' th item deleted');
-		items = items.filter((i, idx) => {
+		items = items.filter((_, idx) => {
 			return idx !== index;
 		});
 	}

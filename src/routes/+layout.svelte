@@ -1,20 +1,22 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte';
-	import { reLoad } from '$lib/stores/store.svelte';
-
-	$effect(() => {
-		reLoad();
-	});
+	import { setMyStuff } from '$lib/stores/store.svelte';
+	import { setContext } from 'svelte';
+	const mystuff = setMyStuff();
 	let w = $state(0);
 	let h = $state(0);
 	let { children } = $props();
-
-	$inspect('main w and h: ', w, ' ', h);
+	$effect(() => {
+		mystuff.reLoad();
+		setContext('clientSize', { w, h });
+	});
 </script>
 
 <main bind:clientWidth={w} bind:clientHeight={h}>
 	<Header />
-	{@render children()}
+	{#if children}
+		{@render children()}
+	{/if}
 </main>
 
 <style>

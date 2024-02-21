@@ -5,13 +5,13 @@ import type { stuff } from './types'
 const MYSTUFF = 'MYSTUFF'
 
 class MyStuff {
-  version = '0.190224'
+  version: string = $state('')
   sortReverse: boolean = $state(false)
   stuff: stuff[] = $state([])
   tmpCont: stuff = $state({ id: '', name: '', type: '', items: [['', false]], interact: false })
   unSaved: stuff = $state({ id: '', name: '', type: '', items: [['', false]], interact: false })
   constructor() {
-    this.reLoad()
+    this.version = '0.190224'
   }
   // Grabs all local stored Stuff
   reLoad() {
@@ -79,7 +79,7 @@ export function setMyStuff() {
 }
 
 export function getMyStuff() {
-  return getContext(MYSTUFF)
+  return getContext<MyStuff>(MYSTUFF)
 }
 
 // export const containerColors = $state([

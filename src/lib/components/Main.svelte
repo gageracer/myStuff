@@ -5,8 +5,8 @@
 
 	let status = $state('');
 	$inspect(status);
-	let { w, h } = $props<{ w: number; h: number }>();
-	let ratio = $derived((w / h).toFixed(2));
+	// let { w, h } = $props<{ w: number; h: number }>();
+	// let ratio = $derived((w / h).toFixed(2));
 </script>
 
 <!-- Page width:{w} height:{h} ratio: {ratio} -->

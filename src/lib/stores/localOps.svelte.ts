@@ -2,14 +2,14 @@ import type { stuff, temp } from "./types";
 
 
 // These are set and get functions for the whole Containers list
-export function setList(item: stuff | stuff[] | string | boolean | temp, lsName: string) {
+export function setList(item: stuff | stuff[] | temp | string | boolean, lsName: string) {
   $inspect(lsName, " ----------------------->", item);
-  localStorage.setItem(lsName, JSON.stringify(item));
+  window.localStorage.setItem(lsName, JSON.stringify(item));
 }
 
 export function getList(str: string) {
   $inspect("inside getTODO: " + str);
-  if (localStorage.getItem(str)) return JSON.parse(localStorage.getItem(str)!);
+  if (window.localStorage.getItem(str)) return JSON.parse(window.localStorage.getItem(str)!);
   else {
     if (str === "myVersion") return "0";
     if (str === "sortReverse") return "false";

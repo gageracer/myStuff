@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { toggle, sortOption } from '$lib/stores/store.svelte';
-	type button = { button: string };
-	let { button } = $props<button>();
+	import { getMyStuff } from '$lib/stores/store.svelte';
+
+	let { button } = $props<{ button: string }>();
+	const mystuff = getMyStuff();
 </script>
 
 {#if button === 'newlist'}
-	<a id="menu-edit-create" onclick={() => toggle(button)} href="/new" aria-label="Create Container">
+	<a id="menu-edit-create" href="/new" aria-label="Create Container">
 		<div id="cross" aria-hidden="true"></div>
 	</a>
 {:else if button === 'sortReverse'}
-	<button id="sort-reverse" onclick={sortOption}>
+	<button id="sort-reverse" onclick={mystuff.sortReverse}>
 		<div>Sort</div>
 	</button>
 {/if}
