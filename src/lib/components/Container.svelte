@@ -40,15 +40,7 @@
 	class={container.interact ? 'containersum containersum-on' : 'containersum containersum-off'}
 	style="--container-color-off: {container.containerColor}; --container-color-on: {interactColor}"
 >
-	<button
-		id="name"
-		aria-pressed="false"
-		onclick={details}
-		class="title"
-		style:background-color={container.interact
-			? 'var(--container-color-on)'
-			: 'var(--container-color-off)'}
-	>
+	<button id="name" aria-pressed="false" onclick={details} class="title">
 		{container.name}
 	</button>
 	<hr style="width: 90%; border-color: #e1e2e186;" />
@@ -112,7 +104,7 @@
 	}
 	.title {
 		border: none;
-		transition: background-color 0.5s ease;
+		background-color: inherit;
 	}
 	.containersum-off {
 		background-color: var(--container-color-off);
@@ -151,31 +143,40 @@
 		align-self: center;
 		background-color: #fff59d;
 		float: right;
-		font-size: 1.5em;
+		font-size: 1em;
 		color: black;
 		text-decoration: none;
 		box-sizing: border-box;
 		border: 1px solid #ccc;
 		border-radius: 2px;
+		padding: 2px 1rem;
 	}
 	/* .interactive-button{
         zoom: 2;
     } */
 	.interactive-text-off {
 		color: grey;
+		padding: 2px 1rem;
+		background-color: inherit;
 	}
 	.interactive-text-on {
 		transition: color 1s;
 		color: rgb(255, 111, 0);
+		padding: 2px 1rem;
+		background-color: inherit;
 	}
 	.item-red {
 		font-size: calc(1rem + 2vmin);
 		color: black;
+		background-color: inherit;
+		border: none;
 	}
 	.item-not-red {
 		font-size: calc(1rem + 2vmin);
 		text-decoration: line-through;
 		color: rgba(90, 90, 90, 0.9);
+		border: none;
+		background-color: inherit;
 	}
 	#name {
 		font-size: calc(1rem + 4vmin);
@@ -190,5 +191,6 @@
 		width: 100%;
 		color: black;
 		font-size: (1em + 4vmin);
+		
 	}
 </style>
