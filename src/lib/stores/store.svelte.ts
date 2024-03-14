@@ -19,8 +19,6 @@ class MyStuff {
 	stuff: stuff[] = $state([])
 	tmpCont: stuff = $state(emptyStuff)
 	unSaved: stuff = $state(emptyStuff)
-	tmpContLS = $derived(setList(this.tmpCont, 'tmpCont'))
-	unSavedtLS = $derived(setList(this.unSaved, 'unSaved'))
 
 	constructor() {
 		this.version = '0.240312'
@@ -31,12 +29,22 @@ class MyStuff {
 		this.unSaved = getList('unSaved')
 		this.tmpCont = getList('tmpCont')
 		this.sortReverse = getList('sortReverse')
+		$inspect('unsaved changed:', this.unSaved)
 	}
 	// Updates stuff to localstorage
 	updateStuff() {
 		setList(this.stuff, 'myStuff')
 		setList(this.sortReverse, 'sortReverse')
 	}
+	// Updates tmpcont to localstorage
+	tmpContLS() {
+		setList(this.tmpCont, 'tmpCont')
+	}
+	// Updates unsaved to localstorage
+	unSavedtLS() {
+		setList(this.unSaved, 'unSaved')
+	}
+
 	// Editing any Container
 	editCont(stuff: stuff) {
 		$inspect('tmpContis: ' + stuff.id)
@@ -57,8 +65,6 @@ class MyStuff {
 	}
 	sortOption() {
 		this.sortReverse = !this.sortReverse
-		// this.stuff = this.stuff.reverse()
-		// this.stuff.reverse()
 		this.updateStuff()
 	}
 	// Adding or Updating a Container

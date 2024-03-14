@@ -10,7 +10,7 @@
 	let itemsCount = $derived(container.items.length)
 	const mystuff = getMyStuff()
 	$inspect('remaining is:', remaining)
-	$inspect('stuff changed, ', mystuff.stuff)
+	$inspect('stuff changed, ', container)
 	// TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
 
 	function editHandle() {
@@ -60,7 +60,10 @@
 			{:else if remaining != 0}
 				<span>{container.type} | {remaining} remaining of {itemsCount} Stuff</span>
 			{:else}
-				<span>{container.type} | All {itemsCount} Stuff are Done!</span>
+				<span
+					>{container.type} | {itemsCount === 1 ? '' : 'All'}
+					{itemsCount} Stuff {itemsCount === 1 ? 'is' : 'are'} Done!</span
+				>
 			{/if}
 
 			<ul class="item-list">

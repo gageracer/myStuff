@@ -17,8 +17,11 @@
 	let inputMsg = $derived(
 		tmpCont.items.length > 1 ? 'And another one' : 'Start adding items to your container!'
 	)
-
+	$inspect('tmp changed:', tmpCont)
 	const mystuff = getMyStuff()
+	$effect(() => {
+		editt ? mystuff.tmpContLS() : mystuff.unSavedtLS()
+	})
 
 	function handleSubmit() {
 		if (tmpCont.name && tmpCont.type && tmpCont.items) {
@@ -85,7 +88,7 @@
 					autocomplete="off"
 					maxlength="48"
 					placeholder={inputMsg}
-					bind:value={item[0]}
+					bind:value={tmpCont.items[i][0]}
 					required
 				/>
 				{#if i != 0}
@@ -131,7 +134,7 @@
 		justify-content: center;
 		margin-top: 5em;
 		width: 90vw;
-		font-size: 1.5em;
+		font-size: 1em;
 	}
 
 	label {
@@ -158,7 +161,7 @@
 	.itemslist {
 		display: flex;
 		flex-direction: row;
-		width: 100vw;
+		width: 90vw;
 	}
 
 	.itemslist > input {
@@ -178,6 +181,7 @@
 	.itemslist > button {
 		width: 10vw;
 		display: flex;
+		font-size: 1em;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
