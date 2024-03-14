@@ -1,35 +1,22 @@
 <script lang="ts">
-	import Container from '$lib/components/Container.svelte';
-	import { getMyStuff } from '$lib/stores/store.svelte';
-	import { flip } from 'svelte/animate';
-	import { fade } from 'svelte/transition';
-	import GitHub from '$lib/assets/github2.svelte';
-	// import GoogleSignInButton from './GoogleSignInButton.svelte';
-	// import { onDestroy } from 'svelte';
+	import Container from '$lib/components/Container.svelte'
+	import { getMyStuff } from '$lib/stores/store.svelte'
+	import { flip } from 'svelte/animate'
+	import { fade } from 'svelte/transition'
+	import GitHub from '$lib/assets/github2.svelte'
 
-	// let containers;
-	// const subs = myContainers.subscribe(stuff => {
-	//     containers = stuff;
-	// });
-
-	// onDestroy(() => {
-	//     subs && subs();
-	// })
-
-	// Sort Button Reactive Function
-	const mystuff = getMyStuff();
+	const mystuff = getMyStuff()
 
 	// Github Button Animation Controller
-	let githubVisible = $state(false);
+	let githubVisible = $state(false)
 	setTimeout(() => {
-		githubVisible = true;
-	}, 3000);
+		githubVisible = true
+	}, 3000)
 </script>
 
-<!-- <GoogleSignInButton/> -->
-{#each mystuff.stuff as container, i (container.id)}
+{#each mystuff.stuff as _, i (i)}
 	<div animate:flip={{ duration: 200 }}>
-		<Container {...container} />
+		<Container bind:container={mystuff.stuff[i]} />
 	</div>
 {:else}
 	<div class="welcome">

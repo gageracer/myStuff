@@ -1,77 +1,67 @@
 <script lang="ts">
-	import { getMyStuff } from '$lib/stores/store.svelte';
-	import { fly } from 'svelte/transition';
-	type props = {
-		id: string;
-		name: string;
-		type: string;
-		items: [[string, boolean]];
-		interact: boolean;
-		containerColor: string;
-		itemsnum: number;
-		isSum: boolean;
-	};
-	let {
-		id = '',
-		name = 'TestName',
-		type = 'TestType',
-		items = [['sugar', false]],
-		interact = false,
-		containerColor = '#e6e6e9',
-		itemsnum = 1,
-		isSum = true
-	} = $props<props>();
+	import { getMyStuff } from '$lib/stores/store.svelte'
+	import type { stuff } from '$lib/stores/types'
+	import { fly } from 'svelte/transition'
 
-	let interactColor = $state('#CADCE2');
-	let remaining = $derived(items.filter((e) => !e[1]).length);
+	let { container }: { container: stuff } = $props()
 
-	const mystuff = getMyStuff();
-	$inspect('remaining is:', remaining);
+	let interactColor = $state('#CADCE2')
+	let remaining = $derived(container.items.filter((e) => !e[1]).length)
+	let itemsCount = $derived(container.items.length)
+	const mystuff = getMyStuff()
+	$inspect('remaining is:', remaining)
+	$inspect('stuff changed, ', container)
 	// TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
 
 	function editHandle() {
-		mystuff.editCont({ id, name, type, items, interact: false });
-		$inspect('handleSubmitted by editCont');
+		mystuff.editCont(container)
 	}
 
 	function details() {
-		isSum = !isSum;
+		container.isSum = !container.isSum
+		mystuff.updateStuff()
 	}
+
 	function theInteract() {
-		interact = !interact;
-		mystuff.addContainer(name, type, items, id, interact);
+		container.interact = !container.interact
+		mystuff.updateStuff()
 	}
+
 	function isRed(index: number) {
-		if (interact) {
-			items[index][1] = !items[index][1];
-			mystuff.addContainer(name, type, items, id, interact);
+		if (container.interact) {
+			container.items[index][1] = !container.items[index][1]
+			mystuff.updateStuff()
 			// !event.target.style.color ? event.target.style.color = "red" : event.target.style.color = "";
 		}
 	}
-	$inspect('interaction is: ', interact);
 </script>
 
 <div
-	class={interact ? 'containersum containersum-on' : 'containersum containersum-off'}
-	style="--container-color-off: {containerColor}; --container-color-on: {interactColor}"
+	class={container.interact ? 'containersum containersum-on' : 'containersum containersum-off'}
+	style="--container-color-off: {container.containerColor}; --container-color-on: {interactColor}"
 >
-	<button id="name" aria-pressed="false" onclick={details}>
-		{name}
+	<button id="name" aria-pressed="false" onclick={details} class="title">
+		{container.name}
 	</button>
 	<hr style="width: 90%; border-color: #e1e2e186;" />
 
-	{#if !isSum}
+	{#if !container.isSum}
 		<div class="details" transition:fly={{ y: -10, duration: 200 }}>
-			{#if remaining == itemsnum}
-				<span>{type} | {itemsnum} Stuff here</span>
+			{#if remaining == itemsCount}
+				<span>{container.type} | {itemsCount} Stuff here</span>
+			{:else if remaining != 0}
+				<span>{container.type} | {remaining} remaining of {itemsCount} Stuff</span>
 			{:else}
-				<span>{type} | {remaining} / {itemsnum} Stuff</span>
+				<span
+					>{container.type} | {itemsCount === 1 ? '' : 'All'}
+					{itemsCount} Stuff {itemsCount === 1 ? 'is' : 'are'} Done!</span
+				>
 			{/if}
 
 			<ul class="item-list">
-				{#each items as item, i}
+				{#each container.items as item, i}
 					<li>
-						<button onclick={isRed.bind(this, i)} class={item[1] ? 'item-not-red' : 'item-red'}
+						<button onclick={() => isRed(i)} class={item[1] ? 'item-not-red' : 'item-red'}
 							>{item[0]}
 						</button>
 					</li>
@@ -81,7 +71,7 @@
 				<a href="/edit" class="edit-button" on:click={editHandle}> Edit</a>
 
 				<button
-					class={interact ? 'interactive-text-on' : 'interactive-text-off'}
+					class={container.interact ? 'interactive-text-on' : 'interactive-text-off'}
 					onclick={theInteract}
 				>
 					Interactive Mode
@@ -111,6 +101,10 @@
 	}
 	.containersum-on {
 		background-color: var(--container-color-on);
+	}
+	.title {
+		border: none;
+		background-color: inherit;
 	}
 	.containersum-off {
 		background-color: var(--container-color-off);
@@ -149,31 +143,40 @@
 		align-self: center;
 		background-color: #fff59d;
 		float: right;
-		font-size: 1.5em;
+		font-size: 1em;
 		color: black;
 		text-decoration: none;
 		box-sizing: border-box;
 		border: 1px solid #ccc;
 		border-radius: 2px;
+		padding: 2px 1rem;
 	}
 	/* .interactive-button{
         zoom: 2;
     } */
 	.interactive-text-off {
 		color: grey;
+		padding: 2px 1rem;
+		background-color: inherit;
 	}
 	.interactive-text-on {
 		transition: color 1s;
 		color: rgb(255, 111, 0);
+		padding: 2px 1rem;
+		background-color: inherit;
 	}
 	.item-red {
 		font-size: calc(1rem + 2vmin);
 		color: black;
+		background-color: inherit;
+		border: none;
 	}
 	.item-not-red {
 		font-size: calc(1rem + 2vmin);
 		text-decoration: line-through;
 		color: rgba(90, 90, 90, 0.9);
+		border: none;
+		background-color: inherit;
 	}
 	#name {
 		font-size: calc(1rem + 4vmin);
@@ -188,5 +191,6 @@
 		width: 100%;
 		color: black;
 		font-size: (1em + 4vmin);
+		
 	}
 </style>

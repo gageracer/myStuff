@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	window.onSignIn = (googleUser) => {
 		const profile = googleUser.getBasicProfile();
 		console.log('ID: ' + profile.getId());
@@ -16,4 +16,4 @@
 	/>
 </svelte:head>
 
-<div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn" />
+<div class="g-signin2" data-longtitle="true" data-onsuccess="onSignIn" /> -->

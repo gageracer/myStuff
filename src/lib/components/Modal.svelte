@@ -1,18 +1,32 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import { fly, blur } from 'svelte/transition';
-	const dispatch = createEventDispatcher();
+	import type { Snippet } from 'svelte'
+	import type { MouseEventHandler } from 'svelte/elements'
+	import { fly, blur } from 'svelte/transition'
 
-	export let content: HTMLElement | string;
+	let {
+		children,
+		content,
+		onClose,
+		onCancel
+	}: {
+		children: Snippet
+		content: string
+		onClose: MouseEventHandler<HTMLButtonElement>
+		onCancel: MouseEventHandler<HTMLButtonElement>
+	} = $props()
 </script>
 
-<div class="modal-bg" transition:blur={{ amount: 10 }} on:click={() => dispatch('cancel')}></div>
+<div class="modal-bg" transition:blur={{ amount: 10 }} onclick={onCancel}></div>
 
 <div class="modal" transition:fly={{ y: 300 }}>
-	{content}
-	<slot>
-		<button name="modal-close" on:click={() => dispatch('close')}>Close</button>
-	</slot>
+	<div>
+		{content}
+	</div>
+	{#if children}
+		{@render children()}
+	{:else}
+		<button name="modal-close" onclick={onClose}>Close</button>
+	{/if}
 </div>
 
 <style type="text/css">

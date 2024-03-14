@@ -1,22 +1,19 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte'
 	import { setMyStuff } from '$lib/stores/store.svelte'
-	import { setContext } from 'svelte'
+	import { onMount, type Snippet } from 'svelte'
 	const mystuff = setMyStuff()
 	let w = $state(0)
 	let h = $state(0)
-	let { children } = $props()
-	$effect(() => {
+	let { children }: { children: Snippet } = $props()
+	onMount(() => {
 		mystuff.reLoad()
-		setContext('clientSize', { w, h })
 	})
 </script>
 
 <main bind:clientWidth={w} bind:clientHeight={h}>
 	<Header />
-	{#if children}
-		{@render children()}
-	{/if}
+	{@render children?.()}
 </main>
 
 <svelte:head>
@@ -33,7 +30,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		font-size: calc(10px + 2vmin);
+		font-size: calc(1rem + 2vmin);
 		width: 100vw;
 		margin-top: 12vh;
 	}
@@ -49,7 +46,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: flex-start;
-		font-size: calc(10px + 2vmin);
+		font-size: calc(1rem + 2vmin);
 		margin: 0;
 		box-sizing: border-box;
 		font-family:
