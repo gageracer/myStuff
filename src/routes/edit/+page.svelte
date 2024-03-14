@@ -5,11 +5,7 @@
 	const mystuff = getMyStuff();
 </script>
 
-<svelte:component
-	this={Create}
-	name={mystuff.tmpCont.name}
-	type={mystuff.tmpCont.type}
-	items={mystuff.tmpCont.items}
-	id={mystuff.tmpCont.id}
+<Create
+	tmpCont={mystuff.tmpCont}
 	editt={true}
 />

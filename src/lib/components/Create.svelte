@@ -1,63 +1,60 @@
 <script lang="ts">
-	import { getMyStuff } from '$lib/stores/store.svelte';
-	import { setList } from '$lib/stores/localOps.svelte';
-	import Modal from './Modal.svelte';
-	import { slide } from 'svelte/transition';
-	import { goto } from '$app/navigation';
+	import { getMyStuff } from '$lib/stores/store.svelte'
+	import { setList } from '$lib/stores/localOps.svelte'
+	import Modal from './Modal.svelte'
+	import type { stuff } from '$lib/stores/types'
+	import { slide } from 'svelte/transition'
+	import { goto } from '$app/navigation'
 
-	type props = {
-		id: string;
-		name: string;
-		type: string;
-		items: [string, boolean][];
-		editt: boolean;
-	};
-	let { id = '', name = '', type = '', items = [['', false]], editt = false } = $props<props>();
+	let {
+		tmpCont,
+		editt = false
+	}: {
+		tmpCont: stuff
+		editt: boolean
+	} = $props()
 
-	let delModal = $state(false);
+	let delModal = $state(false)
 	let inputMsg = $derived(
-		items.length > 1 ? 'And another one' : 'Start adding items to your container!'
-	);
+		tmpCont.items.length > 1 ? 'And another one' : 'Start adding items to your container!'
+	)
 
-	const mystuff = getMyStuff();
+	const mystuff = getMyStuff()
 
 	function handleSubmit() {
-		if (name && type && items) {
+		if (tmpCont.name && tmpCont.type && tmpCont.items) {
 			// items = items.filter(Boolean);
-			items[items.length - 1][0] === '' ? items.splice(items.length - 1, 1) : null;
-			items[items.length - 1][1] === true ? (items[items.length - 1][1] = false) : null;
+			if (tmpCont.items[tmpCont.items.length - 1][0] === '')
+				tmpCont.items.splice(tmpCont.items.length - 1, 1)
+			tmpCont.items[tmpCont.items.length - 1][1] = false
 
-			mystuff.addContainer(name, type, items, id);
-			$inspect('handleSubmitted');
+			mystuff.addContainer(tmpCont)
 			// toggle('main');
-			editt = false;
-			goto('/', { replaceState: true });
+			editt = false
+			editt ? setList(tmpCont, 'tmpCont') : setList(tmpCont, 'unSaved')
+			goto('/', { replaceState: true })
 		}
 	}
 
 	function deleteSubmit() {
-		mystuff.deleteContainer(id);
-		// toggle('main');
+		mystuff.deleteContainer(tmpCont.id)
+		goto('/', { replaceState: true })
 	}
 	// TODO:This whole thing should be a form and items should be object or something strict
-	editt
-		? setList({ name: name, type: type, items: items }, 'tmpCont')
-		: setList({ name: name, type: type, items: items }, 'unSaved');
 
-	$inspect('the last item is::::::::::::::::::::::', items.slice(-1)[1]);
+	// $inspect('the last item is::::::::::::::::::::::', items.slice(-1)[1])
 
-	function newItem(itm: string | boolean) {
-		if (items[items.length - 1][0] !== '') {
-			items[items.length - 1] = [itm, false];
-			items = [...items, ['', false]];
+	function newItem(itm: string) {
+		if (tmpCont.items[tmpCont.items.length - 1][0] !== '') {
+			tmpCont.items[tmpCont.items.length - 1] = [itm, false]
+			tmpCont.items = [...tmpCont.items, ['', false]]
 		}
 	}
 
 	function remItem(index: number) {
-		$inspect(index + ' th item deleted');
-		items = items.filter((_, idx) => {
-			return idx !== index;
-		});
+		tmpCont.items = tmpCont.items.filter((_, idx) => {
+			return idx !== index
+		})
 	}
 </script>
 
@@ -66,7 +63,7 @@
 		<input
 			type="text"
 			name="name"
-			bind:value={name}
+			bind:value={tmpCont.name}
 			autocomplete="off"
 			maxlength="28"
 			placeholder="The Container Name"
@@ -75,14 +72,14 @@
 		<input
 			type="text"
 			name="type"
-			bind:value={type}
+			bind:value={tmpCont.type}
 			autocomplete="off"
 			maxlength="32"
 			placeholder="The Container Type"
 			required
 		/>
 
-		{#each items as item, i (i)}
+		{#each tmpCont.items as item, i (i)}
 			<div class="itemslist" transition:slide|local>
 				<input
 					type="text"
@@ -94,7 +91,7 @@
 					required
 				/>
 				{#if i != 0}
-					<button name="rem-item" onclick={remItem.bind(this, i)}>
+					<button name="rem-item" onclick={() => remItem(i)}>
 						<div class="minus"></div>
 					</button>
 				{/if}
@@ -111,15 +108,15 @@
 					on:click={() => (delModal = true)}>Delete</button
 				>
 			{/if}
-			<button name="save-container" on:click|once={handleSubmit}>Save</button>
+			<button name="save-container" onclick={handleSubmit}>Save</button>
 		</div>
 	</label>
 </div>
 {#if delModal}
 	<Modal
 		content="Are you sure you wanna delete this container?"
-		on:cancel={() => (delModal = false)}
-		on:close={() => (delModal = false)}
+		onCancel={() => (delModal = false)}
+		onClose={() => (delModal = false)}
 	>
 		<br />
 		<div class="row-buttons">

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { getMyStuff } from '$lib/stores/store.svelte';
+	import { getMyStuff } from '$lib/stores/store.svelte'
 
-	let { button } = $props<{ button: string }>();
-	const mystuff = getMyStuff();
+	let { button }: { button: string } = $props()
+	const mystuff = getMyStuff()
 </script>
 
 {#if button === 'newlist'}
@@ -10,7 +10,7 @@
 		<div id="cross" aria-hidden="true"></div>
 	</a>
 {:else if button === 'sortReverse'}
-	<button id="sort-reverse" onclick={mystuff.sortReverse}>
+	<button id="sort-reverse" onclick={mystuff.sortOption}>
 		<div>Sort</div>
 	</button>
 {/if}

@@ -19,15 +19,3 @@ export function getList(str: string) {
     if (str === "tmpCont") return { id: "", name: "", type: "", items: [["", false]] };
   }
 }
-
-// These are set and get functions for the last visited page
-export function getLastPage(str: string) {
-  // console.log("inside getTODO: "+ str);
-  if (localStorage.getItem(str)) { return JSON.parse(localStorage.getItem(str)!); }
-  else { return "main"; }
-}
-
-export function setLastPage(str: string) {
-  $inspect(str);
-  localStorage.setItem("lastPage", JSON.stringify(str));
-}
