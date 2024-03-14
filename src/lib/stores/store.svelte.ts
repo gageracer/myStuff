@@ -1,31 +1,27 @@
 import { setContext, getContext } from 'svelte'
 import { getList, setList } from '$lib/stores/localOps.svelte'
-import type { stuff } from './types'
+import type { stuff, tmpContOrunSaved } from './types'
 
 const MYSTUFF = 'MYSTUFF'
 
+const emptyStuff: stuff = {
+	id: '',
+	name: '',
+	type: '',
+	items: [['', false]],
+	interact: false,
+	containerColor: '',
+	isSum: true
+}
 class MyStuff {
 	version: string = $state('')
 	sortReverse: boolean = $state(false)
 	stuff: stuff[] = $state([])
-	tmpCont: stuff = $state({
-		id: '',
-		name: '',
-		type: '',
-		items: [['', false]],
-		interact: false,
-		containerColor: '',
-		isSum: true
-	})
-	unSaved: stuff = $state({
-		id: '',
-		name: '',
-		type: '',
-		items: [['', false]],
-		interact: false,
-		containerColor: '',
-		isSum: true
-	})
+	tmpCont: stuff = $state(emptyStuff)
+	unSaved: stuff = $state(emptyStuff)
+	tmpContLS = $derived(setList(this.tmpCont, 'tmpCont'))
+	unSavedtLS = $derived(setList(this.unSaved, 'unSaved'))
+
 	constructor() {
 		this.version = '0.240312'
 	}
@@ -36,8 +32,10 @@ class MyStuff {
 		this.tmpCont = getList('tmpCont')
 		this.sortReverse = getList('sortReverse')
 	}
+	// Updates stuff to localstorage
 	updateStuff() {
 		setList(this.stuff, 'myStuff')
+		setList(this.sortReverse, 'sortReverse')
 	}
 	// Editing any Container
 	editCont(stuff: stuff) {
@@ -51,47 +49,17 @@ class MyStuff {
 		let x = this.stuff.findIndex((x) => x.id === oId)
 		this.stuff.splice(x, 1)
 		this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-		setList({ id: '', name: '', type: '', items: [['', false]], interact: false }, 'tmpCont')
+		setList(emptyStuff, 'tmpCont')
 		this.updateStuff()
 	}
-	// Adding or Updating a Container
-	addContainerold(
-		nname: string,
-		ntype: string,
-		nitems: [string, boolean][],
-		oId = '',
-		ninteract = false,
-		nisSum: boolean
-	) {
-		if (oId == '') {
-			$inspect('I am Creating new one')
-			let newStuff: stuff = {
-				id: (this.stuff.length + Math.random()).toString(),
-				name: nname,
-				type: ntype,
-				items: nitems,
-				interact: ninteract,
-				containerColor: '',
-				isSum: true
-			}
-			this.stuff.push(newStuff)
-			setList({ id: '', name: '', type: '', items: [['', false]], interact: false }, 'unSaved')
-		} else {
-			$inspect('updating the container...')
-			let x = this.stuff.findIndex((x) => x.id === oId)
-			this.stuff[x] = {
-				id: oId,
-				name: nname,
-				type: ntype,
-				items: nitems,
-				interact: ninteract,
-				containerColor: this.stuff[x].containerColor,
-				isSum: nisSum
-			}
-			this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-			setList({ id: '', name: '', type: '', items: [['', false]], interact: false }, 'tmpCont')
-		}
-		setList(this.stuff, 'myStuff')
+	clearTmpUnsaved(lsName: tmpContOrunSaved) {
+		setList(emptyStuff, lsName)
+	}
+	sortOption() {
+		this.sortReverse = !this.sortReverse
+		// this.stuff = this.stuff.reverse()
+		// this.stuff.reverse()
+		this.updateStuff()
 	}
 	// Adding or Updating a Container
 	addContainer(_stuff: stuff) {
@@ -107,7 +75,7 @@ class MyStuff {
 				isSum: _stuff.isSum
 			}
 			this.stuff.push(newStuff)
-			setList({ id: '', name: '', type: '', items: [['', false]], interact: false }, 'unSaved')
+			this.clearTmpUnsaved('unSaved')
 		} else {
 			$inspect('updating the container...')
 			let x = this.stuff.findIndex((x) => x.id === _stuff.id)
@@ -121,21 +89,13 @@ class MyStuff {
 				isSum: _stuff.isSum
 			}
 			this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-			setList({ id: '', name: '', type: '', items: [['', false]], interact: false }, 'tmpCont')
+			this.clearTmpUnsaved('tmpCont')
 		}
-		setList(this.stuff, 'myStuff')
+		this.updateStuff()
 	}
 
 	findStuff(_stuff: stuff) {
 		return this.stuff.find((stuff) => stuff.id == _stuff.id)
-	}
-
-	sortOption() {
-		this.sortReverse = !this.sortReverse
-		// this.stuff = this.stuff.reverse()
-
-		setList(this.sortReverse, 'sortReverse')
-		setList(this.stuff.reverse(), 'myStuff')
 	}
 }
 

@@ -30,7 +30,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		font-size: calc(10px + 2vmin);
+		font-size: calc(1rem + 2vmin);
 		width: 100vw;
 		margin-top: 12vh;
 	}
@@ -46,7 +46,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: flex-start;
-		font-size: calc(10px + 2vmin);
+		font-size: calc(1rem + 2vmin);
 		margin: 0;
 		box-sizing: border-box;
 		font-family:

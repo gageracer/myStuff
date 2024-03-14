@@ -8,3 +8,5 @@ export type stuff = {
 	isSum: boolean
 }
 export type temp = { name: string; type: string; items: [string, boolean][] }
+
+export type tmpContOrunSaved = 'unSaved' | 'tmpCont'

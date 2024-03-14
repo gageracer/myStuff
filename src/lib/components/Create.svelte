@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { getMyStuff } from '$lib/stores/store.svelte'
-	import { setList } from '$lib/stores/localOps.svelte'
 	import Modal from './Modal.svelte'
 	import type { stuff } from '$lib/stores/types'
 	import { slide } from 'svelte/transition'
@@ -29,9 +28,8 @@
 			tmpCont.items[tmpCont.items.length - 1][1] = false
 
 			mystuff.addContainer(tmpCont)
-			// toggle('main');
-			editt = false
-			editt ? setList(tmpCont, 'tmpCont') : setList(tmpCont, 'unSaved')
+
+			console.log('edit is: ', editt)
 			goto('/', { replaceState: true })
 		}
 	}

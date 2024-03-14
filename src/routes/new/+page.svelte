@@ -5,4 +5,4 @@
 	const mystuff = getMyStuff()
 </script>
 
-<Create tmpCont={mystuff.unSaved} editt={false} />
+<Create bind:tmpCont={mystuff.unSaved} editt={false} />
