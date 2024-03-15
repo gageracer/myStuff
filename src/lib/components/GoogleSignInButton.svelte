@@ -12,7 +12,7 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<meta
 		name="google-signin-client_id"
-		content="117413078094-c1i6mg67nt6ap9dhp0knimdq8qjdqqao.apps.googleusercontent.com"
+		content=""
 	/>
 </svelte:head>
 

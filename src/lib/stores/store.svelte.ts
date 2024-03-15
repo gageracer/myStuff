@@ -63,7 +63,7 @@ class MyStuff {
 	clearTmpUnsaved(lsName: tmpContOrunSaved) {
 		setList(emptyStuff, lsName)
 	}
-	sortOption() {
+	sortChange() {
 		this.sortReverse = !this.sortReverse
 		this.stuff.reverse()
 		this.updateStuff()

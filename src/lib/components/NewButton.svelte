@@ -10,7 +10,7 @@
 		<div id="cross" aria-hidden="true"></div>
 	</a>
 {:else if button === 'sortReverse'}
-	<button id="sort-reverse" onclick={mystuff.sortOption}>
+	<button id="sort-reverse" onclick={()=>mystuff.sortChange()}>
 		<div>Sort</div>
 	</button>
 {/if}
@@ -63,7 +63,7 @@
 		width: 3rem;
 		height: 3rem;
 		font-size: 1rem;
-		
+
 		-webkit-border-radius: 50%;
 		-khtml-border-radius: 50%;
 		-moz-border-radius: 50%;
