@@ -65,6 +65,7 @@ class MyStuff {
 	}
 	sortOption() {
 		this.sortReverse = !this.sortReverse
+		this.stuff.reverse()
 		this.updateStuff()
 	}
 	// Adding or Updating a Container
