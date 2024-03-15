@@ -132,7 +132,6 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		margin-top: 5em;
 		width: 90vw;
 		font-size: 1em;
 	}
