@@ -105,6 +105,7 @@
 	.title {
 		border: none;
 		background-color: inherit;
+		transform: inherit;
 	}
 	.containersum-off {
 		background-color: var(--container-color-off);
@@ -191,6 +192,5 @@
 		width: 100%;
 		color: black;
 		font-size: (1em + 4vmin);
-		
 	}
 </style>

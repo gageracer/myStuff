@@ -16,7 +16,7 @@
 
 {#each mystuff.stuff as _, i (i)}
 	<div animate:flip={{ duration: 200 }}>
-		<svelte:component this={Container} bind:container={mystuff.stuff[i]}></svelte:component>
+		<Container bind:container={mystuff.stuff[i]} />
 	</div>
 {:else}
 	<div class="welcome">
