@@ -13,5 +13,6 @@ export default {
 			rev: ['Courier New', 'Courier', 'monospace']
 		}
 	},
-	plugins: []
+	plugins: [],
+	jit: true
 }

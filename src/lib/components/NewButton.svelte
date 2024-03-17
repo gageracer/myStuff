@@ -7,7 +7,7 @@
 
 {#if button === 'newlist'}
 	<a
-		class="absolute w-24 h-24 rounded-full bottom-12 inset-x-[50%] -translate-x-1/2 no-underline bg-yellow-300 shadow-xl
+		class="absolute w-24 h-24 rounded-full bottom-12 inset-x-[50%] -translate-x-1/2 no-underline bg-yellow-300 shadow-rev
 		overflow-hidden flex justify-center items-center"
 		href="/new"
 		aria-label="Create Container"
