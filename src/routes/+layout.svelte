@@ -24,7 +24,7 @@
 	<meta name="description" content="A simple app to track your stuff, made with Svelte!" />
 </svelte:head>
 
-<style>
+<style lang="postcss">
 	main {
 		text-align: center;
 		background-color: #f3f3f3;
