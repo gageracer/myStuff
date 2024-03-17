@@ -22,7 +22,7 @@
 	$effect(() => {
 		editt ? mystuff.tmpContLS() : mystuff.unSavedtLS()
 	})
-
+	$inspect(editt ? 'tmp loaded' : 'unsaved loaded', tmpCont)
 	function handleSubmit() {
 		if (tmpCont.name && tmpCont.type && tmpCont.items) {
 			// items = items.filter(Boolean);
@@ -32,7 +32,6 @@
 
 			mystuff.addContainer(tmpCont)
 
-			console.log('edit is: ', editt)
 			goto('/', { replaceState: true })
 		}
 	}

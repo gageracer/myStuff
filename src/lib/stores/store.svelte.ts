@@ -30,7 +30,6 @@ class MyStuff {
 		this.unSaved = getList('unSaved')
 		this.tmpCont = getList('tmpCont')
 		this.sortReverse = getList('sortReverse')
-		$inspect('unsaved changed:', this.unSaved)
 	}
 	// Updates stuff to localstorage
 	updateStuff() {
@@ -45,7 +44,6 @@ class MyStuff {
 	unSavedtLS() {
 		setList(this.unSaved, 'unSaved')
 	}
-
 	// Editing any Container
 	editCont(stuff: stuff) {
 		$inspect('tmpContis: ' + stuff.id)
@@ -58,11 +56,13 @@ class MyStuff {
 		let x = this.stuff.findIndex((x) => x.id === oId)
 		this.stuff.splice(x, 1)
 		this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-		setList(emptyStuff, 'tmpCont')
 		this.updateStuff()
+		this.clearTmpUnsaved('tmpCont')
 	}
 	clearTmpUnsaved(lsName: tmpContOrunSaved) {
 		setList(emptyStuff, lsName)
+		this.updateStuff()
+		this.reLoad()
 	}
 	sortChange() {
 		this.sortReverse = !this.sortReverse
@@ -99,7 +99,6 @@ class MyStuff {
 			this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
 			this.clearTmpUnsaved('tmpCont')
 		}
-		this.updateStuff()
 	}
 
 	findStuff(_stuff: stuff) {
