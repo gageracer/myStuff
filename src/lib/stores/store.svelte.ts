@@ -22,6 +22,7 @@ class MyStuff {
 
 	constructor() {
 		this.version = '0.240312'
+		// this.reLoad()
 	}
 	// Grabs all local stored Stuff
 	reLoad() {
