@@ -1,16 +1,13 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte'
 	import { setMyStuff } from '$lib/stores/store.svelte'
-	import { onMount, type Snippet } from 'svelte'
+	import { type Snippet } from 'svelte'
 	import '../app.css'
 
 	const mystuff = setMyStuff()
 	let w = $state(0)
 	let h = $state(0)
 	let { children }: { children: Snippet } = $props()
-	onMount(() => {
-		mystuff.reLoad()
-	})
 </script>
 
 <main bind:clientWidth={w} bind:clientHeight={h}>

@@ -1,6 +1,7 @@
 import { setContext, getContext } from 'svelte'
 import { getList, setList } from '$lib/stores/localOps.svelte'
 import type { stuff, tmpContOrunSaved } from './types'
+import { onMount } from 'svelte'
 
 const MYSTUFF = 'MYSTUFF'
 
@@ -22,7 +23,9 @@ class MyStuff {
 
 	constructor() {
 		this.version = '0.240312'
-		// this.reLoad()
+		onMount(() => {
+			this.reLoad()
+		})
 	}
 	// Grabs all local stored Stuff
 	reLoad() {
