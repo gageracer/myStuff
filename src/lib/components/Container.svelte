@@ -3,7 +3,7 @@
 	import type { stuff } from '$lib/stores/types'
 	import { fly } from 'svelte/transition'
 
-	let { container }: { container: stuff } = $props()
+	let { container = $bindable() }: { container: stuff } = $props()
 
 	let interactColor = $state('#CADCE2')
 	let remaining = $derived(container.items.filter((e) => !e[1]).length)
@@ -181,7 +181,6 @@
 	}
 	#name {
 		font-size: calc(1rem + 4vmin);
-		height: 5vh;
 		width: 100%;
 	}
 	.options {

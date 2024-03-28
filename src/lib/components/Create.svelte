@@ -6,7 +6,7 @@
 	import { goto } from '$app/navigation'
 
 	let {
-		tmpCont,
+		tmpCont = $bindable(),
 		editt = false
 	}: {
 		tmpCont: stuff
