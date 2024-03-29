@@ -59,7 +59,7 @@
 </script>
 
 <div class="create-new" transition:slide={{ duration: 500 }}>
-	<label>
+	<label for="name">
 		<input
 			type="text"
 			name="name"
@@ -69,6 +69,8 @@
 			placeholder="The Container Name"
 			required
 		/>
+	</label>
+	<label for="type">
 		<input
 			type="text"
 			name="type"
@@ -78,7 +80,9 @@
 			placeholder="The Container Type"
 			required
 		/>
+	</label>
 
+	<label for="items">
 		{#each tmpCont.items as item, i (i)}
 			<div class="itemslist" transition:slide|local>
 				<input
@@ -105,7 +109,7 @@
 				<button
 					name="delete-container"
 					style="color: red;background-color: #f5f5f6;"
-					on:click={() => (delModal = true)}>Delete</button
+					onclick={() => (delModal = true)}>Delete</button
 				>
 			{/if}
 			<button name="save-container" onclick={handleSubmit}>Save</button>
@@ -120,7 +124,7 @@
 	>
 		<br />
 		<div class="row-buttons">
-			<button onclick={deleteSubmit} style="background-color: red;">Yes</button>
+			<button onclick={deleteSubmit} class="bg-red-600">Yes</button>
 			<button onclick={() => (delModal = false)}>No</button>
 		</div>
 	</Modal>
@@ -128,108 +132,44 @@
 
 <style>
 	.create-new {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		width: 90vw;
-		font-size: 1em;
+		@apply flex flex-col justify-center w-90;
 	}
 
 	label {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
+		@apply flex flex-col justify-center;
 	}
 
 	label > * {
-		text-align: center;
-		margin-top: 0.5em;
-		width: 90vw;
-		border-radius: 3%;
-		background-color: #f5f5f6;
+		@apply text-center mt-[0.5em] shadow-input w-90 rounded-[3%] bg-slate-100;
 	}
-	label > input {
-		font-size: 1.3em;
-		height: 2em;
-		box-shadow:
-			0 2px 4px 0 rgba(0, 0, 0, 0.2),
-			0 6px 10px 0 rgba(0, 0, 0, 0.19);
+	input {
+		@apply h-[2em] text-formSize;
 	}
 
 	.itemslist {
-		display: flex;
-		flex-direction: row;
-		width: 90vw;
+		@apply flex flex-row;
 	}
 
 	.itemslist > input {
-		width: 90%;
-		text-align: center;
-		background-color: #f5f5f6;
-		font-size: 1.3em;
-		height: 2em;
-		box-shadow:
-			0 2px 4px 0 rgba(0, 0, 0, 0.2),
-			0 6px 10px 0 rgba(0, 0, 0, 0.19);
+		@apply bg-slate-100 w-70min text-center grow;
 	}
 
 	.itemslist > div {
-		width: 90%;
+		@apply w-90;
 	}
 	.itemslist > button {
-		width: 10vw;
-		display: flex;
-		font-size: 1em;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		background-color: #fff59d;
-		box-shadow:
-			0 2px 4px 0 rgba(0, 0, 0, 0.2),
-			0 6px 10px 0 rgba(0, 0, 0, 0.19);
+		@apply w-[10vw] bg-yellow-200 flex flex-col justify-center items-center;
 	}
 	.buttons {
-		display: flex;
-		flex-direction: row;
-		box-shadow:
-			0 2px 4px 0 rgba(0, 0, 0, 0.2),
-			0 6px 10px 0 rgba(0, 0, 0, 0.19);
+		@apply flex flex-row;
 	}
 	.buttons > button {
-		width: 100%;
-		background-color: #fff59d;
-		font-size: 2em;
+		@apply bg-yellow-200 w-full text-2;
 	}
 	.row-buttons {
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
+		@apply flex;
 	}
 	.row-buttons > button {
-		width: 90vw;
-	}
-	.cross {
-		background: black;
-		height: 1.5em;
-		position: relative;
-		width: 0.075em;
-		left: 0;
-	}
-
-	.cross:after {
-		background: black;
-		content: '';
-		height: 0.075em;
-		left: -0.7em;
-		position: absolute;
-		top: 0.7em;
-		width: 1.5em;
-	}
-
-	.minus {
-		background: black;
-		height: 0.075em;
-		position: relative;
-		width: 1.5em;
+		@apply w-90;
 	}
 </style>
