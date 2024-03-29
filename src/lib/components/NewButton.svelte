@@ -7,7 +7,7 @@
 
 {#if button === 'newlist'}
 	<a
-		class="absolute w-24 h-24 rounded-full bottom-12 inset-x-[50%] -translate-x-1/2 no-underline bg-yellow-300 shadow-rev
+		class="fixed w-24 h-24 rounded-full bottom-12 inset-x-[50%] -translate-x-1/2 no-underline bg-yellow-300 shadow-rev
 		overflow-hidden flex justify-center items-center"
 		href="/new"
 		aria-label="Create Container"
@@ -18,7 +18,10 @@
 		></div>
 	</a>
 {:else if button === 'sortReverse'}
-	<button class="fixed w-12 h-12 text-base rounded-full top-[5dvh] -translate-y-1/2 font-rev text-black no-underline shadow-rev hover:shadow-lg bg-green-300 z-4 left-[5dvw]" onclick={() => mystuff.sortChange()}>
+	<button
+		class="fixed w-12 h-12 text-base rounded-full top-[5dvh] -translate-y-1/2 font-rev text-black no-underline shadow-rev hover:shadow-lg bg-green-300 z-4 left-[5dvw]"
+		onclick={() => mystuff.sortChange()}
+	>
 		<div>Sort</div>
 	</button>
 {/if}
