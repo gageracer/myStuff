@@ -100,15 +100,13 @@
 			0 6px 10px 0 rgba(0, 0, 0, 0.19);
 	}
 	.containersum-on {
-		background-color: var(--container-color-on);
+		@apply bg-[var(--container-color-on)];
 	}
 	.title {
-		border: none;
-		background-color: inherit;
-		transform: inherit;
+		@apply border-none bg-inherit;
 	}
 	.containersum-off {
-		background-color: var(--container-color-off);
+		@apply bg-[var(--container-color-off)];
 	}
 	.details {
 		font-size: calc(1rem + 2vmin);
@@ -125,12 +123,8 @@
 		/* font-size: calc(6px + 1vmin); */
 	}
 	.item-list {
-		text-align: left;
-		width: 90vw;
-		overflow-x: hidden;
-		overflow-y: scroll;
-		scrollbar-width: none; /* For Firefox */
-		-ms-overflow-style: none; /* For Internet Explorer and Edge */
+		@apply text-left w-90 overflow-scroll;
+		/* scrollbar-width: none; For Firefox */
 	}
 	.item-list::-webkit-scrollbar {
 		width: 0px; /* For Chrome, Safari, and Opera */
