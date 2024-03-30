@@ -14,20 +14,22 @@
 	}, 3000)
 </script>
 
-{#each mystuff.stuff as _, i (i)}
-	<div animate:flip={{ duration: 200 }}>
-		<Container bind:container={mystuff.stuff[i]} />
-	</div>
-{:else}
-	<div class="welcome">
-		<div>
-			Welcome to MyStuff! Start adding Containers to the app using the plus button so you can keep
-			track of stuff you have, even when you forgot the app remembers!
+<div class="containersum">
+	{#each mystuff.stuff as _, i (i)}
+		<div animate:flip={{ duration: 200 }}>
+			<Container bind:container={mystuff.stuff[i]} />
 		</div>
+	{:else}
+		<div class="welcome">
+			<div>
+				Welcome to MyStuff! Start adding Containers to the app using the plus button so you can keep
+				track of stuff you have, even when you forgot the app remembers!
+			</div>
 
-		<div>This app saves all data to your local store so all your data is on your device.</div>
-	</div>
-{/each}
+			<div>This app saves all data to your local store so all your data is on your device.</div>
+		</div>
+	{/each}
+</div>
 {#if githubVisible}
 	<a
 		class="github"
@@ -41,6 +43,9 @@
 {/if}
 
 <style>
+	.containersum{
+		@apply mb-12;
+	}
 	.welcome {
 		display: flex;
 		justify-content: space-evenly;

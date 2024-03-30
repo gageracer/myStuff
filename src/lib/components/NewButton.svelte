@@ -17,7 +17,7 @@
 
 <style>
 	.newButton {
-		@apply fixed w-[2em] h-[2em] rounded-full bottom-4 right-4 no-underline bg-yellow-300 shadow-rev
+		@apply fixed w-[2em] h-[2em] rounded-full bottom-4 right-0 inset-x-[50%] -translate-x-1/2 no-underline bg-yellow-300 shadow-rev
 		overflow-hidden flex justify-center items-center;
 	}
 	.plus {
