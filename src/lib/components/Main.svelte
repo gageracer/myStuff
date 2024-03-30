@@ -27,6 +27,6 @@
 
 <style>
 	.content {
-		height: 80vmin;
+		@apply h-[80vh]
 	}
 </style>
