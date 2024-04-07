@@ -17,21 +17,33 @@ export default {
 				1: '1em',
 				2: '2em',
 				1.5: '1.5em',
-				formSize: '1.3em'
+				formSize: '1.3em',
+				container: 'calc(1rem + 4vmin)',
+				options: 'calc(1em + 4vmin)',
+				contdetails: 'calc(1rem + 2vmin)'
 			},
 			width: {
 				90: '90vw',
 				80: '80vw',
+				95: '95vw',
 				'70min': '70vmin'
 			},
 			height: {
-				'80h': '80vh',
+				10: '10vh',
+				80: '80vh',
 				'80min': '80vmin'
+			},
+			minHeight: {
+				10: '10vh',
+				20: '20vh'
+			},
+			maxHeight: {
+				80: '80vh'
+			},
+			fontFamily: {
+				rev: ['Courier New', 'Courier', 'monospace']
 			}
 		},
-		fontFamily: {
-			rev: ['Courier New', 'Courier', 'monospace']
-		}
 	},
 	plugins: [],
 	jit: true

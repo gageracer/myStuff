@@ -42,26 +42,14 @@
 	</a>
 {/if}
 
-<style>
+<style lang="postcss">
 	.containersum {
 		@apply pb-16;
 	}
 	.welcome {
-		@apply flex justify-evenly align-middle flex-col text-1.5 opacity-75 h-80min mx-0 my-[4vw];
-		font-family:
-			Noto Sans,
-			'Trebuchet MS',
-			'Lucida Sans Unicode',
-			'Lucida Grande',
-			'Lucida Sans',
-			Arial,
-			sans-serif;
+		@apply font-sans flex justify-evenly align-middle flex-col text-1.5 opacity-75 h-80min mx-0 my-[4vw];
 	}
 	.github {
-		position: fixed;
-		text-decoration: none;
-		top: 2vh;
-		right: 3vw;
-		z-index: 5;
+		@apply fixed no-underline top-[2vh] right-[3vw] z-4;
 	}
 </style>

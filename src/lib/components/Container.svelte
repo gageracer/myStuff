@@ -81,22 +81,10 @@
 	{/if}
 </div>
 
-<style>
+<style lang="postcss">
 	.containersum {
-		@apply shadow-container;
-		transition: background-color 0.5s ease;
-		margin-bottom: 1rem;
-		width: 95vw;
-		min-height: 10vh;
-		height: auto;
-		padding: 2vh 0 2vh 0;
-		list-style-type: none;
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		font-size: calc(1rem + 4vmin);
-		color: black;
-	
+		@apply shadow-container transition-colors mb-4 w-95 min-h-10 py-[2vh]
+		flex align-middle flex-col text-black text-container;
 	}
 	.containersum-on {
 		@apply bg-[var(--container-color-on)];
@@ -108,18 +96,7 @@
 		@apply bg-[var(--container-color-off)];
 	}
 	.details {
-		font-size: calc(1rem + 2vmin);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		min-height: 20vh;
-		max-height: 80vh;
-		/* border: 1px solid green; */
-		/* transform: scale(1.5); */
-		color: chocolate;
-		padding-top: 0;
-		/* font-size: calc(6px + 1vmin); */
+		@apply flex flex-col align-middle justify-center text-orange-500 pt-0 text-contdetails min-h-20 max-h-80;
 	}
 	.item-list {
 		@apply text-left w-90 overflow-scroll;
@@ -129,60 +106,28 @@
 		width: 0px; /* For Chrome, Safari, and Opera */
 	}
 	.item-list > li {
-		transition: color 1s;
+		@apply transition-colors pl-4;
 	}
 	.edit-button {
-		display: block;
-		width: fit-content;
-		align-self: center;
-		background-color: #fff59d;
-		float: right;
-		font-size: 1em;
-		color: black;
-		text-decoration: none;
-		box-sizing: border-box;
-		border: 1px solid #ccc;
-		border-radius: 2px;
-		padding: 2px 1rem;
+		@apply block w-fit self-center float-right text-1 text-black no-underline
+		bg-yellow-200 border box-border py-0.5 px-4 border-gray-300 rounded-sm border-solid;
 	}
-	/* .interactive-button{
-        zoom: 2;
-    } */
 	.interactive-text-off {
-		color: grey;
-		padding: 2px 1rem;
-		background-color: inherit;
+		@apply text-gray-600 py-0.5 px-4 bg-inherit;
 	}
 	.interactive-text-on {
-		transition: color 1s;
-		color: rgb(255, 111, 0);
-		padding: 2px 1rem;
-		background-color: inherit;
+		@apply transition-colors text-orange-500 py-0.5 px-4;
 	}
 	.item-red {
-		font-size: calc(1rem + 2vmin);
-		color: black;
-		background-color: inherit;
-		border: none;
+		@apply text-contdetails text-black bg-inherit border-none;
 	}
 	.item-not-red {
-		font-size: calc(1rem + 2vmin);
-		text-decoration: line-through;
-		color: rgba(90, 90, 90, 0.9);
-		border: none;
-		background-color: inherit;
+		@apply line-through text-gray-600 border-none bg-inherit;
 	}
 	#name {
-		font-size: calc(1rem + 4vmin);
-		width: 100%;
+		@apply text-container w-full transition-colors;
 	}
 	.options {
-		transition: color 1s;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-around;
-		width: 100%;
-		color: black;
-		font-size: (1em + 4vmin);
+		@apply transition-colors flex flex-row justify-around;
 	}
 </style>

@@ -17,7 +17,7 @@
 	let inputMsg = $derived(
 		tmpCont.items.length > 1 ? 'And another one' : 'Start adding items to your container!'
 	)
-	$inspect('tmp changed:', tmpCont)
+	$inspect(editt ? 'tmp changed:' : 'unsaved changed:', tmpCont)
 	const mystuff = getMyStuff()
 	$effect(() => {
 		editt ? mystuff.tmpContLS() : mystuff.unSavedtLS()
@@ -130,7 +130,7 @@
 	</Modal>
 {/if}
 
-<style>
+<style lang="postcss">
 	.create-new {
 		@apply flex-auto flex-col justify-center w-90;
 	}
