@@ -7,11 +7,12 @@
 	const mystuff = setMyStuff()
 	let w = $state(0)
 	let h = $state(0)
+	$inspect(w, h)
 	let { children }: { children: Snippet } = $props()
 </script>
 
+<Header />
 <main bind:clientWidth={w} bind:clientHeight={h}>
-	<Header />
 	{@render children?.()}
 </main>
 
@@ -23,6 +24,7 @@
 
 <style lang="postcss">
 	main {
+		@apply overflow-scroll;
 		text-align: center;
 		background-color: #f3f3f3;
 		height: auto;
@@ -36,11 +38,9 @@
 	:global(html, body) {
 		position: relative;
 		width: 100%;
-		height: 100%;
 	}
 	:global(body) {
 		background-color: #f3f3f3;
-		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

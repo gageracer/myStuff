@@ -43,18 +43,11 @@
 {/if}
 
 <style>
-	.containersum{
-		@apply mb-12;
+	.containersum {
+		@apply pb-16;
 	}
 	.welcome {
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-		flex-direction: column;
-		font-size: 1.5em;
-		opacity: 75%;
-		margin: 0 4vw;
-		height: 80vh;
+		@apply flex justify-evenly align-middle flex-col text-1.5 opacity-75 h-80min mx-0 my-[4vw];
 		font-family:
 			Noto Sans,
 			'Trebuchet MS',

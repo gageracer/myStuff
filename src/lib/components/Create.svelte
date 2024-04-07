@@ -132,7 +132,7 @@
 
 <style>
 	.create-new {
-		@apply flex flex-col justify-center w-90;
+		@apply flex-auto flex-col justify-center w-90;
 	}
 
 	label {

@@ -83,6 +83,7 @@
 
 <style>
 	.containersum {
+		@apply shadow-container;
 		transition: background-color 0.5s ease;
 		margin-bottom: 1rem;
 		width: 95vw;
@@ -95,9 +96,7 @@
 		flex-direction: column;
 		font-size: calc(1rem + 4vmin);
 		color: black;
-		box-shadow:
-			0 4px 20px 0 rgba(0, 0, 0, 0.2),
-			0 6px 10px 0 rgba(0, 0, 0, 0.19);
+	
 	}
 	.containersum-on {
 		@apply bg-[var(--container-color-on)];
