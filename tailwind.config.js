@@ -42,7 +42,7 @@ export default {
 			},
 			fontFamily: {
 				rev: ['Courier New', 'Courier', 'monospace']
-			}
+			},
 		},
 	},
 	plugins: [],

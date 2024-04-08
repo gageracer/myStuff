@@ -29,28 +29,12 @@
 	{/if}
 </div>
 
-<style type="text/css">
+<style lang="postcss">
 	.modal-bg {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: rgba(0, 0, 0, 0.75);
+		@apply fixed top-0 left-0 w-full h-full bg-black/50;
 	}
 	.modal {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		width: calc(90vw - 4em);
-		max-width: 32em;
-		overflow: auto;
-		transform: translate(-50%, -50%);
-		padding: 1em;
-		border-radius: 0.2em;
-		background: white;
-		color: black;
-		display: flex;
-		flex-direction: column;
+		@apply absolute left-1/2 top-1/2 flex flex-col text-black bg-white p-[1em] translate-x-[-50%] translate-y-[-50%]
+		overflow-auto max-w-lg w-10/12 rounded;
 	}
 </style>
