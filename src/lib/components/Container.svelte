@@ -84,7 +84,7 @@
 <style lang="postcss">
 	.containersum {
 		@apply shadow-container transition-colors mb-4 w-95 min-h-10 py-[2vh]
-		flex align-middle flex-col text-black text-container;
+		flex items-center flex-col text-black text-container;
 	}
 	.containersum-on {
 		@apply bg-[var(--container-color-on)];
@@ -96,7 +96,7 @@
 		@apply bg-[var(--container-color-off)];
 	}
 	.details {
-		@apply flex flex-col align-middle justify-center text-orange-500 pt-0 text-contdetails min-h-20 max-h-80;
+		@apply flex flex-col items-center justify-center text-orange-500 pt-0 text-contdetails min-h-20 max-h-80;
 	}
 	.item-list {
 		@apply text-left w-90 overflow-scroll;

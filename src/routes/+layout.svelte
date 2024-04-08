@@ -19,54 +19,28 @@
 <svelte:head>
 	<title>My2Stuff</title>
 	<meta name="theme-color" content="#fff59d" />
-	<meta name="description" content="A simple app to track your stuff, made with Svelte!" />
+	<meta name="description" content="A simple app to track your stuff, made with svelte(5)kit(2)!" />
 </svelte:head>
 
 <style lang="postcss">
 	main {
-		@apply overflow-scroll;
-		text-align: center;
-		background-color: #f3f3f3;
-		height: auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		font-size: calc(1rem + 2vmin);
-		width: 100vw;
-		margin-top: 12vh;
+		@apply overflow-scroll w-screen min-h-screen mt-[10vh] text-contdetails flex items-center 
+		flex-col bg-black/5 text-center;
 	}
-	:global(html, body) {
-		position: relative;
-		width: 100%;
-	}
-	:global(body) {
-		background-color: #f3f3f3;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: flex-start;
-		font-size: calc(1rem + 2vmin);
-		margin: 0;
-		box-sizing: border-box;
-		font-family:
-			Noto Sans,
-			Roboto;
-	}
-	:global(label) {
-		display: block;
-	}
+	/* :global(body) {
+		@apply font-sans bg-black/5 flex h-screen flex-col items-center justify-start 
+		text-contdetails m-0 box-border;
+	} */
+	/* :global(label) {
+		@apply block;
+	} */
 	:global(input, button, select, textarea) {
-		font-family: inherit;
-		font-size: inherit;
-
-		box-sizing: border-box;
-		border: 1px solid #ccc;
-		border-radius: 2px;
+		@apply text-inherit box-border border-solid;
 	}
-	:global(button) {
-		outline: none;
-	}
-	:global(input:disabled) {
-		color: #ccc;
-	}
+	/* :global(button) {
+		@apply outline-none;
+	} */
+	/* :global(input:disabled) {
+		@apply text-white/20;
+	} */
 </style>
