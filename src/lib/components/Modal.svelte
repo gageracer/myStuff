@@ -31,7 +31,7 @@
 
 <style lang="postcss">
 	.modal-bg {
-		@apply fixed top-0 left-0 w-full h-full bg-black/50;
+		@apply fixed top-0 left-0 w-screen h-screen bg-black/50;
 	}
 	.modal {
 		@apply absolute left-1/2 top-1/2 flex flex-col text-black bg-white p-[1em] translate-x-[-50%] translate-y-[-50%]

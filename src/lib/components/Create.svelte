@@ -132,7 +132,7 @@
 
 <style lang="postcss">
 	.create-new {
-		@apply flex-auto flex-col justify-center w-90;
+		@apply flex-auto flex-col justify-center;
 	}
 
 	label {
@@ -164,7 +164,7 @@
 		@apply flex flex-row;
 	}
 	.buttons > button {
-		@apply bg-yellow-200 w-full text-2;
+		@apply bg-yellow-200 w-screen text-2;
 	}
 	.row-buttons {
 		@apply flex;

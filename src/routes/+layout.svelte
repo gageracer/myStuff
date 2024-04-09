@@ -24,7 +24,8 @@
 
 <style lang="postcss">
 	main {
-		@apply overflow-scroll w-screen min-h-screen mt-[10vh] text-contdetails flex items-center 
+		@apply overflow-scroll w-screen min-h-screen mt-[10vh] 
+		text-contdetails flex items-center 
 		flex-col bg-black/5 text-center;
 	}
 	/* :global(body) {
@@ -35,11 +36,11 @@
 		@apply block;
 	} */
 	:global(input, button, select, textarea) {
-		@apply text-inherit box-border border-solid;
+		@apply text-inherit box-border border-solid border-2;
 	}
-	/* :global(button) {
+	:global(button) {
 		@apply outline-none;
-	} */
+	}
 	/* :global(input:disabled) {
 		@apply text-white/20;
 	} */

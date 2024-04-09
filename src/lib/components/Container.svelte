@@ -125,9 +125,9 @@
 		@apply line-through text-gray-600 border-none bg-inherit;
 	}
 	#name {
-		@apply text-container w-full transition-colors;
+		@apply text-container w-full bg-transparent;
 	}
 	.options {
-		@apply transition-colors flex flex-row justify-around;
+		@apply transition-colors flex flex-row justify-around w-full;
 	}
 </style>
