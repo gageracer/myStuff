@@ -44,7 +44,7 @@
 
 <style lang="postcss">
 	.containersum {
-		@apply pb-16;
+		@apply pb-20;
 	}
 	.welcome {
 		@apply font-sans flex justify-evenly items-center flex-col text-1.5 opacity-75 h-80min mx-0 my-[4vw];

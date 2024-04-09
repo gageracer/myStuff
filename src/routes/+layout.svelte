@@ -25,7 +25,7 @@
 <style lang="postcss">
 	main {
 		@apply overflow-scroll w-screen min-h-screen mt-[10vh] 
-		text-contdetails flex items-center 
+		text-contdetails flex items-center pt-4 
 		flex-col bg-black/5 text-center;
 	}
 	/* :global(body) {
