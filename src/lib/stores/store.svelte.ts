@@ -2,7 +2,7 @@ import { setContext, getContext } from 'svelte'
 import { getList, setList } from '$lib/stores/localOps.svelte'
 import type { stuff, tmpContOrunSaved } from './types'
 import { onMount } from 'svelte'
-
+import { goto } from '$app/navigation'
 const MYSTUFF = 'MYSTUFF'
 
 const emptyStuff: stuff = {
@@ -50,9 +50,10 @@ class MyStuff {
 	// Editing any Container
 	editCont(id: number) {
 		$inspect('tmpContis: ' + id)
-		if (id <= this.stuff.length) {
-			console.log('id is within')
+		if (id >= 0 && id <= this.stuff.length) {
 			this.tmpCont = this.stuff[id]
+		} else {
+			goto('/')
 		}
 		$inspect('tmpCont updated to:', this.tmpCont)
 	}

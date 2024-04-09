@@ -5,7 +5,9 @@
 	const mystuff = getMyStuff()
 
 	$effect(() => {
-		mystuff.editCont(data.id)
+		if (mystuff.stuff.length) {
+			mystuff.editCont(data.id)
+		}
 	})
 </script>
 
