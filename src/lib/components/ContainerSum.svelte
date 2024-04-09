@@ -15,9 +15,9 @@
 </script>
 
 <div class="containersum">
-	{#each mystuff.stuff as _, i (i)}
+	{#each mystuff.stuff as _, id (id)}
 		<div animate:flip={{ duration: 200 }}>
-			<Container bind:container={mystuff.stuff[i]} />
+			<Container bind:container={mystuff.stuff[id]} {id} />
 		</div>
 	{:else}
 		<div class="welcome">

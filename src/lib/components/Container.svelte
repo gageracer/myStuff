@@ -3,7 +3,7 @@
 	import type { stuff } from '$lib/stores/types'
 	import { fly } from 'svelte/transition'
 
-	let { container = $bindable() }: { container: stuff } = $props()
+	let { container = $bindable(), id }: { container: stuff , id: number} = $props()
 
 	let interactColor = $state('#CADCE2')
 	let remaining = $derived(container.items.filter((e) => !e[1]).length)
@@ -13,9 +13,6 @@
 	$inspect('stuff changed, ', container)
 	// TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
 
-	function editHandle() {
-		mystuff.editCont(container)
-	}
 
 	function details() {
 		container.isSum = !container.isSum
@@ -68,7 +65,7 @@
 				{/each}
 			</ul>
 			<div class="options">
-				<a href="/edit" class="edit-button" on:click={editHandle}> Edit</a>
+				<a href="/edit/{id}" class="edit-button"> Edit</a>
 
 				<button
 					class={container.interact ? 'interactive-text-on' : 'interactive-text-off'}

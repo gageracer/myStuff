@@ -48,9 +48,12 @@ class MyStuff {
 		setList(this.unSaved, 'unSaved')
 	}
 	// Editing any Container
-	editCont(stuff: stuff) {
-		$inspect('tmpContis: ' + stuff.id)
-		this.tmpCont = stuff
+	editCont(id: number) {
+		$inspect('tmpContis: ' + id)
+		if (id <= this.stuff.length) {
+			console.log('id is within')
+			this.tmpCont = this.stuff[id]
+		}
 		$inspect('tmpCont updated to:', this.tmpCont)
 	}
 
