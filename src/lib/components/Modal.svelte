@@ -11,8 +11,8 @@
 	}: {
 		children: Snippet
 		content: string
-		onClose: MouseEventHandler<HTMLButtonElement>
-		onCancel: MouseEventHandler<HTMLButtonElement>
+		onClose?: MouseEventHandler<HTMLButtonElement>
+		onCancel?: MouseEventHandler<HTMLButtonElement>
 	} = $props()
 </script>
 

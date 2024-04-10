@@ -8,7 +8,7 @@
 	<span class="version">{mystuff.version}</span>
 </div>
 
-<style>
+<style lang="postcss">
 	.header {
 		@apply w-screen text-[2em] fixed flex justify-center flex-row 
 		items-center z-[3] p-0 bg-yellow-200 text-center h-[10vh] shadow-title top-0;

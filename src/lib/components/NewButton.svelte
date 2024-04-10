@@ -26,7 +26,5 @@
 	.sort {
 		@apply fixed w-12 h-12 text-base rounded-full top-5d -translate-y-1/2 font-rev text-black no-underline shadow-rev hover:shadow-lg bg-green-300 z-4 left-[5dvw];
 	}
-	.sortReverse {
-		@apply fixed w-12 h-12 text-base rounded-full top-5d -translate-y-1/2 font-rev text-black no-underline shadow-rev hover:shadow-lg bg-green-300 z-4 left-[5dvw];
-	}
+
 </style>

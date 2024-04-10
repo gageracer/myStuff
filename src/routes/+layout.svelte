@@ -5,6 +5,7 @@
 	import '../app.css'
 	import { updated } from '$app/stores'
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit'
+	import Modal from '$lib/components/Modal.svelte'
 
 	injectSpeedInsights()
 	const mystuff = setMyStuff()
@@ -19,13 +20,11 @@
 	{@render children?.()}
 
 	{#if $updated}
-		<div class="toast">
-			<p>
-				A new version of the app is available
-
+		<Modal content="A new version of the app is available">
+			<div class="toast">
 				<button on:click={() => location.reload()}> reload the page </button>
-			</p>
-		</div>
+			</div>
+		</Modal>
 	{/if}
 </main>
 
@@ -41,26 +40,13 @@
 		text-contdetails flex items-center pt-4 
 		flex-col bg-black/5 text-center;
 	}
-	/* :global(body) {
-		@apply font-sans bg-black/5 flex h-screen flex-col items-center justify-start 
-		text-contdetails m-0 box-border;
-	} */
-	/* :global(label) {
-		@apply block;
-	} */
+	.toast {
+		@apply fixed left-0 bottom-0 w-full flex justify-center gap-4 z-10;
+	}
 	:global(input, button, select, textarea) {
 		@apply text-inherit box-border border-solid border-2;
 	}
 	:global(button) {
 		@apply outline-none;
-	}
-	/* :global(input:disabled) {
-		@apply text-white/20;
-	} */
-	.toast {
-		@apply fixed left-0 bottom-0 w-full flex justify-center gap-4 z-10;
-	}
-	.toast p {
-		@apply flex items-center gap-4 bg-slate-500 py-2 px-4 rounded-md;
 	}
 </style>
