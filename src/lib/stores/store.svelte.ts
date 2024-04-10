@@ -22,7 +22,8 @@ class MyStuff {
 	unSaved: stuff = $state(emptyStuff)
 
 	constructor() {
-		this.version = '0.240312'
+		const now = new Date()
+		this.version = `0.${now.getUTCFullYear()}${now.getUTCMonth() + 1}${now.getUTCDate()}`
 		onMount(() => {
 			this.reLoad()
 		})
