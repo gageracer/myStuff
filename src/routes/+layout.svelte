@@ -3,6 +3,7 @@
 	import { setMyStuff } from '$lib/stores/store.svelte'
 	import { type Snippet } from 'svelte'
 	import '../app.css'
+	import { updated } from '$app/stores'
 
 	const mystuff = setMyStuff()
 	let w = $state(0)
@@ -14,6 +15,16 @@
 <Header />
 <main bind:clientWidth={w} bind:clientHeight={h}>
 	{@render children?.()}
+
+	{#if $updated}
+		<div class="toast">
+			<p>
+				A new version of the app is available
+
+				<button on:click={() => location.reload()}> reload the page </button>
+			</p>
+		</div>
+	{/if}
 </main>
 
 <svelte:head>
