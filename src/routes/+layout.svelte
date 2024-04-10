@@ -55,4 +55,10 @@
 	/* :global(input:disabled) {
 		@apply text-white/20;
 	} */
+	.toast {
+		@apply fixed left-0 bottom-0 w-full flex justify-center gap-4 z-10;
+	}
+	.toast p {
+		@apply flex items-center gap-4 bg-slate-500 py-2 px-4 rounded-md;
+	}
 </style>
