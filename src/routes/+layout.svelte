@@ -4,7 +4,9 @@
 	import { type Snippet } from 'svelte'
 	import '../app.css'
 	import { updated } from '$app/stores'
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit'
 
+	injectSpeedInsights()
 	const mystuff = setMyStuff()
 	let w = $state(0)
 	let h = $state(0)
