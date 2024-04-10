@@ -22,6 +22,9 @@ export default {
 				options: 'calc(1em + 4vmin)',
 				contdetails: 'calc(1rem + 2vmin)'
 			},
+			spacing: {
+				'5d': '5dvh'
+			},
 			width: {
 				90: '90vw',
 				80: '80vw',
@@ -42,9 +45,8 @@ export default {
 			},
 			fontFamily: {
 				rev: ['Courier New', 'Courier', 'monospace']
-			},
-		},
+			}
+		}
 	},
-	plugins: [],
-	jit: true
+	plugins: []
 }
