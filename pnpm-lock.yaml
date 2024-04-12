@@ -38,7 +38,7 @@ devDependencies:
     specifier: ^3.2.3
     version: 3.2.3(prettier@3.2.5)(svelte@5.0.0-next.100)
   svelte:
-    specifier: 5.0.0-next.100
+    specifier: ^5.0.0-next.100
     version: 5.0.0-next.100
   svelte-check:
     specifier: ^3.6.9
