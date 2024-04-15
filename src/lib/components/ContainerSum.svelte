@@ -33,7 +33,7 @@
 {#if githubVisible}
 	<a
 		class="github"
-		href="https://github.com/gageracer/myStuff"
+		href="https://github.com/gageracer/myStuff/tree/mystuff5"
 		target="_blank"
 		type="image/svg+xml"
 		transition:fade
