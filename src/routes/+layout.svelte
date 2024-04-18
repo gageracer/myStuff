@@ -56,7 +56,7 @@
 		flex-col bg-black/5 text-center;
 	}
 	.toast {
-		@apply fixed left-0 bottom-0 w-full flex justify-center gap-4 z-10;
+		@apply fixed left-0 bottom-0 w-full flex justify-center gap-4 z-10 h-[25vh];
 	}
 	:global(input, button, select, textarea) {
 		@apply text-inherit box-border border-solid border-2;
