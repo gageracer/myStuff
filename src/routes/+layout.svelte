@@ -36,7 +36,7 @@
 
 <style lang="postcss">
 	.reloadbtn{
-		@apply bg-lime-500;
+		@apply bg-lime-400;
 	}
 	main {
 		/* overflow: scroll;
