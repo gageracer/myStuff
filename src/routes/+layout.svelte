@@ -22,7 +22,7 @@
 	{#if $updated}
 		<Modal content="A new version of the app is available">
 			<div class="toast">
-				<button on:click={() => location.reload()}> reload the page </button>
+				<button class="reloadbtn" onclick={() => location.reload()}> reload the page </button>
 			</div>
 		</Modal>
 	{/if}
@@ -35,6 +35,9 @@
 </svelte:head>
 
 <style lang="postcss">
+	.reloadbtn{
+		@apply bg-lime-500 m-2;
+	}
 	main {
 		/* overflow: scroll;
 		width: 100vw;
