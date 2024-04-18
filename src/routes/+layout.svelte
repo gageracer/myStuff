@@ -51,7 +51,7 @@
 		background-color: rgb(0 0 0 / 0.05);
 		text-align: center; */
 
-		@apply overflow-scroll w-screen min-h-screen mt-[10vh] 
+		@apply overflow-scroll w-screen min-h-[90vh] mt-[10vh] 
 		text-contdetails flex items-center pt-4 
 		flex-col bg-black/5 text-center;
 	}
