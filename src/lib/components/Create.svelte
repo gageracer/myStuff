@@ -132,7 +132,7 @@
 
 <style lang="postcss">
 	.create-new {
-		@apply flex-auto flex-col justify-center;
+		@apply flex-1 flex-col justify-center;
 	}
 
 	label {

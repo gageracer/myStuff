@@ -36,9 +36,21 @@
 
 <style lang="postcss">
 	main {
-		@apply overflow-scroll w-screen min-h-screen mt-[10vh] 
+		overflow: scroll;
+		width: 100vw;
+		min-height: 100vh;
+		margin-top: 10vh;
+		font-size: calc(1rem/* 16px */ + 2vmin);
+		display: flex;
+		align-items: center;
+		padding-top: 1rem/* 16px */;
+		flex-direction: column;
+		background-color: rgb(0 0 0 / 0.05);
+		text-align: center;
+
+		/* @apply overflow-scroll w-screen min-h-screen mt-[10vh] 
 		text-contdetails flex items-center pt-4 
-		flex-col bg-black/5 text-center;
+		flex-col bg-black/5 text-center; */
 	}
 	.toast {
 		@apply fixed left-0 bottom-0 w-full flex justify-center gap-4 z-10;
