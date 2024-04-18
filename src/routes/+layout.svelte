@@ -20,7 +20,7 @@
 	{@render children?.()}
 
 	{#if $updated}
-		<Modal content="A new version of the app is available">
+		<Modal content="Update is available">
 			<div class="toast">
 				<button class="reloadbtn" onclick={() => location.reload()}> reload the page </button>
 			</div>
@@ -36,7 +36,7 @@
 
 <style lang="postcss">
 	.reloadbtn{
-		@apply bg-lime-500 m-2;
+		@apply bg-lime-500;
 	}
 	main {
 		/* overflow: scroll;
@@ -56,7 +56,7 @@
 		flex-col bg-black/5 text-center;
 	}
 	.toast {
-		@apply fixed left-0 bottom-0 w-full flex justify-center gap-4 z-10 h-[25vh];
+		@apply left-0 bottom-0 w-full flex justify-center gap-4 z-10;
 	}
 	:global(input, button, select, textarea) {
 		@apply text-inherit box-border border-solid border-2;
