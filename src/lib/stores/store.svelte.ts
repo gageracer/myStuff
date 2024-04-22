@@ -114,10 +114,9 @@ class MyStuff {
 	}
 }
 
-export function setMyStuff() {
+export function initMyStuff() {
 	const myStuff = new MyStuff()
 	setContext(MYSTUFF, myStuff)
-	return myStuff
 }
 
 export function getMyStuff() {

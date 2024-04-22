@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/components/Header.svelte'
-	import { setMyStuff } from '$lib/stores/store.svelte'
+	import { initMyStuff } from '$lib/stores/store.svelte'
 	import { type Snippet } from 'svelte'
 	import '../app.css'
 	import { updated } from '$app/stores'
@@ -8,7 +8,7 @@
 	import Modal from '$lib/components/Modal.svelte'
 
 	injectSpeedInsights()
-	const mystuff = setMyStuff()
+	initMyStuff()
 	let w = $state(0)
 	let h = $state(0)
 	$inspect(w, h)
