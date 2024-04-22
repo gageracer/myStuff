@@ -119,7 +119,6 @@
 {#if delModal}
 	<Modal
 		content="Are you sure you wanna delete this container?"
-		onCancel={() => (delModal = false)}
 		onClose={() => (delModal = false)}
 	>
 		<br />

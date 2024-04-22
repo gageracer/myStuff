@@ -6,17 +6,15 @@
 	let {
 		children,
 		content,
-		onClose,
-		onCancel
+		onClose
 	}: {
 		children: Snippet
 		content: string
 		onClose?: MouseEventHandler<HTMLButtonElement>
-		onCancel?: MouseEventHandler<HTMLButtonElement>
 	} = $props()
 </script>
 
-<div class="modal-bg" transition:blur={{ amount: 10 }} onclick={onCancel}></div>
+<div class="modal-bg" transition:blur={{ amount: 10 }} role="alertdialog" aria-modal="true"></div>
 
 <div class="modal" transition:fly={{ y: 300 }}>
 	<div>
