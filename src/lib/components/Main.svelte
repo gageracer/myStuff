@@ -10,7 +10,7 @@
 </script>
 
 <!-- Page width:{w} height:{h} ratio: {ratio} -->
-<div transition:slide={{ duration: 500 }} onoutroend={() => (status = 'outro ended')}>
+<div transition:slide|global={{ duration: 500 }} onoutroend={() => (status = 'outro ended')}>
 	<!-- <svg width="100vw" height="20vh">
             <circle cx="50%" cy="50%" r="40" stroke="green" stroke-width="4" fill="yellow" />
             <text fill="#0f0f0f" font-size="40" font-family="Verdana" x="50%" y="50%">SVG</text>

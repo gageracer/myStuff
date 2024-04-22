@@ -155,7 +155,7 @@
 	}
 
 	.itemslist > div {
-		@apply w-90;
+		/* @apply w-90; */
 	}
 	.itemslist > button {
 		@apply w-[10vw] bg-yellow-200 flex flex-col justify-center items-center;
