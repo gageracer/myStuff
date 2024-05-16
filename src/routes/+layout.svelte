@@ -35,22 +35,10 @@
 </svelte:head>
 
 <style lang="postcss">
-	.reloadbtn{
+	.reloadbtn {
 		@apply bg-lime-400;
 	}
 	main {
-		/* overflow: scroll;
-		width: 100vw;
-		min-height: 100vh;
-		margin-top: 10vh;
-		font-size: calc(1rem 16px  + 2vmin);
-		display: flex;
-		align-items: center;
-		padding-top: 1rem16px ;
-		flex-direction: column;
-		background-color: rgb(0 0 0 / 0.05);
-		text-align: center; */
-
 		@apply overflow-scroll w-screen min-h-[90vh] mt-[10vh] 
 		text-contdetails flex items-center pt-4 
 		flex-col bg-black/5 text-center;

@@ -24,11 +24,13 @@
 	})
 	$inspect(editt ? 'tmp loaded' : 'unsaved loaded', tmpCont)
 	function handleSubmit() {
+		const length = tmpCont.items.length - 1
 		if (tmpCont.name && tmpCont.type && tmpCont.items) {
 			// items = items.filter(Boolean);
-			if (tmpCont.items[tmpCont.items.length - 1][0] === '')
-				tmpCont.items.splice(tmpCont.items.length - 1, 1)
-			tmpCont.items[tmpCont.items.length - 1][1] = false
+			if (tmpCont.items[length][0] === '') tmpCont.items.splice(length, 1)
+			if (tmpCont.items[length][1] === undefined) {
+				tmpCont.items[length][1] = false
+			}
 
 			mystuff.addContainer(tmpCont)
 
@@ -37,17 +39,24 @@
 	}
 
 	function deleteSubmit() {
-		mystuff.deleteContainer(tmpCont.id)
-		goto('/', { replaceState: true })
+		if (tmpCont && tmpCont.id) {
+			mystuff.deleteContainer(tmpCont.id)
+			goto('/', { replaceState: true })
+		} else {
+			console.error('tmpCont or tmCont.id is undefined')
+		}
+	}
+	function formSubmit(e: SubmitEvent) {
+		e.preventDefault()
 	}
 	// TODO:This whole thing should be a form and items should be object or something strict
 
 	// $inspect('the last item is::::::::::::::::::::::', items.slice(-1)[1])
 
-	function newItem(itm: string) {
-		if (tmpCont.items[tmpCont.items.length - 1][0] !== '') {
-			tmpCont.items[tmpCont.items.length - 1] = [itm, false]
-			tmpCont.items = [...tmpCont.items, ['', false]]
+	function newItem() {
+		const length = tmpCont.items.length - 1
+		if (tmpCont.items[length][0] !== '') {
+			tmpCont.items.push(['', false])
 		}
 	}
 
@@ -58,7 +67,7 @@
 	}
 </script>
 
-<div class="create-new" transition:slide={{ duration: 500 }}>
+<form class="create-new" transition:slide={{ duration: 500 }} onsubmit={formSubmit}>
 	<label for="name">
 		<input
 			type="text"
@@ -99,7 +108,7 @@
 						<div class="minus"></div>
 					</button>
 				{/if}
-				<button name="add-item" onclick={() => newItem(item[0])}>
+				<button name="add-item" onclick={() => newItem()}>
 					<div class="cross"></div>
 				</button>
 			</div>
@@ -115,12 +124,9 @@
 			<button name="save-container" onclick={handleSubmit}>Save</button>
 		</div>
 	</label>
-</div>
+</form>
 {#if delModal}
-	<Modal
-		content="Are you sure you wanna delete this container?"
-		onClose={() => (delModal = false)}
-	>
+	<Modal content="Are you sure you wanna delete this container?" onClose={() => (delModal = false)}>
 		<br />
 		<div class="row-buttons">
 			<button onclick={deleteSubmit} class="bg-red-600">Yes</button>
