@@ -33,6 +33,8 @@
     "@vercel/speed-insights": "^1.0.10"
   },
   "trustedDependencies": [
+    "@sveltejs/kit",
+    "@vercel/speed-insights",
     "svelte-preprocess"
   ]
 }
