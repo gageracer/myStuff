@@ -4,7 +4,7 @@
 </script>
 
 <div class="header">
-	<a href="/">My_Stuff</a>
+	<a href="/" aria-label="Goes to the main page">My_Stuff</a>
 	<span class="version">{mystuff.version}</span>
 </div>
 

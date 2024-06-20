@@ -36,6 +36,7 @@
 		href="https://github.com/gageracer/myStuff/tree/mystuff5"
 		target="_blank"
 		type="image/svg+xml"
+		aria-label="Goes to the github page of this project"
 		transition:fade
 	>
 		<GitHub />
