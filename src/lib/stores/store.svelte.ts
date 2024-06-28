@@ -113,14 +113,13 @@ class MyStuff {
 		return this.stuff.find((stuff) => stuff.id == _stuff.id)
 	}
 }
-
+const STUFF_KEY = Symbol('MYSTUFF')
 export function initMyStuff() {
-	const myStuff = new MyStuff()
-	setContext(MYSTUFF, myStuff)
+	return setContext(STUFF_KEY, new MyStuff())
 }
 
 export function getMyStuff() {
-	return getContext<MyStuff>(MYSTUFF)
+	return getContext<ReturnType<typeof initMyStuff>>(STUFF_KEY)
 }
 
 // export const containerColors = $state([
