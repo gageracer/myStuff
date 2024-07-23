@@ -11,9 +11,9 @@ let localVersion = version
 
 if (version) {
 	localVersion = version
-	window.localStorage.setItem('swversion', localVersion)
+	localStorage.setItem('swversion', localVersion)
 } else {
-	localVersion = window.localStorage.getItem('swversion') || ''
+	localVersion = localStorage.getItem('swversion') || ''
 }
 
 const CACHE = `dev-my-stuff-${localVersion}`
