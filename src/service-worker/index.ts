@@ -7,7 +7,16 @@ const sw = self as unknown as ServiceWorkerGlobalScope
 import { build, files, version } from '$service-worker'
 
 // Create a unique cache name for this deployment
-const CACHE = `dev-my-stuff-${version}`
+let localVersion = version
+
+if (version) {
+	localVersion = version
+	window.localStorage.setItem('swversion', localVersion)
+} else {
+	localVersion = window.localStorage.getItem('swversion') || ''
+}
+
+const CACHE = `dev-my-stuff-${localVersion}`
 
 const ASSETS = [
 	...build, // the app itself
