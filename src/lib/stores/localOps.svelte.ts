@@ -1,16 +1,5 @@
 import type { stuff, temp } from './types'
-import { version } from '$service-worker'
 
-export function localVersion() {
-	let localVersion = ''
-	if (version) {
-		localVersion = version
-		window.localStorage.setItem('swversion', localVersion)
-	} else {
-		localVersion = window.localStorage.getItem('swversion') || ''
-	}
-	return localVersion
-}
 // These are set and get functions for the whole Containers list
 export function setList(item: stuff | stuff[] | temp | string | boolean, lsName: string) {
 	$inspect(lsName, ' ----------------------->', item)
