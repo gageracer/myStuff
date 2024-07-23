@@ -4,19 +4,13 @@
 /// <reference lib="webworker" />
 
 const sw = self as unknown as ServiceWorkerGlobalScope
-import { build, files, version } from '$service-worker'
+import { localVersion } from '$lib/stores/localOps.svelte'
+import { build, files } from '$service-worker'
 
 // Create a unique cache name for this deployment
-let localVersion = version
+let localVer = localVersion()
 
-if (version) {
-	localVersion = version
-	localStorage.setItem('swversion', localVersion)
-} else {
-	localVersion = localStorage.getItem('swversion') || ''
-}
-
-const CACHE = `dev-my-stuff-${localVersion}`
+const CACHE = `dev-my-stuff-${localVer}`
 
 const ASSETS = [
 	...build, // the app itself
