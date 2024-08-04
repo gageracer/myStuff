@@ -39,7 +39,7 @@
 	}
 
 	function deleteSubmit() {
-		if (tmpCont && tmpCont.id) {
+		if (tmpCont?.id) {
 			mystuff.deleteContainer(tmpCont.id)
 			goto('/', { replaceState: true })
 		} else {

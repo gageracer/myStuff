@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Main from '$lib/components/Main.svelte';
+	import Main from '$lib/components/Main.svelte'
 	// import { getContext } from 'svelte';
 	// let wi = $state(0);
 	// let he = $state(0);

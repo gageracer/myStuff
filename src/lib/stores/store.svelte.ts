@@ -50,7 +50,7 @@ class MyStuff {
 	}
 	// Editing any Container
 	editCont(id: number) {
-		$inspect('tmpContis: ' + id)
+		$inspect(`tmpContis: ${id}`)
 		if (id >= 0 && id <= this.stuff.length) {
 			this.tmpCont = this.stuff[id]
 		} else {
@@ -61,7 +61,7 @@ class MyStuff {
 
 	// Deleting a Container
 	deleteContainer(oId: string) {
-		let x = this.stuff.findIndex((x) => x.id === oId)
+		const x = this.stuff.findIndex((x) => x.id === oId)
 		this.stuff.splice(x, 1)
 		this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
 		this.updateStuff()
@@ -79,9 +79,9 @@ class MyStuff {
 	}
 	// Adding or Updating a Container
 	addContainer(_stuff: stuff) {
-		if (_stuff.id == '') {
+		if (_stuff.id === '') {
 			$inspect('I am Creating new one')
-			let newStuff: stuff = {
+			const newStuff: stuff = {
 				id: (this.stuff.length + Math.random()).toString(),
 				name: _stuff.name,
 				type: _stuff.type,
@@ -94,7 +94,7 @@ class MyStuff {
 			this.clearTmpUnsaved('unSaved')
 		} else {
 			$inspect('updating the container...')
-			let x = this.stuff.findIndex((x) => x.id === _stuff.id)
+			const x = this.stuff.findIndex((x) => x.id === _stuff.id)
 			this.stuff[x] = {
 				id: _stuff.id,
 				name: _stuff.name,
@@ -110,7 +110,7 @@ class MyStuff {
 	}
 
 	findStuff(_stuff: stuff) {
-		return this.stuff.find((stuff) => stuff.id == _stuff.id)
+		return this.stuff.find((stuff) => stuff.id === _stuff.id)
 	}
 }
 const STUFF_KEY = Symbol('MYSTUFF')
