@@ -1,1 +1,1 @@
-export const ssr = false // If both `ssr` and `csr` are `false`, nothing will be rendered!
+export const ssr = true // If both `ssr` and `csr` are `false`, nothing will be rendered!
