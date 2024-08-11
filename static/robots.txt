@@ -1,0 +1,3 @@
+# Disallow all web crawlers from accessing the /admin/ directory
+User-agent: *
+Disallow: /admin/
