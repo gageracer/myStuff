@@ -1,86 +1,40 @@
-Try it here: https://gageracer.github.io/myStuff/
+[svelte5-demo](https://mystuff-murex.vercel.app/)
 
-This is a simple Web App Project for me to learn and hopefully share to anyone interested in Svelte! Whole purpose of the app is to keep track of stuff you have at home/work or wherever so when you forgot if you have milk at home or not you can check it!
+# create-svelte
 
-Stuff I want to add are:
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
-- [x] PWA compatibility :heavy_check_mark:
-- [ ] Add quantity for some items like Eggs,sock pairs etc.
-- [ ] Low quantity threshold setting for certain items.
-- [ ] Alert system for periodicly updating items or changing/removing/cleanig.
+## Creating a project
 
-Please give me feedback on anything to make me a better Svelter, Thanks!
-
----
-
-*Psst — looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
-
----
-
-# svelte app
-
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
-
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+If you're seeing this, you've probably already done this step. Congrats!
 
 ```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
+# create a new project in the current directory
+npm create svelte@latest
+
+# create a new project in my-app
+npm create svelte@latest my-app
 ```
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+## Developing
 
-
-## Get started
-
-Install the dependencies...
-
-```bash
-cd svelte-app
-npm install
-```
-
-...then start [Rollup](https://rollupjs.org):
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
 ```bash
 npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+## Building
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-
-## Deploying to the web
-
-### With [now](https://zeit.co/now)
-
-Install `now` if you haven't already:
-
-```bash
-npm install -g now
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-now
-```
-
-As an alternative, use the [Now desktop client](https://zeit.co/download) and simply drag the unzipped project folder to the taskbar icon.
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
+To create a production version of your app:
 
 ```bash
 npm run build
-surge public
 ```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

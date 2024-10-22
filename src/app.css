@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	@font-face {
+		font-family: 'Noto Sans';
+	}
+}
+
+@layer components {
+	.minus {
+		@apply bg-black h-[0.075em] relative w-[1.5em];
+	}
+	.cross {
+		@apply bg-black h-[1.5em] relative w-[0.075em] left-0 after:bg-black 
+		after:h-[0.075em] after:left-[-0.7em] after:absolute after:top-[0.7em] after:w-[1.5em];
+	}
+}

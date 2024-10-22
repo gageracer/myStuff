@@ -1,33 +1,40 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
-  "devDependencies": {
-    "@rollup/plugin-typescript": "^5.0.2",
-    "@tsconfig/svelte": "^1.0.4",
-    "npm-run-all": "^4.1.5",
-    "rollup": "^1.12.0",
-    "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-livereload": "^1.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-svelte": "^5.0.3",
-    "rollup-plugin-svelte-svg": "^0.2.3",
-    "rollup-plugin-terser": "^4.0.4",
-    "svelte": "^3.0.0",
-    "svelte-check": "^1.0.7",
-    "svelte-preprocess": "^4.0.10",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9.7"
-  },
-  "dependencies": {
-    "global": "^4.4.0",
-    "now": "^16.5.2",
-    "sirv-cli": "^0.4.4"
-  },
+  "name": "mystuff",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "start:dev": "sirv public --single --dev --host 0.0.0.0",
-    "build": "rollup -c",
-    "autobuild": "rollup -c -w",
-    "dev": "run-p start:dev autobuild",
-    "start": "sirv public --single"
-  }
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-vercel": "^5.4.5",
+    "@sveltejs/kit": "^2.7.2",
+    "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^6.1.2",
+    "postcss": "^8.4.47",
+    "postcss-import": "^16.1.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-svelte": "^3.2.7",
+    "svelte": "^5.0.5",
+    "svelte-check": "^3.8.6",
+    "tailwindcss": "^3.4.14",
+    "tslib": "^2.8.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9"
+  },
+  "type": "module",
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  },
+  "trustedDependencies": [
+    "@sveltejs/kit",
+    "@vercel/speed-insights",
+    "svelte-preprocess"
+  ]
 }
