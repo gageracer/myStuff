@@ -104,11 +104,11 @@
 					required
 				/>
 				{#if i != 0}
-					<button name="rem-item" onclick={() => remItem(i)}>
+					<button aria-label="removebtn" name="rem-item" onclick={() => remItem(i)}>
 						<div class="minus"></div>
 					</button>
 				{/if}
-				<button name="add-item" onclick={() => newItem()}>
+				<button aria-label="addbtn" name="add-item" onclick={() => newItem()}>
 					<div class="cross"></div>
 				</button>
 			</div>
