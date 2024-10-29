@@ -1,21 +1,21 @@
-import { setContext, getContext } from 'svelte'
-import { getList, setList } from '$lib/stores/localOps.svelte'
-import type { stuff, tmpContOrunSaved } from './types'
-import { onMount } from 'svelte'
-import { goto } from '$app/navigation'
-const MYSTUFF = 'MYSTUFF'
+import { setContext, getContext } from "svelte"
+import { getList, setList } from "$lib/stores/localOps.svelte"
+import type { stuff, tmpContOrunSaved } from "./types"
+import { onMount } from "svelte"
+import { goto } from "$app/navigation"
+const MYSTUFF = "MYSTUFF"
 
 const emptyStuff: stuff = {
-	id: '',
-	name: '',
-	type: '',
-	items: [['', false]],
+	id: "",
+	name: "",
+	type: "",
+	items: [["", false]],
 	interact: false,
-	containerColor: '',
-	isSum: true
+	containerColor: "",
+	isSum: true,
 }
 class MyStuff {
-	version: string = $state('')
+	version: string = $state("")
 	sortReverse: boolean = $state(false)
 	stuff: stuff[] = $state([])
 	tmpCont: stuff = $state(emptyStuff)
@@ -30,23 +30,23 @@ class MyStuff {
 	}
 	// Grabs all local stored Stuff
 	reLoad() {
-		this.stuff = getList('myStuff')
-		this.unSaved = getList('unSaved')
-		this.tmpCont = getList('tmpCont')
-		this.sortReverse = getList('sortReverse')
+		this.stuff = getList("myStuff")
+		this.unSaved = getList("unSaved")
+		this.tmpCont = getList("tmpCont")
+		this.sortReverse = getList("sortReverse")
 	}
 	// Updates stuff to localstorage
 	updateStuff() {
-		setList(this.stuff, 'myStuff')
-		setList(this.sortReverse, 'sortReverse')
+		setList(this.stuff, "myStuff")
+		setList(this.sortReverse, "sortReverse")
 	}
 	// Updates tmpcont to localstorage
 	tmpContLS() {
-		setList(this.tmpCont, 'tmpCont')
+		setList(this.tmpCont, "tmpCont")
 	}
 	// Updates unsaved to localstorage
 	unSavedtLS() {
-		setList(this.unSaved, 'unSaved')
+		setList(this.unSaved, "unSaved")
 	}
 	// Editing any Container
 	editCont(id: number) {
@@ -54,9 +54,9 @@ class MyStuff {
 		if (id >= 0 && id <= this.stuff.length) {
 			this.tmpCont = this.stuff[id]
 		} else {
-			goto('/')
+			goto("/")
 		}
-		$inspect('tmpCont updated to:', this.tmpCont)
+		$inspect("tmpCont updated to:", this.tmpCont)
 	}
 
 	// Deleting a Container
@@ -65,7 +65,7 @@ class MyStuff {
 		this.stuff.splice(x, 1)
 		this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
 		this.updateStuff()
-		this.clearTmpUnsaved('tmpCont')
+		this.clearTmpUnsaved("tmpCont")
 	}
 	clearTmpUnsaved(lsName: tmpContOrunSaved) {
 		setList(emptyStuff, lsName)
@@ -79,8 +79,8 @@ class MyStuff {
 	}
 	// Adding or Updating a Container
 	addContainer(_stuff: stuff) {
-		if (_stuff.id === '') {
-			$inspect('I am Creating new one')
+		if (_stuff.id === "") {
+			$inspect("I am Creating new one")
 			const newStuff: stuff = {
 				id: (this.stuff.length + Math.random()).toString(),
 				name: _stuff.name,
@@ -88,12 +88,12 @@ class MyStuff {
 				items: _stuff.items,
 				interact: _stuff.interact,
 				containerColor: _stuff.containerColor,
-				isSum: _stuff.isSum
+				isSum: _stuff.isSum,
 			}
 			this.stuff.push(newStuff)
-			this.clearTmpUnsaved('unSaved')
+			this.clearTmpUnsaved("unSaved")
 		} else {
-			$inspect('updating the container...')
+			$inspect("updating the container...")
 			const x = this.stuff.findIndex((x) => x.id === _stuff.id)
 			this.stuff[x] = {
 				id: _stuff.id,
@@ -102,10 +102,10 @@ class MyStuff {
 				items: _stuff.items,
 				interact: _stuff.interact,
 				containerColor: _stuff.containerColor,
-				isSum: _stuff.isSum
+				isSum: _stuff.isSum,
 			}
 			this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-			this.clearTmpUnsaved('tmpCont')
+			this.clearTmpUnsaved("tmpCont")
 		}
 	}
 
@@ -113,7 +113,7 @@ class MyStuff {
 		return this.stuff.find((stuff) => stuff.id === _stuff.id)
 	}
 }
-const STUFF_KEY = Symbol('MYSTUFF')
+const STUFF_KEY = Symbol(MYSTUFF)
 export function initMyStuff() {
 	return setContext(STUFF_KEY, new MyStuff())
 }
