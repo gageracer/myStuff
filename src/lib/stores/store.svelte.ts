@@ -50,13 +50,17 @@ class MyStuff {
 	}
 	// Editing any Container
 	editCont(id: number) {
-		$inspect(`tmpContis: ${id}`)
+		if ($effect.tracking()) {
+			$inspect(`tmpContis: ${id}`)
+		}
 		if (id >= 0 && id <= this.stuff.length) {
 			this.tmpCont = this.stuff[id]
 		} else {
 			goto("/")
 		}
-		$inspect("tmpCont updated to:", this.tmpCont)
+		if ($effect.tracking()) {
+			$inspect("tmpCont updated to:", this.tmpCont)
+		}
 	}
 
 	// Deleting a Container
@@ -80,7 +84,9 @@ class MyStuff {
 	// Adding or Updating a Container
 	addContainer(_stuff: stuff) {
 		if (_stuff.id === "") {
-			$inspect("I am Creating new one")
+			if ($effect.tracking()) {
+				$inspect("I am Creating new one")
+			}
 			const newStuff: stuff = {
 				id: (this.stuff.length + Math.random()).toString(),
 				name: _stuff.name,
@@ -93,7 +99,9 @@ class MyStuff {
 			this.stuff.push(newStuff)
 			this.clearTmpUnsaved("unSaved")
 		} else {
-			$inspect("updating the container...")
+			if ($effect.tracking()) {
+				$inspect("updating the container...")
+			}
 			const x = this.stuff.findIndex((x) => x.id === _stuff.id)
 			this.stuff[x] = {
 				id: _stuff.id,

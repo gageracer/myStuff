@@ -11,7 +11,7 @@
 	initMyStuff()
 	let w = $state(0)
 	let h = $state(0)
-	$inspect(w, h)
+	// $inspect(w, h)
 	let { children }: { children: Snippet } = $props()
 </script>
 
