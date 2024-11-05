@@ -33,7 +33,7 @@
 {#if githubVisible}
 	<a
 		class="github"
-		href="https://github.com/gageracer/myStuff/tree/mystuff5"
+		href="https://github.com/gageracer/myStuff/"
 		target="_blank"
 		type="image/svg+xml"
 		aria-label="Goes to the github page of this project"
