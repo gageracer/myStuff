@@ -20,14 +20,18 @@
 			<Container bind:container={mystuff.stuff[id]} {id} />
 		</div>
 	{:else}
-		<div class="welcome">
-			<div>
-				Welcome to MyStuff! Start adding Containers to the app using the plus button so you can keep
-				track of stuff you have, even when you forgot the app remembers!
-			</div>
+		{#if mystuff.firstTime}
+			<div class="welcome">
+				<div>
+					Welcome to MyStuff! Start adding Containers to the app using the plus button so you can
+					keep track of stuff you have, even when you forgot the app remembers!
+				</div>
 
-			<div>This app saves all data to your local store so all your data is on your device.</div>
-		</div>
+				<div>This app saves all data to your local store so all your data is on your device.</div>
+			</div>
+		{:else}
+			<p class="welcome">...</p>
+		{/if}
 	{/each}
 </div>
 {#if githubVisible}
@@ -48,9 +52,12 @@
 		@apply pb-20;
 	}
 	.welcome {
-		@apply font-sans flex justify-evenly items-center flex-col text-1.5 opacity-75 h-80min mx-0 my-[4vw];
+		@apply font-sans flex justify-evenly items-center flex-col text-1.5 opacity-75 mx-0 my-[8vh];
 	}
 	.github {
 		@apply fixed no-underline top-5d -translate-y-1/2 right-[3vw] z-4;
+	}
+	.loading {
+		@apply h-screen;
 	}
 </style>

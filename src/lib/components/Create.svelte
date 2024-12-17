@@ -23,7 +23,7 @@
 		$inspect(editt ? 'tmp changed:' : 'unsaved changed:', tmpCont)
 	})
 	$inspect(editt ? 'tmp loaded' : 'unsaved loaded', tmpCont)
-	function handleSubmit() {
+	async function handleSubmit() {
 		const length = tmpCont.items.length - 1
 		if (tmpCont.name && tmpCont.type && tmpCont.items) {
 			// items = items.filter(Boolean);
@@ -32,7 +32,7 @@
 				tmpCont.items[length][1] = false
 			}
 
-			mystuff.addContainer(tmpCont)
+			await mystuff.addContainer(tmpCont)
 
 			goto('/', { replaceState: true })
 		}

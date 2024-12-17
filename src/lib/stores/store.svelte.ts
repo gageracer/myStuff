@@ -6,128 +6,132 @@ import { goto } from "$app/navigation"
 const MYSTUFF = "MYSTUFF"
 
 const emptyStuff: stuff = {
-	id: "",
-	name: "",
-	type: "",
-	items: [["", false]],
-	interact: false,
-	containerColor: "",
-	isSum: true,
+  id: "",
+  name: "",
+  type: "",
+  items: [["", false]],
+  interact: false,
+  containerColor: "",
+  isSum: true,
 }
 class MyStuff {
-	version: string = $state("")
-	sortReverse: boolean = $state(false)
-	stuff: stuff[] = $state([])
-	tmpCont: stuff = $state(emptyStuff)
-	unSaved: stuff = $state(emptyStuff)
+  version: string = $state("")
+  sortReverse: boolean = $state(false)
+  stuff: stuff[] = $state([])
+  tmpCont: stuff = $state(emptyStuff)
+  unSaved: stuff = $state(emptyStuff)
+  firstTime: boolean = $state(false)
 
-	constructor() {
-		const now = new Date()
-		this.version = `0.${now.getUTCFullYear()}${now.getUTCMonth() + 1}${now.getUTCDate()}`
-		onMount(() => {
-			this.reLoad()
-		})
-	}
-	// Grabs all local stored Stuff
-	reLoad() {
-		this.stuff = getList("myStuff")
-		this.unSaved = getList("unSaved")
-		this.tmpCont = getList("tmpCont")
-		this.sortReverse = getList("sortReverse")
-	}
-	// Updates stuff to localstorage
-	updateStuff() {
-		setList(this.stuff, "myStuff")
-		setList(this.sortReverse, "sortReverse")
-	}
-	// Updates tmpcont to localstorage
-	tmpContLS() {
-		setList(this.tmpCont, "tmpCont")
-	}
-	// Updates unsaved to localstorage
-	unSavedtLS() {
-		setList(this.unSaved, "unSaved")
-	}
-	// Editing any Container
-	editCont(id: number) {
-		if ($effect.tracking()) {
-			$inspect(`tmpContis: ${id}`)
-		}
-		if (id >= 0 && id <= this.stuff.length) {
-			this.tmpCont = this.stuff[id]
-		} else {
-			goto("/")
-		}
-		if ($effect.tracking()) {
-			$inspect("tmpCont updated to:", this.tmpCont)
-		}
-	}
+  constructor() {
+    const now = new Date()
+    this.version = `0.${now.getUTCFullYear()}${now.getUTCMonth() + 1}${now.getUTCDate()}`
+    onMount(() => {
+      this.reLoad()
+    })
+  }
+  // Grabs all local stored Stuff
+  async reLoad() {
+    this.stuff = await getList("myStuff")
+    this.unSaved = await getList("unSaved")
+    this.tmpCont = await getList("tmpCont")
+    this.sortReverse = await getList("sortReverse")
+    if (this.stuff.length === 0) {
+      this.firstTime = true
+    }
+  }
+  // Updates stuff to localstorage
+  async updateStuff() {
+    await setList(this.stuff, "myStuff")
+    await setList(this.sortReverse, "sortReverse")
+  }
+  // Updates tmpcont to localstorage
+  async tmpContLS() {
+    await setList(this.tmpCont, "tmpCont")
+  }
+  // Updates unsaved to localstorage
+  async unSavedtLS() {
+    await setList(this.unSaved, "unSaved")
+  }
+  // Editing any Container
+  editCont(id: number) {
+    if ($effect.tracking()) {
+      $inspect(`tmpContis: ${id}`)
+    }
+    if (id >= 0 && id <= this.stuff.length) {
+      this.tmpCont = this.stuff[id]
+    } else {
+      goto("/")
+    }
+    if ($effect.tracking()) {
+      $inspect("tmpCont updated to:", this.tmpCont)
+    }
+  }
 
-	// Deleting a Container
-	deleteContainer(oId: string) {
-		const x = this.stuff.findIndex((x) => x.id === oId)
-		this.stuff.splice(x, 1)
-		this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-		this.updateStuff()
-		this.clearTmpUnsaved("tmpCont")
-	}
-	clearTmpUnsaved(lsName: tmpContOrunSaved) {
-		setList(emptyStuff, lsName)
-		this.updateStuff()
-		this.reLoad()
-	}
-	sortChange() {
-		this.sortReverse = !this.sortReverse
-		this.stuff.reverse()
-		this.updateStuff()
-	}
-	// Adding or Updating a Container
-	addContainer(_stuff: stuff) {
-		if (_stuff.id === "") {
-			if ($effect.tracking()) {
-				$inspect("I am Creating new one")
-			}
-			const newStuff: stuff = {
-				id: (this.stuff.length + Math.random()).toString(),
-				name: _stuff.name,
-				type: _stuff.type,
-				items: _stuff.items,
-				interact: _stuff.interact,
-				containerColor: _stuff.containerColor,
-				isSum: _stuff.isSum,
-			}
-			this.stuff.push(newStuff)
-			this.clearTmpUnsaved("unSaved")
-		} else {
-			if ($effect.tracking()) {
-				$inspect("updating the container...")
-			}
-			const x = this.stuff.findIndex((x) => x.id === _stuff.id)
-			this.stuff[x] = {
-				id: _stuff.id,
-				name: _stuff.name,
-				type: _stuff.type,
-				items: _stuff.items,
-				interact: _stuff.interact,
-				containerColor: _stuff.containerColor,
-				isSum: _stuff.isSum,
-			}
-			this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-			this.clearTmpUnsaved("tmpCont")
-		}
-	}
+  // Deleting a Container
+  async deleteContainer(oId: string) {
+    const x = this.stuff.findIndex((x) => x.id === oId)
+    this.stuff.splice(x, 1)
+    this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
+    this.updateStuff()
+    this.clearTmpUnsaved("tmpCont")
+  }
+  async clearTmpUnsaved(lsName: tmpContOrunSaved) {
+    await setList(emptyStuff, lsName)
+    await this.updateStuff()
+    await this.reLoad()
+  }
+  async sortChange() {
+    this.sortReverse = !this.sortReverse
+    this.stuff.reverse()
+    this.updateStuff()
+  }
+  // Adding or Updating a Container
+  async addContainer(_stuff: stuff) {
+    if (_stuff.id === "") {
+      if ($effect.tracking()) {
+        $inspect("I am Creating new one")
+      }
+      const newStuff: stuff = {
+        id: (this.stuff.length + Math.random()).toString(),
+        name: _stuff.name,
+        type: _stuff.type,
+        items: _stuff.items,
+        interact: _stuff.interact,
+        containerColor: _stuff.containerColor,
+        isSum: _stuff.isSum,
+      }
+      this.stuff.push(newStuff)
+      this.clearTmpUnsaved("unSaved")
+    } else {
+      if ($effect.tracking()) {
+        $inspect("updating the container...")
+      }
+      const x = this.stuff.findIndex((x) => x.id === _stuff.id)
+      this.stuff[x] = {
+        id: _stuff.id,
+        name: _stuff.name,
+        type: _stuff.type,
+        items: _stuff.items,
+        interact: _stuff.interact,
+        containerColor: _stuff.containerColor,
+        isSum: _stuff.isSum,
+      }
+      this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
+      this.clearTmpUnsaved("tmpCont")
+    }
+  }
 
-	findStuff(_stuff: stuff) {
-		return this.stuff.find((stuff) => stuff.id === _stuff.id)
-	}
+  findStuff(_stuff: stuff) {
+    return this.stuff.find((stuff) => stuff.id === _stuff.id)
+  }
 }
 const STUFF_KEY = Symbol(MYSTUFF)
 export function initMyStuff() {
-	return setContext(STUFF_KEY, new MyStuff())
+  return setContext(STUFF_KEY, new MyStuff())
 }
 
 export function getMyStuff() {
-	return getContext<ReturnType<typeof initMyStuff>>(STUFF_KEY)
+  return getContext<ReturnType<typeof initMyStuff>>(STUFF_KEY)
 }
 
 // export const containerColors = $state([

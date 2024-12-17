@@ -19,4 +19,5 @@
 	<ContainerSum />
 	<NewButton button="newlist" />
 	<NewButton button="sortReverse" />
+	<!-- <NewButton button="settings" /> -->
 </div>
