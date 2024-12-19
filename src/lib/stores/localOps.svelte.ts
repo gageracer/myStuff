@@ -1,28 +1,8 @@
 import type { stuff, temp } from "./types"
+import { storeInCache, fetchFromCache } from "./cachedstorage"
+import { fetchFromLocalStorage, storeInLocalStorage } from "./localstorage"
+import { fetchFromIndexedDB, storeInIndexedDB } from "./indexedDB"
 
-async function openCache() {
-  return await caches.open("my-cache")
-}
-
-async function storeInCache(lsName: string, item: stuff | stuff[] | temp | string | boolean) {
-  const cache = await openCache()
-
-  const response = new Response(JSON.stringify(item), {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  cache.put(new Request(lsName), response)
-}
-
-async function fetchFromCache(lsName: string) {
-  const cache = await openCache()
-  const cachedResponse = await cache.match(new Request(lsName))
-
-  if (cachedResponse) {
-    return await cachedResponse.json()
-  }
-}
 
 // These are set and get functions for the whole Containers list
 export async function setList(
@@ -32,31 +12,49 @@ export async function setList(
   if ($effect.tracking()) {
     $inspect(`${lsName} is set on Cache Store`)
   }
-  //Store in localStorage
-  //window.localStorage.setItem(lsName, JSON.stringify(item))
+  // Store in localStorage
+  storeInLocalStorage(lsName, item)
 
-  //Store in Cache API
+  // Store in Cache API
   await storeInCache(lsName, item)
+
+  // Store in IndexedDB
+  await storeInIndexedDB(lsName, item)
 }
 
 export async function getList(str: string) {
   if ($effect.tracking()) {
     $inspect(`getList getting: ${str}`)
   }
+  // First, check if the IndexedDB has the data
+  try {
+    const indexedDBData = await fetchFromIndexedDB(str)
+    if (indexedDBData) {
+      //console.log("indexedDBData", str, indexedDBData)
+      await storeInCache(str, indexedDBData)
+      storeInLocalStorage(str, indexedDBData)
+      return indexedDBData
+    }
+  } catch (error) {
+    console.error('Error fetching from IndexedDB:', error)
+  }
 
-  // First, check if the cache has the data
+  // Then, check if the cache has the data
   const cachedData = await fetchFromCache(str)
   if (cachedData) {
-    console.log("cachedData", str, cachedData)
-    window.localStorage.setItem(str, JSON.stringify(cachedData))
+    //console.log("cachedData", str, cachedData)
+    storeInLocalStorage(str, cachedData)
+    await storeInIndexedDB(str, cachedData)
     return cachedData
   }
 
+
   // If cache is empty, check localstorage
-  const storedItem = window.localStorage.getItem(str)
+  const storedItem = fetchFromLocalStorage(str)
   if (storedItem) {
-    await storeInCache(str, JSON.parse(storedItem))
-    return JSON.parse(storedItem)
+    await storeInCache(str, storedItem)
+    await storeInIndexedDB(str, storedItem)
+    return storedItem
   }
 
   if (str === "myVersion") return "0"
