@@ -11,7 +11,7 @@
 	initMyStuff()
 	let w = $state(0)
 	let h = $state(0)
-	// $inspect(w, h)
+	$inspect('update is:', updated)
 	let { children }: { children: Snippet } = $props()
 </script>
 
@@ -19,7 +19,7 @@
 <main bind:clientWidth={w} bind:clientHeight={h}>
 	{@render children?.()}
 
-	{#if updated}
+	{#if updated.current}
 		<Modal content="Update is available">
 			<div class="toast">
 				<button class="reloadbtn" onclick={() => location.reload()}> reload the page </button>
