@@ -36,7 +36,7 @@
 
 <style lang="postcss">
 	.reloadbtn {
-		@apply bg-lime-400;
+		@apply bg-lime-400 dark:border-yellow-200 dark:bg-lime-400/30;
 	}
 	main {
 		@apply overflow-scroll w-screen min-h-[90vh] mt-[10vh]
