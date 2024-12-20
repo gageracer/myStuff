@@ -52,12 +52,9 @@
 		@apply pb-20;
 	}
 	.welcome {
-		@apply font-sans flex justify-evenly items-center flex-col text-1.5 opacity-75 mx-0 my-[8vh];
+		@apply font-sans flex dark:text-slate-50 justify-evenly items-center flex-col text-1.5 opacity-75 mx-0 my-[8vh];
 	}
 	.github {
 		@apply fixed no-underline top-5d -translate-y-1/2 right-[3vw] z-4;
-	}
-	.loading {
-		@apply h-screen;
 	}
 </style>

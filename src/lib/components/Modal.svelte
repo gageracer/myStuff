@@ -33,6 +33,6 @@
 	}
 	.modal {
 		@apply absolute left-1/2 top-1/2 flex flex-col text-black bg-white p-[1em] translate-x-[-50%] translate-y-[-50%]
-		overflow-auto max-w-lg w-10/12 rounded;
+		overflow-auto max-w-lg w-10/12 rounded dark:bg-neutral-800 dark:text-neutral-300;
 	}
 </style>

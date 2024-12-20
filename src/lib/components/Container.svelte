@@ -11,20 +11,20 @@
 	const mystuff = getMyStuff()
 	// TODO: Add the color here, change the editCont function to add the new color if the user changes it or not
 
-	function details() {
+	async function details() {
 		container.isSum = !container.isSum
-		mystuff.updateStuff()
+		await mystuff.updateStuff()
 	}
 
-	function theInteract() {
+	async function theInteract() {
 		container.interact = !container.interact
-		mystuff.updateStuff()
+		await mystuff.updateStuff()
 	}
 
-	function isRed(index: number) {
+	async function isRed(index: number) {
 		if (container.interact) {
 			container.items[index][1] = !container.items[index][1]
-			mystuff.updateStuff()
+			await mystuff.updateStuff()
 			// !event.target.style.color ? event.target.style.color = "red" : event.target.style.color = "";
 		}
 	}
@@ -32,7 +32,8 @@
 
 <div
 	class={container.interact ? 'containersum containersum-on' : 'containersum containersum-off'}
-	style="--container-color-off: {container.containerColor}; --container-color-on: {interactColor}"
+	style="--container-color-off: {container.containerColor ??
+		``}; --container-color-on: {interactColor}"
 >
 	<button id="name" aria-pressed="false" onclick={details} class="title">
 		{container.name}
@@ -83,20 +84,22 @@
 
 <style lang="postcss">
 	.containersum {
-		@apply shadow-container transition-colors mb-4 w-95 min-h-10 py-[2vh]
-		flex items-center flex-col text-black text-container;
+		@apply shadow-container dark:shadow-neutral-700/50 dark:text-neutral-300 transition-colors
+		mb-4 w-95 min-h-10 py-[2vh] flex items-center flex-col
+		text-black text-container;
 	}
 	.containersum-on {
-		@apply bg-[var(--container-color-on)];
+		@apply bg-[var(--container-color-on)] dark:bg-orange-500/5 dark:shadow-orange-300/20;
+	}
+	.containersum-off {
+		@apply bg-[var(--container-color-off)] dark:bg-neutral-700/20;
 	}
 	.title {
 		@apply border-none bg-inherit;
 	}
-	.containersum-off {
-		@apply bg-[var(--container-color-off)];
-	}
 	.details {
-		@apply flex flex-col items-center justify-center text-orange-500 pt-0 text-contdetails min-h-20 max-h-80;
+		@apply flex flex-col items-center justify-center dark:text-orange-300
+		text-orange-500 pt-0 text-contdetails min-h-20 max-h-80;
 	}
 	.item-list {
 		@apply text-left w-90 overflow-scroll;
@@ -113,16 +116,16 @@
 		bg-yellow-200 border box-border py-0.5 px-4 border-gray-300 rounded-sm border-solid;
 	}
 	.interactive-text-off {
-		@apply text-gray-600 py-0.5 px-4 bg-inherit;
+		@apply text-gray-600 dark:text-gray-400 py-0.5 px-4 bg-inherit;
 	}
 	.interactive-text-on {
-		@apply transition-colors text-orange-500 py-0.5 px-4;
+		@apply transition-colors text-orange-500 dark:text-orange-300  py-0.5 px-4;
 	}
 	.item-red {
-		@apply text-contdetails text-black bg-inherit border-none;
+		@apply text-contdetails text-black dark:text-neutral-300 bg-inherit border-none;
 	}
 	.item-not-red {
-		@apply line-through text-gray-600 border-none bg-inherit;
+		@apply line-through text-gray-600 dark:text-neutral-300 border-none bg-inherit;
 	}
 	#name {
 		@apply text-container w-full bg-transparent;

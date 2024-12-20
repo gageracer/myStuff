@@ -38,9 +38,9 @@
 		}
 	}
 
-	function deleteSubmit() {
+	async function deleteSubmit() {
 		if (tmpCont?.id) {
-			mystuff.deleteContainer(tmpCont.id)
+			await mystuff.deleteContainer(tmpCont.id)
 			goto('/', { replaceState: true })
 		} else {
 			console.error('tmpCont or tmCont.id is undefined')
@@ -49,9 +49,6 @@
 	function formSubmit(e: SubmitEvent) {
 		e.preventDefault()
 	}
-	// TODO:This whole thing should be a form and items should be object or something strict
-
-	// $inspect('the last item is::::::::::::::::::::::', items.slice(-1)[1])
 
 	function newItem() {
 		const length = tmpCont.items.length - 1
@@ -115,13 +112,11 @@
 		{/each}
 		<div class="buttons" transition:slide>
 			{#if editt}
-				<button
-					name="delete-container"
-					style="color: red;background-color: #f5f5f6;"
-					onclick={() => (delModal = true)}>Delete</button
+				<button class="delete-btn" name="delete-container" onclick={() => (delModal = true)}
+					>Delete</button
 				>
 			{/if}
-			<button name="save-container" onclick={handleSubmit}>Save</button>
+			<button name="save-container" class="save-btn" onclick={handleSubmit}>Save</button>
 		</div>
 	</label>
 </form>
@@ -145,10 +140,11 @@
 	}
 
 	label > * {
-		@apply text-center mt-[0.5em] shadow-input w-90 rounded-[3%] bg-slate-100;
+		@apply text-center mt-[0.5em] shadow-input w-90 rounded-[3%]
+		bg-slate-100 dark:bg-neutral-700/50;
 	}
 	input {
-		@apply h-[2em] text-formSize;
+		@apply h-[2em] text-formSize dark:text-neutral-300;
 	}
 
 	.itemslist {
@@ -156,7 +152,7 @@
 	}
 
 	.itemslist > input {
-		@apply bg-slate-100 w-70min text-center grow;
+		@apply bg-slate-100 w-70min text-center grow dark:bg-neutral-700/50 dark:text-neutral-300;
 	}
 
 	.itemslist > div {
@@ -168,8 +164,14 @@
 	.buttons {
 		@apply flex flex-row;
 	}
+	.save-btn {
+		@apply dark:text-neutral-700 bg-yellow-200;
+	}
 	.buttons > button {
-		@apply bg-yellow-200 w-screen text-2;
+		@apply w-screen text-2;
+	}
+	.delete-btn {
+		@apply text-red-500 dark:text-red-500  dark:bg-neutral-700/5;
 	}
 	.row-buttons {
 		@apply flex;

@@ -39,9 +39,9 @@
 		@apply bg-lime-400;
 	}
 	main {
-		@apply overflow-scroll w-screen min-h-[90vh] mt-[10vh] 
-		text-contdetails flex items-center pt-4 
-		flex-col bg-black/5 text-center;
+		@apply overflow-scroll w-screen min-h-[90vh] mt-[10vh]
+		text-contdetails flex items-center pt-4
+		flex-col bg-black/5 dark:bg-neutral-900 text-center;
 	}
 	.toast {
 		@apply left-0 bottom-0 w-full flex justify-center gap-4 z-10;

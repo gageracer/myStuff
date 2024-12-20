@@ -55,7 +55,7 @@ class MyStuff {
   // Editing any Container
   editCont(id: number) {
     if ($effect.tracking()) {
-      $inspect(`tmpContis: ${id}`)
+      $inspect(`tmpCont is: ${id}`)
     }
     if (id >= 0 && id <= this.stuff.length) {
       this.tmpCont = this.stuff[id]
@@ -83,7 +83,7 @@ class MyStuff {
   async sortChange() {
     this.sortReverse = !this.sortReverse
     this.stuff.reverse()
-    this.updateStuff()
+    await this.updateStuff()
   }
   // Adding or Updating a Container
   async addContainer(_stuff: stuff) {
@@ -101,7 +101,7 @@ class MyStuff {
         isSum: _stuff.isSum,
       }
       this.stuff.push(newStuff)
-      this.clearTmpUnsaved("unSaved")
+      await this.clearTmpUnsaved("unSaved")
     } else {
       if ($effect.tracking()) {
         $inspect("updating the container...")
@@ -117,7 +117,7 @@ class MyStuff {
         isSum: _stuff.isSum,
       }
       this.stuff.sort((a, b) => Number(a.id) - Number(b.id))
-      this.clearTmpUnsaved("tmpCont")
+      await this.clearTmpUnsaved("tmpCont")
     }
   }
 
