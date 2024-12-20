@@ -3,7 +3,7 @@
 	import { initMyStuff } from '$lib/stores/store.svelte'
 	import { type Snippet } from 'svelte'
 	import '../app.css'
-	import { updated } from '$app/stores'
+	import { updated } from '$app/state'
 	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit'
 	import Modal from '$lib/components/Modal.svelte'
 
@@ -19,7 +19,7 @@
 <main bind:clientWidth={w} bind:clientHeight={h}>
 	{@render children?.()}
 
-	{#if $updated}
+	{#if updated}
 		<Modal content="Update is available">
 			<div class="toast">
 				<button class="reloadbtn" onclick={() => location.reload()}> reload the page </button>
@@ -36,7 +36,7 @@
 
 <style lang="postcss">
 	.reloadbtn {
-		@apply bg-lime-400 dark:border-yellow-200 dark:bg-lime-400/30;
+		@apply bg-lime-400 dark:border-yellow-200 dark:bg-lime-400/5 px-2;
 	}
 	main {
 		@apply overflow-scroll w-screen min-h-[90vh] mt-[10vh]
