@@ -125,7 +125,7 @@
 		<br />
 		<div class="row-buttons">
 			<button onclick={deleteSubmit} class="bg-red-600">Yes</button>
-			<button onclick={() => (delModal = false)}>No</button>
+			<button onclick={() => (delModal = false)} class="bg-green-600">No</button>
 		</div>
 	</Modal>
 {/if}
@@ -140,8 +140,8 @@
 	}
 
 	label > * {
-		@apply text-center mt-[0.5em] shadow-input w-90 rounded-[3%]
-		bg-slate-100 dark:bg-neutral-700/50;
+		@apply text-center mt-[0.5em] shadow-input dark:shadow-yellow-200/20 w-90 rounded-[3%]
+		bg-slate-100 dark:bg-neutral-700/15 dark:border-yellow-200;
 	}
 	input {
 		@apply h-[2em] text-formSize dark:text-neutral-300;
@@ -152,31 +152,31 @@
 	}
 
 	.itemslist > input {
-		@apply bg-slate-100 w-70min text-center grow dark:bg-neutral-700/50 dark:text-neutral-300;
+		@apply bg-slate-100 w-70min text-center grow dark:bg-neutral-700/15 dark:text-neutral-300 dark:border-yellow-200;
 	}
 
 	.itemslist > div {
 		/* @apply w-90; */
 	}
 	.itemslist > button {
-		@apply w-[10vw] bg-yellow-200 flex flex-col justify-center items-center;
+		@apply w-[10vw] bg-yellow-200 flex flex-col justify-center items-center dark:border-yellow-200;
 	}
 	.buttons {
 		@apply flex flex-row;
 	}
 	.save-btn {
-		@apply dark:text-neutral-700 bg-yellow-200;
+		@apply dark:text-neutral-700 bg-yellow-200 dark:border-yellow-200;
 	}
 	.buttons > button {
 		@apply w-screen text-2;
 	}
 	.delete-btn {
-		@apply text-red-500 dark:text-red-500  dark:bg-neutral-700/5;
+		@apply text-red-500 dark:text-red-500  dark:bg-neutral-700/5 dark:border-yellow-200;
 	}
 	.row-buttons {
 		@apply flex;
 	}
 	.row-buttons > button {
-		@apply w-90;
+		@apply w-90 dark:border-yellow-200;
 	}
 </style>

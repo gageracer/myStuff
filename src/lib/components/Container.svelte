@@ -89,10 +89,10 @@
 		text-black text-container;
 	}
 	.containersum-on {
-		@apply bg-[var(--container-color-on)] dark:bg-orange-500/5 dark:shadow-orange-300/20;
+		@apply bg-[var(--container-color-on)] dark:bg-orange-600/30 dark:shadow-orange-300/20;
 	}
 	.containersum-off {
-		@apply bg-[var(--container-color-off)] dark:bg-neutral-700/20;
+		@apply bg-[var(--container-color-off)] dark:bg-neutral-700/30;
 	}
 	.title {
 		@apply border-none bg-inherit;
@@ -113,13 +113,13 @@
 	}
 	.edit-button {
 		@apply block w-fit self-center float-right text-1 text-black no-underline
-		bg-yellow-200 border box-border py-0.5 px-4 border-gray-300 rounded-sm border-solid;
+		bg-yellow-200 border box-border py-0.5 px-4 border-gray-300 rounded-sm border-solid dark:border-yellow-200;
 	}
 	.interactive-text-off {
-		@apply text-gray-600 dark:text-gray-400 py-0.5 px-4 bg-inherit;
+		@apply text-gray-600 dark:text-gray-400 py-0.5 px-4 bg-inherit dark:border-yellow-200;
 	}
 	.interactive-text-on {
-		@apply transition-colors text-orange-500 dark:text-orange-300  py-0.5 px-4;
+		@apply transition-colors text-orange-500 dark:text-orange-300 dark:border-orange-200 py-0.5 px-4;
 	}
 	.item-red {
 		@apply text-contdetails text-black dark:text-neutral-300 bg-inherit border-none;
