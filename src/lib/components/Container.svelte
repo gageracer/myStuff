@@ -38,7 +38,7 @@
 	<button id="name" aria-pressed="false" onclick={details} class="title">
 		{container.name}
 	</button>
-	<hr style="width: 90%; border-color: #e1e2e186;" />
+	<hr class:hr-interact={container.interact} />
 
 	{#if !container.isSum}
 		<div class="details" transition:fly={{ y: -10, duration: 200 }}>
@@ -56,7 +56,10 @@
 			<ul class="item-list">
 				{#each container.items as item, i}
 					<li>
-						<button onclick={() => isRed(i)} class={item[1] ? 'item-not-red' : 'item-red'}
+						<button
+							onclick={() => isRed(i)}
+							class={item[1] ? 'item-not-red' : 'item-red'}
+							class:item-interact={container.interact}
 							>{item[0]}
 						</button>
 					</li>
@@ -67,6 +70,7 @@
 					href="/edit/{id}"
 					aria-label="Goes to the edit page for this container"
 					class="edit-button"
+					class:edit-on={container.interact}
 				>
 					Edit</a
 				>
@@ -75,7 +79,11 @@
 					class={container.interact ? 'interactive-text-on' : 'interactive-text-off'}
 					onclick={theInteract}
 				>
-					Interactive Mode
+					{#if container.interact}
+					Lock
+					{:else}
+					Unlock
+					{/if}
 				</button>
 			</div>
 		</div>
@@ -89,7 +97,13 @@
 		text-black text-container;
 	}
 	.containersum-on {
-		@apply bg-[var(--container-color-on)] dark:bg-yellow-800 dark:shadow-orange-300/20;
+		@apply bg-[var(--container-color-on)] dark:text-black dark:bg-yellow-200 dark:shadow-yellow-300/20;
+	}
+	hr {
+		@apply w-[90%];
+	}
+	.hr-interact {
+		@apply w-[90%] dark:border-black;
 	}
 	.containersum-off {
 		@apply bg-[var(--container-color-off)] dark:bg-neutral-700/30;
@@ -98,7 +112,7 @@
 		@apply border-none bg-inherit;
 	}
 	.details {
-		@apply flex flex-col items-center justify-center dark:text-orange-300
+		@apply flex flex-col items-center justify-center
 		text-orange-500 pt-0 text-contdetails min-h-20 max-h-80;
 	}
 	.item-list {
@@ -115,17 +129,23 @@
 		@apply block w-fit self-center float-right text-1 text-black no-underline
 		bg-yellow-200 border box-border py-0.5 px-4 border-gray-300 rounded-sm border-solid dark:border-yellow-200;
 	}
+	.edit-on {
+		@apply dark:border-yellow-400 dark:bg-yellow-400;
+	}
 	.interactive-text-off {
 		@apply text-gray-600 dark:text-gray-400 py-0.5 px-4 bg-inherit dark:border-yellow-200;
 	}
 	.interactive-text-on {
-		@apply transition-colors text-orange-500 dark:text-orange-300 dark:border-orange-200 py-0.5 px-4;
+		@apply transition-colors text-orange-500 dark:text-orange-500 dark:border-orange-500 py-0.5 px-4;
 	}
 	.item-red {
 		@apply text-contdetails text-black dark:text-neutral-300 bg-inherit border-none;
 	}
 	.item-not-red {
 		@apply line-through text-gray-600 dark:text-neutral-300 border-none bg-inherit;
+	}
+	.item-interact {
+		@apply dark:text-black;
 	}
 	#name {
 		@apply text-container w-full bg-transparent;
