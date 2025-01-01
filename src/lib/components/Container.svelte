@@ -89,7 +89,7 @@
 		text-black text-container;
 	}
 	.containersum-on {
-		@apply bg-[var(--container-color-on)] dark:bg-orange-600/30 dark:shadow-orange-300/20;
+		@apply bg-[var(--container-color-on)] dark:bg-yellow-800 dark:shadow-orange-300/20;
 	}
 	.containersum-off {
 		@apply bg-[var(--container-color-off)] dark:bg-neutral-700/30;
