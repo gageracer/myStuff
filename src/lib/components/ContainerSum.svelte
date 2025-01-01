@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Container from '$lib/components/Container.svelte'
+	import Folder from '$lib/components/Folder.svelte'
 	import { getMyStuff } from '$lib/stores/store.svelte'
 	import { flip } from 'svelte/animate'
 	import { fade } from 'svelte/transition'
@@ -14,11 +15,14 @@
 	}, 3000)
 </script>
 
-<div class="containersum">
+<ul class="containersum">
 	{#each mystuff.stuff as _, id (id)}
-		<div animate:flip={{ duration: 200 }}>
+		<li animate:flip={{ duration: 200 }}>
+			{#if mystuff.stuff[id].folders}
+				<Folder bind:container={mystuff.stuff[id]} {id} />
+			{/if}
 			<Container bind:container={mystuff.stuff[id]} {id} />
-		</div>
+		</li>
 	{:else}
 		{#if mystuff.firstTime}
 			<div class="welcome">
@@ -33,7 +37,7 @@
 			<p class="welcome">...</p>
 		{/if}
 	{/each}
-</div>
+</ul>
 {#if githubVisible}
 	<a
 		class="github"

@@ -45,18 +45,6 @@ export async function getList(str: string) {
   if ($effect.tracking()) {
     $inspect(`getList getting: ${str}`)
   }
-  // First, check if the IndexedDB has the data
-  try {
-    const indexedDBData = await fetchFromIndexedDB(str)
-    if (indexedDBData) {
-      //console.log("indexedDBData", str, indexedDBData)
-      await storeInCache(str, indexedDBData)
-      storeInLocalStorage(str, indexedDBData)
-      return indexedDBData
-    }
-  } catch (error) {
-    console.error('Error fetching from IndexedDB:', error)
-  }
 
   if (INDEXED_DB_ITEMS.includes(str)) {
     try {

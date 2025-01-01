@@ -8,7 +8,9 @@
 	import Modal from '$lib/components/Modal.svelte'
 
 	injectSpeedInsights()
+
 	initMyStuff()
+	
 	let w = $state(0)
 	let h = $state(0)
 	$inspect('update is:', updated)

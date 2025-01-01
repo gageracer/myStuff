@@ -64,7 +64,7 @@
 	}
 </script>
 
-<form class="create-new" transition:slide={{ duration: 500 }} onsubmit={formSubmit}>
+<form class="create-new" transition:slide={{ duration: 0 }} onsubmit={formSubmit}>
 	<label for="name">
 		<input
 			type="text"

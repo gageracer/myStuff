@@ -3,6 +3,7 @@ import { getList, setList } from "$lib/stores/localOps.svelte"
 import type { stuff, tmpContOrunSaved } from "./types"
 import { onMount } from "svelte"
 import { goto } from "$app/navigation"
+import { browser } from "$app/environment"
 const MYSTUFF = "MYSTUFF"
 
 const emptyStuff: stuff = {
@@ -13,6 +14,7 @@ const emptyStuff: stuff = {
   interact: false,
   containerColor: "",
   isSum: true,
+  isRoot: true
 }
 class MyStuff {
   version: string = $state("")
@@ -125,13 +127,15 @@ class MyStuff {
     return this.stuff.find((stuff) => stuff.id === _stuff.id)
   }
 }
+
 const STUFF_KEY = Symbol(MYSTUFF)
+
 export function initMyStuff() {
-  return setContext(STUFF_KEY, new MyStuff())
+  browser && setContext(STUFF_KEY, new MyStuff())
 }
 
 export function getMyStuff() {
-  return getContext<ReturnType<typeof initMyStuff>>(STUFF_KEY)
+  return browser ? getContext<MyStuff>(STUFF_KEY) : new MyStuff()
 }
 
 // export const containerColors = $state([
